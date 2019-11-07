@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar  color="primary" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="home-list"></ion-back-button>
+    </ion-buttons>
+	<ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg>
+	<ion-list list-settings>
+		<ion-item lines="none">
+          <ion-label routerLink="/about">About <b> 9ITE OWL </b></ion-label>
+          <span slot="end" routerLink="/about"><ion-icon name="arrow-forward"></ion-icon></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label routerLink="/terms-privacy">Terms/Privacy Policy</ion-label>
+          <span slot="end" routerLink="/terms-privacy"><ion-icon name="arrow-forward"></ion-icon></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label routerLink="/report-problem">Report A Problem</ion-label>
+          <span slot="end" routerLink="/report-problem"><ion-icon name="arrow-forward"></ion-icon></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label>Send Push Notifications</ion-label>
+          <span slot="end"><ion-toggle color="secondary"></ion-toggle></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label>Send Email Notifications</ion-label>
+          <span slot="end"><ion-toggle color="secondary"></ion-toggle></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label>Hot Venues display at top</ion-label>
+          <span slot="end"><ion-toggle color="secondary"></ion-toggle></span>
+        </ion-item>
+		<ion-item lines="none">
+          <ion-label>Your City/Region</ion-label>
+          <span slot="end"><ion-toggle color="secondary"></ion-toggle></span>
+        </ion-item>
+		<ion-item lines="none" ranges-sa>
+          <ion-label>Mile Radius</ion-label>
+			<ion-range value="50" color="secondary">
+				<span slot="start"  class="min-value"> 5 mil </span>
+				<span slot="end"  class="max-value"> 50 mil </span>
+			</ion-range>
+		</ion-item>
+		<ion-item lines="none" ranges-sa>
+          <ion-label>Cover Price</ion-label>
+			<ion-range value="50" color="secondary">
+				<span slot="start"  class="min-value"> $10 </span>
+				<span slot="end"  class="max-value"> $100 </span>
+			</ion-range>
+		</ion-item>
+	</ion-list>
+</ion-content>

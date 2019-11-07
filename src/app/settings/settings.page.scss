@@ -1,0 +1,43 @@
+ion-content[comments-bg] {
+	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	[list-settings] {
+		background: transparent;
+		border: none;
+		ion-item.item-label {
+			--background: transparent;
+			color: #fff;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			padding: 6px 0;
+			ion-label  {
+				font-weight: 200;
+				b{
+					font-weight: 500;
+				}
+			}
+			span {
+				font-size: 25px;
+				ion-toggle { 
+					padding: 10px 0; 
+				}
+			}
+			
+		}
+		[ranges-sa] {
+			ion-label {
+				min-width: 95px;
+			}
+			span.min-value {
+				position: absolute;
+				font-size: 9px !important;
+				top: 9px;
+				left: 15px;
+			}
+			span.max-value {
+				position: absolute;
+				font-size: 9px !important;
+				top: 9px;
+				right: 15px;
+			}
+		}
+	}
+}

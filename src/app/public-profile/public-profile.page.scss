@@ -1,0 +1,113 @@
+ion-content[comments-bg] {
+	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	.profile-sets {
+		padding: 20px 0 10px;
+		.prfl-top {
+			text-align: center;
+			color: #fff;
+			.img-edt {
+				width: 110px;
+				height: 110px;
+				display: block;
+				margin: 0 auto;
+				position: relative;
+				img {
+					width: 100px;
+					height: 100px;
+					border-radius: 50%;
+				}
+			}
+			h5 {
+				letter-spacing: 1px;
+			}
+		}
+		.profl-btm {
+			padding: 0 10px;
+			color: #fff;
+			text-align: center;
+			p {
+				padding: 0 6px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.29);
+				padding-bottom: 15px;
+				font-weight: 200;
+				line-height: 25px;
+			}
+			.totl-frns {
+				font-size: 18px;
+				font-weight: 600;
+				line-height: 26px;
+				background: #fff;
+				display: inline-block;
+				color: #1f1878;
+				padding: 10px 30px;
+				border-radius: 50px;
+				margin-top: 15px;
+				ion-icon {
+					font-size: 25px;
+					vertical-align: bottom;
+					margin-right: 10px;
+					border-right: 1px solid #1f1878;
+					padding-right: 10px;
+				}
+				span {
+					display: inline-block;
+				}
+			}
+		}
+	}
+	span.plus-ad {
+		width: 14px;
+		height: 14px;
+		background: #fff;
+		color: #120073;
+		position: absolute;
+		bottom: 3px;
+		left: 14px;
+		right: 0;
+		margin: 0 auto;
+		border-radius: 50%;
+		font-size: 9px;
+		text-align: center;
+		line-height: 14px;
+		border: 2px solid #120073;
+	}
+	span.active-dot {
+		width: 14px;
+		height: 14px;
+		background: #00d448;
+		color: #120073;
+		position: absolute;
+		bottom: 3px;
+		left: -16px;
+		right: 0;
+		margin: 0 auto;
+		border-radius: 50%;
+		font-size: 9px;
+		text-align: center;
+		line-height: 14px;
+		border: 2px solid #120073;
+	}
+	span.text-poa {
+		position: relative;
+		display: inline-block;
+		ion-icon {
+			font-size: 30px;
+			vertical-align: middle;
+			margin-left: 10px;
+			position: absolute;
+			right: -40px;
+		}
+	}
+	[btn-bottom]
+		{    
+		  margin-top: 30px;
+		  ion-button
+		  {          min-width: 242px;    --box-shadow: 5px 4px 7px #000;
+					--ion-color-base: var(--ion-color-gradient-grey)!important;
+					font-size: var(--ion-value-18);
+					min-height: var(--ion-value-40);
+					text-transform: capitalize;
+					font-weight: 600;
+		  }
+		}
+}

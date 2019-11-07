@@ -1,0 +1,42 @@
+ion-content[comments-bg] {
+	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	.logo-cntrs {
+		padding: 50px;
+		text-align: center;
+		img {
+			width: 100%;
+			max-width: 240px;
+		}
+	}
+	.cont-alsa {
+		padding: 0px 25px;
+		color: #fff;
+		h4  {
+			font-size: 18px;
+			letter-spacing: 1px;
+			margin: 0px;
+			margin-bottom: 4px;
+			border-bottom: 2px solid #ffffff2b;
+			padding-bottom: 10px;
+			margin-bottom: 15px;
+			position: relative;
+			&:after {
+				content: "";
+				position: absolute;
+				width: 40px;
+				height: 2px;
+				background: #fff;
+				bottom: -2px;
+				left: 0;
+			}
+		}
+		p {
+			font-size: 12px;
+			margin: 0px;
+			margin-bottom: 10px;
+			font-weight: 200;
+			letter-spacing: 0.3px;
+			line-height: 19px;
+		}
+	}
+}

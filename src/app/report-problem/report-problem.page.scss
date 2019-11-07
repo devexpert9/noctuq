@@ -1,0 +1,39 @@
+ion-content[comments-bg] {
+	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	.logo-cntrs {
+		padding:70px 90px 40px;
+		text-align: center;
+		img {
+			width: 100%;
+			max-width: 150px;
+		}
+	}
+	.cont-alsa {
+		padding: 10px 25px 10px;
+		color: #fff;
+		h4  {
+			font-size: 18px;
+			letter-spacing: 1px;
+			margin: 0px;
+			margin-bottom: 15px;
+		}
+		p {
+			font-size: 12px;
+			margin: 0px;
+			margin-bottom: 10px;
+			font-weight: 200;
+			letter-spacing: 0.3px;
+			line-height: 17px;
+		}
+	}
+	ion-item.text-atea {
+		padding: 0px 25px 10px;
+		ion-textarea {
+			font-size: 12px;
+			--placeholder-color:#887fb9;
+			--placeholder-opacity:1;
+			    margin: 0px;
+			
+		}
+	}
+}

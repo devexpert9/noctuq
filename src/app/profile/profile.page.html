@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar  color="primary" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="home-list"></ion-back-button>
+    </ion-buttons>
+  
+    <ion-title>Profile</ion-title>
+	<ion-buttons slot="end">
+		<ion-icon name="ios-settings"></ion-icon>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg>
+	<div class="profile-sets">
+		<div class="prfl-top">
+			<div class="img-edt">
+				<img src="assets/img/user.jpg">
+				<ion-icon name="create"></ion-icon>
+			</div>
+			<h5> Bran Bryce </h5>
+		</div>
+		<div class="profl-btm">
+			<p>  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime  facere possimus omnis. </p>
+			<div class="totl-frns" routerLink="/friends">
+				<ion-icon name="contacts"></ion-icon>  <span> 100 Friends </span>
+			</div>
+		</div>
+	</div>
+</ion-content>

@@ -1,0 +1,24 @@
+ion-content[bg-black] {
+ --background:#000;
+}
+masonry {
+    padding:0.5%;
+}
+
+.brick { width:48.5%; margin:0.5%; margin-bottom:0px;  } 
+[scrll-icon] {
+    background: transparent;
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+	ion-icon  {
+		background: rgba(255, 255, 255, 0.41);
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		color: #fff;
+	}
+}

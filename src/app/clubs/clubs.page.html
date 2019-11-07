@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar  color="primary" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="home-list"></ion-back-button>
+    </ion-buttons>
+  
+    <ion-title>Clubs</ion-title>
+	<ion-buttons slot="end" routerLink="/settings">
+		<ion-icon name="ios-settings"></ion-icon>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen event-dtsl>
+  <ion-card dls-a>
+	<img src="assets/img/event1.jpg" class="img-main"/>
+	<span class="price-top"> $20 </span>
+	
+	<ion-card-header>
+	  <ion-card-title>Upscale House: </ion-card-title>
+	  <ion-card-subtitle str-rigt>Live Bands, Dancing, Food, Drinks <ion-icon name="star-outline"></ion-icon></ion-card-subtitle>
+			<ion-row botm-star>
+				<ion-col size="6">
+					<span class="rate-tl"> Rate </span>
+					<ul class="icon-fir">
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+					</ul>
+				</ion-col>
+				<ion-col size="6" right-icns>
+					<ion-icon name="videocam" routerLink="/make-live-feed"></ion-icon>
+					<ion-icon name="chatboxes" routerLink="/vanue-comments"></ion-icon>
+				</ion-col>
+			</ion-row>
+	</ion-card-header>
+	<ion-card-content>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<ion-row btm-links>
+			<ion-col size="12" align-self-center>
+				<ul class="list-st-cnt">
+					<li (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
+					<li routerLink="/map"> <ion-icon name="pin"></ion-icon> </li>
+					<li routerLink="/feed-gallery"> 
+						<span class="linc-x">
+							<img src="assets/img/live.jpg">
+							Live 
+						</span>
+					</li>
+				</ul>
+			</ion-col>
+		</ion-row>
+	</ion-card-content>
+  </ion-card>
+</ion-content>

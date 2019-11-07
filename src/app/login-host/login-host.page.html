@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar  color="primary" text-center>
+  <ion-buttons slot="start">
+    <ion-icon name="ios-settings"></ion-icon>
+  </ion-buttons>
+    <ion-title>Web Site</ion-title>
+	 <ion-buttons slot="end">
+       <ion-icon name="ios-contact"></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content login-host> 
+	<div login-url class="ion-no-padding">
+		<div class="set-serch">	
+			<ion-item color="none" lines="none">
+				<ion-input placeholder="https://giteowl.com" ></ion-input>
+			</ion-item>
+	   </div>
+	   <div logo class="ion-text-center">
+	      <img height="132px" src="assets/img/logo.png"/>
+		  <h2>Welcome to gite Owl</h2>
+	   </div>
+	</div>
+	<div btn-bottom class="ion-padding ion-text-center">
+	   <ion-button routerLink="/login" color="secondary" shape="round">
+	    Host Login
+	   </ion-button> 
+	</div>
+
+</ion-content>

@@ -1,0 +1,136 @@
+ion-content[event-dtsl] {
+	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	ion-card[dls-a] {
+		margin: 0px;
+	    border-radius: 0px;
+		box-shadow: none;
+		img.img-main {
+			min-height: 230px;
+			object-fit: cover;
+		}
+		ion-card-header {
+			padding: 15px 15px 5px;
+			ion-card-title  {
+				color: #fff;
+				font-size: 20px;
+				text-transform: uppercase;
+				font-weight: 600;
+				span  {
+					float: right;
+					color: #ff0000;
+					font-weight: 700;
+				}
+			}
+			ion-card-subtitle[str-rigt] {
+				    color: #fff;
+					font-size: 18px;
+					font-weight: 100;
+					position: relative;
+					padding-right: 50px;
+					text-transform: capitalize;
+					margin-top: 9px;
+					margin-bottom: 10px;
+				ion-icon {
+					position: absolute;
+					right: 0;
+					top: 0px;
+					font-size: 22px;
+					color: #fff;
+				}
+			}
+		}
+		[botm-star] {
+			margin: 5px -2px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+			span.rate-tl  {
+				font-size: 16px;
+				color: #fff;
+				font-weight: 200;
+				letter-spacing: 1px;
+				display: inline-block;
+			}
+			ul.icon-fir {
+				padding: 0px;
+				margin: 0px;
+				list-style: none;
+				display: inline-block;
+				margin-left: 2px;
+				li {
+					display: inline-block;
+					font-size: 23px;
+					vertical-align: middle;
+					color: #ff0000;
+					margin-right: -2px;
+				}
+			}
+		}
+		[right-icns] {
+			ion-icon {
+				    float: right;
+					font-size: 25px;
+					color: #fff;
+					margin-left: 12px;
+					margin-top: 0px;
+			}
+		}
+		ion-card-content {
+			color: #fff;
+			font-size: 12px;
+			font-weight: 300;
+			letter-spacing: 0.3px;
+			padding-top: 0px;
+			line-height: 19px;
+		}
+		ul.list-st-cnt {
+			padding: 0px;
+			margin: 10px 0 0;
+			list-style: none;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			li {
+				display: inline-block;
+				margin: 0 10px;
+				ion-icon {
+					font-size: 28px;
+				}
+				span.linc-x {
+					display: block;
+					font-size: 17px;
+					text-transform: uppercase;
+					color: #10ff00;
+					font-weight: 500;
+					letter-spacing: 1px;
+					img {
+						width: 80px;
+						display: inline-block;
+						vertical-align: bottom;
+						margin-right: 2px;
+					}
+				}
+			}
+		}
+	}
+	span.price-top {
+		position: absolute;
+		top: 15px;
+		right: 0;
+		background: #ff0000;
+		color: #fff;
+		padding: 2px 16px;
+		font-size: 20px;
+		font-weight: 600;
+		letter-spacing: 1px;
+		z-index:0;
+		&:after {
+			content: "";
+			position: absolute;
+			border: 14px solid #222;
+			left: -14px;
+			border-color: #f00 #f00 #f00 transparent;
+			top: 0;
+			z-index: -1;
+		}
+	}
+}

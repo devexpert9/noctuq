@@ -1,0 +1,148 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #1f1878;
+  --ion-color-primary-rgb: 31, 24, 120;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #111;
+  --ion-color-primary-tint: #333;
+
+/* Light Blue */
+.ion-color-ltblue
+{
+  --ion-color-base: #8f8cb6;
+  --ion-color-base-rgb: 143, 140, 182;
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255, 255, 255;
+  --ion-color-shade: #111;
+  --ion-color-tint: #333;
+
+}
+  /** secondary **/
+  --ion-color-secondary: #e9e9e9;
+  --ion-color-secondary-rgb: 233,233,233;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #111;
+  --ion-color-secondary-tint: #000;
+
+  /** tertiary **/
+  --ion-color-tertiary: #7044ff;
+  --ion-color-tertiary-rgb: 112, 68, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #633ce0;
+  --ion-color-tertiary-tint: #7e57ff;
+
+  /** success **/
+  --ion-color-success: #10dc60;
+  --ion-color-success-rgb: 16, 220, 96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ec254;
+  --ion-color-success-tint: #28e070;
+
+  /** warning **/
+  --ion-color-warning: #ffce00;
+  --ion-color-warning-rgb: 255, 206, 0;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-tint: #ffd31a;
+
+  /** danger **/
+  --ion-color-danger: #f04141;
+  --ion-color-danger-rgb: 245, 61, 61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d33939;
+  --ion-color-danger-tint: #f25454;
+
+  /** dark **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 34, 34;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** medium **/
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152, 154, 162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
+
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 244, 244;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+    --ion-color-white:#fff;
+    --ion-color-grey:#8685a3;
+    --ion-color-darkgrey:#7f7f7f;
+    --ion-color-ltblue:#908db6;
+    --ion-color-gradient-grey:linear-gradient(90deg, rgba(233,233,233,1) 0%, rgba(131,131,131,1) 50%, rgba(219,219,219,1) 100%);
+    --ion-color-black:#000;
+  
+   --ion-value-0:0px;
+  --ion-value-1:1px;
+  --ion-value-2:2px;
+  --ion-value-3:3px;
+  --ion-value-4:4px;
+  --ion-value-5:5px;
+  --ion-value-6:6px;
+  --ion-value-7:7px;
+  --ion-value-8:8px;
+  --ion-value-9:9px;
+  --ion-value-10:10px;
+  --ion-value-11:11px;
+  --ion-value-12:12px;
+  --ion-value-13:13px;
+  --ion-value-14:14px;
+  --ion-value-15:15px;
+  --ion-value-16:16px;
+  --ion-value-18:18px;
+  --ion-value-20:20px;
+  --ion-value-22:22px;
+  --ion-value-24:24px;
+  --ion-value-25:25px;
+  --ion-value-28:28px;
+  --ion-value-30:30px;
+  --ion-value-32:32px;
+  --ion-value-34:34px;
+  --ion-value-35:35px;
+  --ion-value-36:36px;
+  --ion-value-38:38px;
+  --ion-value-40:40px;
+  --ion-value-42:42px;
+  --ion-value-44:44px;
+  --ion-value-45:45px;
+  --ion-value-50:50px;
+  --ion-value-55:55px;
+  --ion-value-56:56px;
+  --ion-value-57:57px;
+  --ion-value-60:60px;
+  --ion-value-65:65px;
+  --ion-value-70:70px;
+  --ion-value-75:75px;
+  --ion-value-80:80px;
+  --ion-value-85:85px;
+  --ion-value-90:90px;
+  --ion-value-95:95px;
+  --ion-value-100:100px;
+  --ion-value-110:100px;
+  --ion-value-120:120px;
+  --ion-value-125:125px;
+  --ion-value-130:130px;
+  --ion-value-140:140px;
+  --ion-value-145:145px;
+}
