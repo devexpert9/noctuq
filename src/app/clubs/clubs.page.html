@@ -37,20 +37,24 @@
 	</ion-card-header>
 	<ion-card-content>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		<ion-row btm-links>
-			<ion-col size="12" align-self-center>
-				<ul class="list-st-cnt">
-					<li (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
-					<li routerLink="/map"> <ion-icon name="pin"></ion-icon> </li>
-					<li routerLink="/feed-gallery"> 
-						<span class="linc-x">
-							<img src="assets/img/live.jpg">
-							Live 
-						</span>
-					</li>
-				</ul>
-			</ion-col>
-		</ion-row>
+		
 	</ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-row btm-links>
+	<ion-col size="12" align-self-center>
+		<ul class="list-st-cnt">
+			<li (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
+			<li routerLink="/map"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/feed-gallery"> 
+				<span class="linc-x">
+					<img src="assets/img/live.jpg">
+					Live 
+				</span>
+			</li>
+		</ul>
+	</ion-col>
+</ion-row>
+</ion-footer>
