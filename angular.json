@@ -40,6 +40,9 @@
               }	,
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "node_modules/ng-masonry-grid/ng-masonry-grid.css"
               }
             ],
             "scripts": []

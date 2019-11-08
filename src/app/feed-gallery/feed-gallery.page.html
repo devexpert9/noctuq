@@ -11,9 +11,19 @@
 </ion-header>
 
 <ion-content bg-black>
-	<masonry [useImagesLoaded]="true">
+<!-- 	<masonry [useImagesLoaded]="true">
 		<masonry-brick class="brick"  *ngFor="let item of masonryItems" routerLink="/live-feed"><img [src]="item.img"></masonry-brick>
-	</masonry>
+	</masonry> -->
+  <ng-masonry-grid
+    [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5 }" 
+    [useAnimation]="true"
+    [useImagesLoaded]="true"
+    [scrollAnimationOptions]="{ animationEffect: 'effect-4', minDuration : 0.4, maxDuration : 0.7 }">
+    <ng-masonry-grid-item routerLink="/live-feed" id="{{'masonry-item-'+i}}" *ngFor="let item of masonryItems; let i = index;"> 
+        <!-- Grid Content  -->
+        <img [src]="item.img">
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>
 </ion-content>
 <ion-footer> 
   <div scrll-icon>

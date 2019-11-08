@@ -6,8 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { FeedGalleryPage } from './feed-gallery.page';
-import { NgxMasonryModule } from 'ngx-masonry';
-import { MasonryModule } from 'angular2-masonry';
+// import { NgxMasonryModule } from 'ngx-masonry';
+// import { MasonryModule } from 'angular2-masonry';
+import { NgMasonryGridModule } from 'ng-masonry-grid';
 const routes: Routes = [
   {
     path: '',
@@ -21,8 +22,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-	NgxMasonryModule,
-	MasonryModule 
+    NgMasonryGridModule
+	// NgxMasonryModule,
+	// MasonryModule 
   ],
   declarations: [FeedGalleryPage]
 })
