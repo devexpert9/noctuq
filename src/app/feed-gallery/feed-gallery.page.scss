@@ -22,3 +22,7 @@ masonry {
 		color: #fff;
 	}
 }
+.grid ng-masonry-grid-item {
+    width: 49% !important;
+}
+ng-masonry-grid.grid.effect-4 {margin-top:10px !important;}
