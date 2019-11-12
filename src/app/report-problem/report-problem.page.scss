@@ -37,3 +37,18 @@ ion-content[comments-bg] {
 		}
 	}
 }
+/**Button Css Start**/
+	 [btn-bottom]
+	 {    
+		  padding:0 25px 15px;
+		  ion-button
+		  {          min-width: 242px;   
+					--box-shadow: 5px 4px 7px #000;
+					--ion-color-base: var(--ion-color-gradient-grey)!important;
+					font-size: var(--ion-value-18);
+					min-height: var(--ion-value-30);
+					text-transform: capitalize;
+					font-weight: 600;
+		  }
+		 }
+/**Button Css Ends**/
