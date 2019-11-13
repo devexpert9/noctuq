@@ -84,3 +84,11 @@ ion-content[live-feed] {
 		}
 	}
 }
+span.active-icn {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #8BC34A;
+    border-radius: 50%;
+    margin-left: 2px;
+}
