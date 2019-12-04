@@ -10,14 +10,17 @@
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen event-dtsl>
+<ion-content fullscreen event-dtsl *ngIf="is_loaded">
   <ion-card dls-a>
-	<img src="assets/img/event1.jpg" class="img-main"/>
-	<span class="price-top"> $20 </span>
+	<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png" class="img-main" /> 
+	<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}" class="img-main"/> 
+	<span class="price-top"> ${{event?.price}} </span>
 	
 	<ion-card-header>
-	  <ion-card-title>Upscale House: </ion-card-title>
-	  <ion-card-subtitle str-rigt>Live Bands, Dancing, Food, Drinks <ion-icon name="star-outline"></ion-icon></ion-card-subtitle>
+	  <ion-card-title>{{event?.venue_type}}: </ion-card-title>
+	  <ion-card-subtitle str-rigt>{{event?.title}} 
+	  	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'star-outline' : 'star'}}"></ion-icon>
+	  </ion-card-subtitle>
 			<ion-row botm-star>
 				<ion-col size="6">
 					<span class="rate-tl"> Rate </span>
@@ -35,19 +38,16 @@
 				</ion-col>
 			</ion-row>
 	</ion-card-header>
-	<ion-card-content>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-	</ion-card-content>
+	<ion-card-content [innerHTML]="event?.venue_description"></ion-card-content>
   </ion-card>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="is_loaded">
   <ion-row btm-links>
 	<ion-col size="12" align-self-center>
 		<ul class="list-st-cnt">
 			<li (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
-			<li routerLink="/map"> <ion-icon name="pin"></ion-icon> </li>
+			<li (click)="openMap()"> <ion-icon name="pin"></ion-icon> </li>
 			<li routerLink="/feed-gallery"> 
 				<span class="linc-x">
 					<img src="assets/img/live.jpg">

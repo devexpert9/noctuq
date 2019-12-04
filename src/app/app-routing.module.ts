@@ -1,29 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { AuthGuardService } from './services/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home-list',
     pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
-  },
-  {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   },
   { path: 'login-host', loadChildren: './login-host/login-host.module#LoginHostPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'forgotpassword', loadChildren: './forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
-  { path: 'home-list', loadChildren: './home-list/home-list.module#HomeListPageModule' },
-  { path: 'home-map', loadChildren: './home-map/home-map.module#HomeMapPageModule' },
-  { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsPageModule' },
+  { path: 'home-list', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
+  { path: 'home-list/:type', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
+  { path: 'home-map', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
+  { path: 'home-map/:type', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
+  { path: 'clubs/:id', loadChildren: './clubs/clubs.module#ClubsPageModule', canActivate: [AuthGuardService] },
   { path: 'vanue-comments', loadChildren: './vanue-comments/vanue-comments.module#VanueCommentsPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'friends', loadChildren: './friends/friends.module#FriendsPageModule' },
   { path: 'live-feed', loadChildren: './live-feed/live-feed.module#LiveFeedPageModule' },
   { path: 'map', loadChildren: './map/map.module#MapPageModule' },

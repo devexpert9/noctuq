@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "608339143855",
+    "firebase_url": "https://ite-owl.firebaseio.com",
+    "project_id": "ite-owl",
+    "storage_bucket": "ite-owl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608339143855:android:9fa0af778de06dd151b85a",
+        "android_client_info": {
+          "package_name": "io.giteowl.a841946"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608339143855-6t5isdeaok9h2s64hbbv5haq3tncpju3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.giteowl.a841946",
+            "certificate_hash": "da690d43b2f56615a669824de534cbb64b3acc98"
+          }
+        },
+        {
+          "client_id": "608339143855-msuu5n847treif8htdsju9kia98nr4ms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH-z3V7QmiVWEh84ce-XB_TfeNEpJ0e2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608339143855-msuu5n847treif8htdsju9kia98nr4ms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

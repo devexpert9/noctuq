@@ -11,19 +11,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content comments-bg>
+<ion-content comments-bg *ngIf="is_loaded">
 	<div class="profile-sets">
 		<div class="prfl-top">
 			<div class="img-edt">
-				<img src="assets/img/user.jpg">
+				<img *ngIf="errors.indexOf(profile?.image) >= 0" src="assets/img/default.png"/> 
+				<img *ngIf="errors.indexOf(profile?.image) == -1" src="{{profile?.is_social_image == '1' ? profile?.image : IMAGES_URL+'/profile/'+profile?.image}}"/> 
 				<ion-icon name="create"></ion-icon>
 			</div>
-			<h5> Bran Bryce </h5>
+			<h5> {{profile?.name}} </h5>
 		</div>
 		<div class="profl-btm">
-			<p>  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime  facere possimus omnis. </p>
+			<p>  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
 			<div class="totl-frns" routerLink="/friends">
-				<ion-icon name="contacts"></ion-icon>  <span> 100 Friends </span>
+				<ion-icon name="contacts"></ion-icon>  <span> {{profile?.friends}} {{profile?.friends == '1' ? 'Friend' : 'Friends'}} </span>
+			</div>
+		</div>
+		<div class="profl-btm">
+			<div class="totl-frns" (click)="logout()">
+				<ion-icon name="log-out"></ion-icon>  <span> Log out </span>
 			</div>
 		</div>
 	</div>

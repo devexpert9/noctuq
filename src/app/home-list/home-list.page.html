@@ -7,17 +7,21 @@
 	<a href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
 	<a href="javascript:void(0)" class="list-ics"> List View </a>
   </ion-buttons>
-    <ion-title pls>Home</ion-title> 
+    <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
 	
-	<ion-buttons slot="end">
+	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-list">
+       <ion-icon name="home" star-head></ion-icon>
+	</ion-buttons>
+	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites">
        <ion-icon name="star" star-head></ion-icon>
 	</ion-buttons>
+
 	<ion-buttons slot="end" routerLink="/profile">
        <ion-icon name="ios-contact"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content login-host> 
+<ion-content login-host #content> 
 	<div login-url class="ion-no-padding">
 	   <div class="set-serch">
 		   <ion-item color="none" lines="none">
@@ -28,46 +32,21 @@
 		</div>
 	</div>
 	<div list-events>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event1.jpg" />
+		<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
+			<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
+			<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
 			<ion-card-header>
-				<ion-card-title>UPSCALE HOUSE: Live Bands, Dancing, Food, Drinks </ion-card-title>
+				<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
 			</ion-card-header>
 		</ion-card>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event2.jpg" />
-			<ion-card-header>
-				<ion-card-title>HOTPHILLY: Local DJ, Dancing, Food, Drinks </ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event3.jpg" />
-			<ion-card-header>
-				<ion-card-title>NCSOCIAL: Live Bands, Dancing, Food, Drinks </ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event1.jpg" />
-			<ion-card-header>
-				<ion-card-title>UPSCALE HOUSE: Live Bands, Dancing, Food, Drinks </ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event2.jpg" />
-			<ion-card-header>
-				<ion-card-title>HOTPHILLY: Local DJ, Dancing, Food, Drinks </ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card img-srta routerLink="/clubs">
-			<img src="assets/img/event3.jpg" />
-			<ion-card-header>
-				<ion-card-title>NCSOCIAL: Live Bands, Dancing, Food, Drinks </ion-card-title>
-			</ion-card-header>
-		</ion-card>
+		<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
+        	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+		<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
 	</div>
 </ion-content>
 <ion-footer>
-  <div scrll-icon>
+  <div scrll-icon *ngIf="all_events != ''">
 	<ion-icon name="arrow-down"></ion-icon>
   </div>
 </ion-footer>

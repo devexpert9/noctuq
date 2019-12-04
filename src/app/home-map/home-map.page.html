@@ -1,18 +1,29 @@
 <ion-header>
   <ion-toolbar  color="primary" text-center>
-	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
-    </ion-buttons>
-  
-    <ion-title>Map</ion-title>
-	<ion-buttons slot="end">
-		<ion-icon name="ios-settings"></ion-icon>
+  <ion-buttons slot="start"  routerLink="/settings">
+    <ion-icon name="ios-settings"></ion-icon>
+  </ion-buttons>
+  <ion-buttons slot="start" btn-sts>
+	<a href="javascript:void(0)" class="map-ics"> Map View </a>
+	<a href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
+  </ion-buttons>
+    <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
+	
+	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-map">
+       <ion-icon name="home" star-head></ion-icon>
+	</ion-buttons>
+	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-map/favorites">
+       <ion-icon name="star" star-head></ion-icon>
+	</ion-buttons>
+
+	<ion-buttons slot="end" routerLink="/profile">
+       <ion-icon name="ios-contact"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content> 
 	<div map-home>
-		<img src="assets/img/home-map.jpg">	
+		<div #map style="height:100%;"></div>
 	</div>
 </ion-content>
- 
+  
