@@ -1,51 +1,89 @@
-ion-content
-{
- --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat top center/cover;
- [logo]
- {
-     margin-top: var(--ion-value-55);
+ion-content{
+ 
+[halfColored]{
+	background:var(--ion-color-primary)  url('../../assets/img/loginbg.jpg')no-repeat top center/cover;
+	height:310px;
+	position: absolute;
+	z-index: 0	;
+	left: 0;
+	top: 0;
+	right:0;
+	width: 100%;
+}
+p.text-center{
+	text-align:center;
+	display: block;
+	margin: 10px 0 0;
+}
+ [logo]{
+     margin-top:0;
+     position: relative;
+     z-index: 5;
+     img{
+     	max-width: 150px;
+     }
  }
- [login-form]
- {   margin-top: var(--ion-value-50);
-     padding: var(--ion-value-0) var(--ion-value-15);
-    ion-item
-	{
-		--min-height: var(--ion-value-45);
-		height: var(--ion-value-45);
+ [roundedForm]{
+ 	background:#fff;
+ 	padding:20px;
+ 	border-radius: 5px;  
+ 	box-shadow: 0px 10px 20px rgba(0,0,0, .2);
+ }
+ [login-form]{
+ 	position: relative;
+    z-index:5;
+ 	margin-top: var(--ion-value-25);
+    padding:0;
+    ion-item{
 		margin-bottom: var(--ion-value-20);
-		--border-radius: var(--ion-value-30);
-		--padding-start: var(--ion-value-20)!important;
 		overflow: visible;
-	  [icon-left]
-		{
+		--padding-start:0;
+		--border-color:rgba(0,0,0, .2);
+		--background: none;
+		--highlight-color-focused: #1d166e;
+	  [icon-left]{
 			margin: var(--ion-value-0);
-			background: var(--ion-color-darkgrey);
-			min-width: 46px;
-			min-height: 46px;
-			text-align: center;
-			padding-top: var(--ion-value-12);
+			padding-top: 4px;
 			position: absolute;
-			right: -1px;
-			border-radius: var(--ion-value-0) var(--ion-value-30) var(--ion-value-30) var(--ion-value-0);
+			left: -1px;
+			z-index: 99;
+			ion-icon{
+				color: #1d166e;
+				font-size: 22px;
+			}
 		}
-	  ion-input
-	  {
-	      
-	   
-	      padding-right: var(--ion-value-40)!important;
-	  }
+		ion-input{
+			margin-left:25px;
+			color: #222;
+			font-size: 15px;
+		}
+		ion-input::-webkit-input-placeholder { /* Edge */
+		  color: #222;
+		}
+		ion-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		  color: #222;
+		}
+		ion-input::placeholder {
+		  color: #222;
+		}
+		.native-input.sc-ion-input-md:-webkit-autofill{
+			--background: none;
+		}
 	}
-			 /**Button Css Start**/
-		 [btn-bottom]
-		 {    
-			  margin-top: var(--ion-value-10);
-			  ion-button
-			  {          min-width: 242px;    --box-shadow: 5px 4px 7px #000;
-						--ion-color-base: var(--ion-color-gradient-grey)!important;
-						font-size: var(--ion-value-18);
-						min-height: var(--ion-value-40);
-						text-transform: capitalize;
-						font-weight: 600;
+		
+		/**Button Css Start**/
+		 [btn-bottom]{    
+			  margin-top: var(--ion-value-20);
+			  ion-button{         
+				font-size: var(--ion-value-16);
+				min-height: var(--ion-value-40);
+				text-transform: capitalize;
+				font-weight: 600;
+				--background: #1d166e;
+				color: var(--ion-color-white);
+				width: 100%;
+				height: 50px;
+				--box-shadow: none;
 			  }
 		 }
 		 /**Button Css Ends**/
@@ -61,30 +99,44 @@ ion-content
 	}
 	/* Social Icon Css Start*/
 	[social-icons]
-	{  margin-top: var(--ion-value-20);
-			ion-button
-			{    margin-left: var(--ion-value-10);
-				  width: var(--ion-value-45);
-				  height:  var(--ion-value-45);
-				 --border-radius: 50%;
-				 --padding-top: var(--ion-value-0);
-				 --padding-start:var(--ion-value-0);
-				 --padding-end:var(--ion-value-0);
-				 --padding-bottom:var(--ion-value-0);
+	{  margin-top: var(--ion-value-30);
+			ion-button{
+				margin-left: var(--ion-value-10);
+			    width: var(--ion-value-45);
+			    height: var(--ion-value-45);
+			    --border-radius: 50%;
+			    border-radius: 50%;
+			    --padding-top: var(--ion-value-0);
+			    --padding-start: var(--ion-value-0);
+			    --background: none;
+			    border:1px solid rgba(29, 22, 110, 0.14);
+			    color: #1d166e;
+			    --box-shadow:none;
+			    --padding-end: var(--ion-value-0);
+			    --padding-bottom: var(--ion-value-0);
 			}
 	}
 	/* Social Icon Css Ends*/
 	/* Bottom Link Css Start */
-	[bottom-links]
-	{
-		  p
-		  {   
-		    a 
-			{
-			  color:var(--ion-color-white);
-			  text-decoration:none;
-			}
-		  }
+	[bottom-links]{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		margin:30px 0 0;
+		a{
+		  color:#1d166e;
+		  text-decoration:none;
+		  border:1px solid  #1d166e;
+		  border-radius: 50px;
+		  line-height: 40px;
+		  font-size: 14px;
+		  text-align: center;
+		  display: block;
+		  width:100%;
+		  font-weight: 600;
+		  margin:0 5px;
+		}
 	}
 	/* Bottom Link Css Ends */
  }
