@@ -4,53 +4,74 @@
   </ion-toolbar>
 </ion-header-->
 <ion-content class="ion-padding">
+<div halfColored></div>
    <div logo class="ion-text-center">
-      <img height="132px" src="assets/img/logo.png"/>
+      <img height="" src="assets/img/logo.png"/>
    </div>
    <div login-form>
-     <ion-item lines="none" class="ion-no-padding">
+     	<div roundedForm>
+     <ion-item  class="ion-no-padding">
            <ion-input [(ngModel)]="name" placeholder="Full Name"></ion-input>
-		   <ion-label icon-left>
+		   <!--ion-label icon-left>
 			   <img height="22px" src="assets/img/lock.png"/>
-		   </ion-label>
+		   </ion-label-->
+		   <ion-label icon-left>
+					<ion-icon name="contact"></ion-icon>
+				</ion-label>
         </ion-item>
         <span error *ngIf="errors.indexOf(name) >= 0 && is_submit == true">Please enter your name</span>
-       <ion-item lines="none" class="ion-no-padding">
-           <ion-input [(ngModel)]="email" placeholder="Email Address"></ion-input>
-		   <ion-label icon-left>
-			   <img height="22px" src="assets/img/lock.png"/>
-		   </ion-label>
-        </ion-item>
-        <span error *ngIf="errors.indexOf(email) >= 0 && is_submit == true">Please enter your email address</span>
-		<span error *ngIf="errors.indexOf(email) == -1 && is_submit == true && !reg_exp.test(email.toLowerCase())">Please enter valid email address</span>
-		<ion-item lines="none" class="ion-no-padding">
-           <ion-input [(ngModel)]="password" type="password" placeholder="Password"></ion-input>
-		   <ion-label icon-left>
-			   <img height="22px" src="assets/img/lock.png"/>
-		   </ion-label>
-        </ion-item>
-        <span error *ngIf="errors.indexOf(password) >= 0 && is_submit == true">Please enter your password</span>	
-		<span error *ngIf="errors.indexOf(password) == -1 && is_submit == true && password.length < 6">Please enter atleast 6 digits password</span>
-		<ion-item lines="none" class="ion-no-padding">
-           <ion-input [(ngModel)]="confirm_password" type="password" placeholder="Verify Password"></ion-input>
-		   <ion-label icon-left>
-			   <img height="22px" src="assets/img/lock.png"/>
-		   </ion-label>
-        </ion-item>
-        <span error *ngIf="errors.indexOf(confirm_password) >= 0 && is_submit == true">Please enter password again</span>	
-		<span error *ngIf="errors.indexOf(confirm_password) == -1 && is_submit == true && password != confirm_password">Please enter same password again</span>
-    <ion-item>
+		   <ion-item>
+	<ion-label icon-left>
+					<ion-icon name="ios-calendar"></ion-icon>
+				</ion-label>
       <ion-datetime [(ngModel)]="dob" displayFormat="MMM D, YYYY" min="1900" max="{{max_year_dob}}" placeholder="Date of Birth"></ion-datetime>
     </ion-item>
     <span error *ngIf="errors.indexOf(dob) >= 0 && is_submit == true">Please select your date of birth</span> 
+       <ion-item  class="ion-no-padding">
+           <ion-input [(ngModel)]="email" placeholder="Email Address"></ion-input>
+		   <!--ion-label icon-left>
+			   <img height="22px" src="assets/img/lock.png"/>
+		   </ion-label-->
+		   <ion-label icon-left>
+					<ion-icon name="mail"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(email) >= 0 && is_submit == true">Please enter your email address</span>
+		<span error *ngIf="errors.indexOf(email) == -1 && is_submit == true && !reg_exp.test(email.toLowerCase())">Please enter valid email address</span>
+		<ion-item class="ion-no-padding">
+           <ion-input [(ngModel)]="password" type="password" placeholder="Password"></ion-input>
+		   <!--ion-label icon-left>
+			   <img height="22px" src="assets/img/lock.png"/>
+		   </ion-label-->
+		   <ion-label icon-left>
+					<ion-icon name="lock"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(password) >= 0 && is_submit == true">Please enter your password</span>	
+		<span error *ngIf="errors.indexOf(password) == -1 && is_submit == true && password.length < 6">Please enter atleast 6 digits password</span>
+		<ion-item  class="ion-no-padding">
+           <ion-input [(ngModel)]="confirm_password" type="password" placeholder="Verify Password"></ion-input>
+		   <!--ion-label icon-left>
+			   <img height="22px" src="assets/img/lock.png"/>
+		   </ion-label-->
+		   <ion-label icon-left>
+					<ion-icon name="lock"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(confirm_password) >= 0 && is_submit == true">Please enter password again</span>	
+		<span error *ngIf="errors.indexOf(confirm_password) == -1 && is_submit == true && password != confirm_password">Please enter same password again</span>
+ 
 	<!-- 	 <div remember-me class="ion-text-center">                
            <ion-checkbox [(ngModel)]="remember_me" slot="end"></ion-checkbox>
     	   <ion-label>Remember Me</ion-label>
         </div> -->
 		<div btn-bottom class="ion-text-center">
-		   <ion-button (click)="register()" color="secondary" shape="round">
+		   <ion-button (click)="register()" color="ltblack" shape="round">
 			  Sign Up
 		   </ion-button> 
         </div>	 
+   </div>
+   <p class="text-center">Already have an account? <a routerLink="/login" href="javascript:void(0)">Sign in</a></p>
+
    </div>
 </ion-content>

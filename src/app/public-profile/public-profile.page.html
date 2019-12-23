@@ -1,21 +1,24 @@
 <ion-header>
-  <ion-toolbar  color="primary" text-center>
+  <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
       <ion-back-button defaultHref="home-list"></ion-back-button>
     </ion-buttons>
 	<ion-title>Profile</ion-title>
   </ion-toolbar> 
 </ion-header>
-
 <ion-content comments-bg>
 	<div class="profile-sets">
 		<div class="prfl-top">
 			<div class="img-edt">
 				<img src="assets/img/user.jpg">
-				<span class="plus-ad"><ion-icon name="add"></ion-icon> </span>
+				<!--span class="plus-ad"><ion-icon name="add"></ion-icon> </span-->
 				<span class="active-dot"></span>
 			</div>
-			<h5> <span class="text-poa"> Bran Bryce  <ion-icon name="chatboxes" routerLink="/chat"></ion-icon> </span> </h5>
+			<h5> <span class="text-poa"> Bran Bryce  <!--ion-icon name="chatboxes" routerLink="/chat"></ion-icon--> </span> </h5>
+		</div>	
+		<div btnsRow>
+			<ion-button routerLink="/chat" shape="round"><ion-icon name="chatboxes"></ion-icon> Chat</ion-button>
+			<ion-button shape="round"><ion-icon name="person-add"></ion-icon> Add Contact</ion-button>
 		</div>
 		<div class="profl-btm">
 			<p>  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime  facere possimus omnis. </p>
@@ -24,9 +27,9 @@
 			</div>
 		</div>
 	</div>
-	<div btn-bottom class="ion-padding ion-text-center">
-	   <ion-button routerLink="/login" color="secondary" shape="round">
+	<!--div btn-bottom class="ion-padding ion-text-center">
+	   <ion-button routerLink="/login" color="ltblack" shape="round">
 	    Add Friend
 	   </ion-button> 
-	</div>
+	</div-->
 </ion-content>

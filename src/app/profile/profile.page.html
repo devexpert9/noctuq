@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar  color="primary" text-center>
+  <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
       <ion-back-button defaultHref="home-list"></ion-back-button>
     </ion-buttons>
@@ -23,6 +23,16 @@
 		</div>
 		<div class="profl-btm">
 			<p>  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
+				<div userDetails>
+				<ion-item no-padding>
+					<ion-label><ion-icon name="mail-open"></ion-icon> Email</ion-label>
+					<p>branbryce01@gmail.com</p>
+				</ion-item>
+				<ion-item no-padding>
+					<ion-label><ion-icon name="call"></ion-icon> Phone</ion-label>
+					<p>+1 012 0000 250</p>
+				</ion-item>
+			</div>
 			<div class="totl-frns" routerLink="/friends">
 				<ion-icon name="contacts"></ion-icon>  <span> {{profile?.friends}} {{profile?.friends == '1' ? 'Friend' : 'Friends'}} </span>
 			</div>

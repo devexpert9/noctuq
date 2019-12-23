@@ -20,7 +20,7 @@ p.text-center{
      position: relative;
      z-index: 5;
      img{
-     	max-width: 150px;
+         max-width: 300px;
      }
  }
  [roundedForm]{
@@ -34,13 +34,18 @@ p.text-center{
     z-index:5;
  	margin-top: var(--ion-value-25);
     padding:0;
+	a
+	{
+	  color: var(--ion-color-ltblack);
+	}
     ion-item{
 		margin-bottom: var(--ion-value-20);
 		overflow: visible;
 		--padding-start:0;
-		--border-color:rgba(0,0,0, .2);
+		--border-color:rgba(0,0,0, .2);	
 		--background: none;
-		--highlight-color-focused: #1d166e;
+		--highlight-color-focused: var(--ion-color-ltblack);
+		--highlight-background:  var(--ion-color-ltblack);
 	  [icon-left]{
 			margin: var(--ion-value-0);
 			padding-top: 4px;
@@ -48,23 +53,23 @@ p.text-center{
 			left: -1px;
 			z-index: 99;
 			ion-icon{
-				color: #1d166e;
+				color: var(--ion-color-ltblack);
 				font-size: 22px;
 			}
 		}
 		ion-input{
 			margin-left:25px;
-			color: #222;
+			color: var(--ion-color-ltblack);
 			font-size: 15px;
 		}
 		ion-input::-webkit-input-placeholder { /* Edge */
-		  color: #222;
+		  color: var(--ion-color-ltblack);
 		}
 		ion-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-		  color: #222;
+		  color: var(--ion-color-ltblack);
 		}
 		ion-input::placeholder {
-		  color: #222;
+		  color: var(--ion-color-ltblack);
 		}
 		.native-input.sc-ion-input-md:-webkit-autofill{
 			--background: none;
@@ -110,10 +115,14 @@ p.text-center{
 			    --padding-start: var(--ion-value-0);
 			    --background: none;
 			    border:1px solid rgba(29, 22, 110, 0.14);
-			    color: #1d166e;
+			    color: var(--ion-color-ltblack);
 			    --box-shadow:none;
 			    --padding-end: var(--ion-value-0);
 			    --padding-bottom: var(--ion-value-0);
+				&:hover
+				{
+				 color: var(--ion-color-white);
+				}
 			}
 	}
 	/* Social Icon Css Ends*/
@@ -125,17 +134,17 @@ p.text-center{
 		flex-direction: row;
 		margin:30px 0 0;
 		a{
-		  color:#1d166e;
-		  text-decoration:none;
-		  border:1px solid  #1d166e;
-		  border-radius: 50px;
-		  line-height: 40px;
-		  font-size: 14px;
-		  text-align: center;
-		  display: block;
-		  width:100%;
-		  font-weight: 600;
-		  margin:0 5px;
+	       color: var(--ion-color-ltblack);
+			text-decoration: none;
+			border: 1px solid var(--ion-color-ltblack);
+			border-radius: 50px;
+			line-height: 40px;
+			font-size: 16px;
+			text-align: center;
+			display: block;
+			width: 100%;
+			font-weight: 600;
+			margin: 0 5px;
 		}
 	}
 	/* Bottom Link Css Ends */

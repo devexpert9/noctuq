@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar  color="primary" text-center>
+  <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
       <ion-back-button defaultHref="home-list"></ion-back-button>
     </ion-buttons>
@@ -8,19 +8,23 @@
 </ion-header>
 
 <ion-content comments-bg>
-	<div class="logo-cntrs">
-		<img src="assets/img/settings.png">
+    <div report-top>
+		<div class="logo-cntrs">
+			<img height="" src="assets/img/reports.jpg">
+		</div>
+			<div class="cont-alsa ion-text-center">
+			<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
+		 </div>
+	 </div>
+	 <div briefly-explain>
+		<ion-item class="text-atea">
+			<ion-textarea placeholder="Briefly explain what happend..." rows="5"></ion-textarea>
+		</ion-item>
+		<div btn-bottom class="ion-text-center" >
+			 <ion-button routerLink="/home-list" color="white" expand="full" shape="round">
+				Submit
+			 </ion-button> 
 	</div>
-	<ion-item class="text-atea">
-		<ion-textarea placeholder="Briefly explain what happend" rows="5"></ion-textarea>
-	</ion-item>
-	<div btn-bottom class="ion-text-center" >
-		 <ion-button routerLink="/home-list" color="secondary" expand="full">
-			Submit
-		 </ion-button> 
 	</div>
-	<div class="cont-alsa">
-		<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
-		
-	</div>
+
 </ion-content>
