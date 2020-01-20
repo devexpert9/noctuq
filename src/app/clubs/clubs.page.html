@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <!-- <ion-back-button defaultHref="home-list"></ion-back-button> -->
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   
     <ion-title>Venue</ion-title>
@@ -14,10 +15,10 @@
   <ion-card dls-a>
   	<div mainImg>
 		<span right-icns>
-			<ion-icon name="videocam" routerLink="/make-live-feed"></ion-icon>
-			<ion-icon name="chatboxes" routerLink="/vanue-comments"></ion-icon>
+			<ion-icon name="videocam" routerLink="/make-live-feed/{{event?._id}}"></ion-icon>
+			<ion-icon name="chatboxes" routerLink="/venue-comments/{{event?._id}}"></ion-icon>
 			<ion-icon name="paper-plane" (click)="share()"></ion-icon>
-			<ion-icon name="pin" routerLink="/map"></ion-icon>
+			<ion-icon name="pin" routerLink="/map/{{event?._id}}"></ion-icon>
 	
 		</span>
 	<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png" class="img-main" /> 
@@ -62,7 +63,7 @@
 	
 	</ion-card-content>
 	<div class="list-st-cnt">
-			<a class="linc-x"  routerLink="/feed-gallery">
+			<a class="linc-x"  routerLink="/feed-gallery/{{event?._id}}">
 				<ion-icon src="assets/img/live.svg"></ion-icon>
 			</a>
 		</div>	

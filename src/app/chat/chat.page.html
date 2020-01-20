@@ -4,88 +4,44 @@
       <ion-back-button defaultHref="home-list"></ion-back-button>
     </ion-buttons>
 	<ion-title>Chat</ion-title>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" routerLink="/settings">
       <ion-icon name="settings"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content comments-bg>
+<ion-content comments-bg #content>
 	<!--div class="chat-box-s"-->
 	<div class="commts">
-	<div class="comnt-single">
+		<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" *ngFor="let chat of chats ">
 			<div class="comnt-head">
-				<img src="assets/img/selfie.jpg">
+				<ng-container *ngIf="userId != chat.fromId">
+					<img pro-img *ngIf="errors.indexOf(chat_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					<img pro-img *ngIf="errors.indexOf(chat_image) == -1" src="{{chat_is_social_image == '1' ? chat_image : IMAGES_URL+'/profile/'+chat_image}}"/> 
+				</ng-container>
+				<ng-container *ngIf="userId == chat.fromId">
+					<img pro-img *ngIf="errors.indexOf(mySession?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+					<img pro-img *ngIf="errors.indexOf(mySession?.image) == -1" src="{{mySession?.is_social_image == '1' ? mySession?.image : IMAGES_URL+'/profile/'+mySession?.image}}"/> 
+				</ng-container>
 				<div class="comt-body">
-					<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
+					<p *ngIf="chat.type == 'text'">{{chat.message}}</p>
+					<img (click)="openImage(chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image == '1'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(chat.message))">
+
+					<img (click)="openImage(IMAGES_URL+'/chats/'+chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image != '1'" src="{{IMAGES_URL+'/chats/'+chat.message}}">
+					<span><b><ion-icon name="time"></ion-icon> {{chat.created_at | timeAgo}}</b></span>
 				</div>
 			</div>
 		</div>
-		<div class="comnt-single commnt-right">
-			<div class="comnt-head">
-				<div class="comt-body">
-					<p>Hi, Event is suprb!</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-				</div>
-				<img src="assets/img/selfie7.jpg">
-			</div>
-		</div>
-		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie.jpg">
-				<div class="comt-body">
-					<p>The passage is attributed</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-				</div>
-			</div>
-		</div>
-		<div class="comnt-single commnt-right">
-			<div class="comnt-head">
-				<div class="comt-body">
-					<p>Cicero's De Finibus Bonorum</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-				</div>
-				<img src="assets/img/selfie7.jpg">
-			</div>
-		</div>
-		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie.jpg">
-				<div class="comt-body">
-					<p>Experienced a surge in popularity</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-				</div>
-			</div>
-		</div>
-		<div class="comnt-single commnt-right">
-			<div class="comnt-head">
-				<div class="comt-body">
-					<p>Okay</p>
-					<span><b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-				</div>
-				<img src="assets/img/selfie7.jpg">
-			</div>
-		</div>
-		<!--div class="wid-cds"-->
-			<!--div class="chat-r8-sr"> 
-				<div class="chts">
-					<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. </p>
-				</div>
-				<img src="assets/img/user-icon.jpg" class="user-imgs">
-			</div-->
-			
-		<!--/div-->
 	</div>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="foot-mgs"> 
     <ion-item color="none" lines="none">
-	<span class="add-pl">
+	<span class="add-pl" (click)="selectImage()">
 		<ion-icon name="add" add-deis></ion-icon>
 	</span>
-	 <ion-input placeholder="Type Message here..." ></ion-input>
-	 <a href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
+	 <ion-input [(ngModel)]="chat_message" placeholder="Type Message here..." ></ion-input>
+	 <a (click)="send()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
 	</ion-item>
   </ion-toolbar>
 </ion-footer>

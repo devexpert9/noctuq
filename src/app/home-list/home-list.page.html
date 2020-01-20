@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
-  <ion-buttons slot="start"  routerLink="/settings">
+  <!-- <ion-buttons slot="start"  routerLink="/settings">
     <ion-icon name="ios-settings"></ion-icon>
+  </ion-buttons> -->
+  <ion-buttons slot="start" float-left>
+    <ion-menu-button></ion-menu-button>
   </ion-buttons>
   <!--ion-buttons slot="start" btn-sts>
 	<a href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
@@ -25,34 +28,37 @@
 	<div login-url class="ion-no-padding">
 	   <div class="set-serch">
 		   <ion-item color="none" lines="none">
-			  <ion-icon name="search"></ion-icon>
-			 <ion-input placeholder="Search..." ></ion-input>
-			 <a href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> </a>
+			  <!-- <ion-icon name="search"></ion-icon> -->
+			 <!-- <ion-input (search)="search()" [(ngModel)]="search_term" placeholder="Search..." ></ion-input> -->
+			 <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+			 <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> </a>
+			 <!-- <span no_of_filters>2</span> -->
 		   </ion-item>
 		</div>
 	</div>
 	<div list-events>
-	  <ion-buttons  btn-sts>
-	<a href="javascript:void(0)" class="map-ics" routerLink="/map"> Map View </a>
-	<a href="javascript:void(0)" class="list-ics"> List View </a>
-  </ion-buttons>
-  	<div AppContainer>
-		<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
-			<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
-			<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
-			<ion-card-header>
-				<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
-				<div description>
-				  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor....</p>
-				</div>
-			</ion-card-header>
-		
-		</ion-card>
+		<ion-buttons btn-sts>
+		  <a href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
+		  <a href="javascript:void(0)" class="list-ics"> List View </a>
+	    </ion-buttons>
+	  	<div AppContainer>
+			<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
+				<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
+				<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
+				<ion-card-header>
+					<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
+					<div description>
+					  <p [innerHTML]="event?.venue_description.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
+					</div>
+				</ion-card-header>
+				
+			</ion-card>
+			
+			<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
+		</div>
 		<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
-        	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+	        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
 		</ion-infinite-scroll>
-		<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
-	</div>
 	</div>
 </ion-content>
 <ion-footer>

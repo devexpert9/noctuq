@@ -1,17 +1,17 @@
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <ion-back-button defaultHref="clubs/{{id}}"></ion-back-button>
     </ion-buttons>
     <ion-title>Map</ion-title>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" routerLink="/settings">
 		<ion-icon name="ios-settings"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content live-feed>
-	<div class="img-feed">
-		<img src="assets/img/map.jpg">
+<ion-content>
+	<div map-home>
+		<div #map style="height:100%;"></div>
 	</div>
 </ion-content>

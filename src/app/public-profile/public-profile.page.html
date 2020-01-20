@@ -3,27 +3,53 @@
 	<ion-buttons slot="start">
       <ion-back-button defaultHref="home-list"></ion-back-button>
     </ion-buttons>
-	<ion-title>Profile</ion-title>
+	<ion-title *ngIf="is_loaded">{{profile?.name.split(' ')[0]}}'s Profile</ion-title>
   </ion-toolbar> 
 </ion-header>
-<ion-content comments-bg>
+<ion-content comments-bg *ngIf="is_loaded">
 	<div class="profile-sets">
 		<div class="prfl-top">
 			<div class="img-edt">
-				<img src="assets/img/user.jpg">
+				<img *ngIf="errors.indexOf(profile?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+				<img *ngIf="errors.indexOf(profile?.image) == -1" src="{{profile?.is_social_image == '1' ? profile?.image : IMAGES_URL+'/profile/'+profile?.image}}"/> 
 				<!--span class="plus-ad"><ion-icon name="add"></ion-icon> </span-->
 				<span class="active-dot"></span>
 			</div>
-			<h5> <span class="text-poa"> Bran Bryce  <!--ion-icon name="chatboxes" routerLink="/chat"></ion-icon--> </span> </h5>
+			<h5> <span class="text-poa"> {{profile?.name}}  <!--ion-icon name="chatboxes" routerLink="/chat"></ion-icon--> </span> </h5>
 		</div>	
+		<div btnsRow  *ngIf="profile?.coming_request > 0">
+			<ion-button (click)="chat()" shape="round">
+				<ion-icon name="chatboxes"></ion-icon> Chat
+			</ion-button>
+		</div>
 		<div btnsRow>
-			<ion-button routerLink="/chat" shape="round"><ion-icon name="chatboxes"></ion-icon> Chat</ion-button>
-			<ion-button shape="round"><ion-icon name="person-add"></ion-icon> Add Contact</ion-button>
+			<ion-button *ngIf="profile?.coming_request == 0" (click)="chat()" shape="round">
+				<ion-icon name="chatboxes"></ion-icon> Chat
+			</ion-button>
+			<ion-button shape="round" (click)="addFriend()" *ngIf="(profile?.sent_request == 0 && profile?.coming_request == 0) && profile?.is_friend == 0">
+				<ion-icon name="person-add"></ion-icon> Add Contact
+			</ion-button>
+			<ng-container *ngIf="(profile?.sent_request > 0 || profile?.coming_request > 0) && profile?.is_friend == 0">
+				<ion-button shape="round" *ngIf="profile?.sent_request > 0">
+					<ion-icon name="checkmark"></ion-icon> Request sent
+				</ion-button>
+
+				<ion-button (click)="change_status(1)" shape="round" *ngIf="profile?.coming_request > 0">
+					<ion-icon name="checkmark"></ion-icon> Accept request
+				</ion-button>
+
+				<ion-button (click)="change_status(2)" shape="round" *ngIf="profile?.coming_request > 0">
+					<ion-icon name="close"></ion-icon> Reject request
+				</ion-button>
+			</ng-container>
+			<ion-button shape="round" *ngIf="profile?.is_friend > 0">
+				<ion-icon name="done-all"></ion-icon> Friends
+			</ion-button>
 		</div>
 		<div class="profl-btm">
-			<p>  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime  facere possimus omnis. </p>
+			<p>  {{profile?.about}} </p>
 			<div class="totl-frns">
-				<ion-icon name="contacts"></ion-icon>  <span> 100 Friends </span>
+				<ion-icon name="contacts"></ion-icon>  <span> {{profile?.friends}} {{profile?.friends == '1' ? 'Friend' : 'Friends'}} </span>
 			</div>
 		</div>
 	</div>

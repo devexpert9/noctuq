@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <ion-back-button defaultHref="clubs/{{event_id}}"></ion-back-button>
     </ion-buttons>
   
     <ion-title>Comments</ion-title>
@@ -10,15 +10,16 @@
 
 <ion-content comments-bg>
 	<div class="commts">
-		 	<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie.jpg">
+		<div class="comnt-single">
+			<div class="comnt-head" *ngFor="let comm of comments">
+				<img *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+				<img *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
 				<div class="comt-body">
-					<span>Baisali Bora <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-					<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
+					<span>{{comm.name}} <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
+					<p>{{comm.comment}}</p>
 				</div>
 			</div>
-			<div class="comnt-single commnt-right">
+			<!-- <div class="comnt-single commnt-right">
 				<div class="comnt-head" routerLink="/public-profile">
 					<img src="assets/img/selfie7.jpg">
 					<div class="comt-body">
@@ -26,54 +27,18 @@
 						<p>Hi, <br> Event is suprb!</p>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie2.jpg">
-				<div class="comt-body">
-					<span>David kulkar<b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-					<p>Natus error sit voluptatem.</p>
-				</div>
-			</div>
-		</div>
-		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie4.jpg">
-				<div class="comt-body">
-					<span>Somiya Arora <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-					<p>Perspiciatis unde omnis iste natus error sit voluptatem.</p>
-				</div>
-			</div>
-			<div class="comnt-single commnt-right">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/selfie5.jpg">
-					<div class="comt-body">
-						<span>Shelton Bishop <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-						<p>Great event</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/selfie8.jpg">
-				<div class="comt-body">
-					<span>Lora Roy <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
-					<p>Voluptatem omnis iste natus</p>
-				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="foot-mgs"> 
     <ion-item color="none" lines="none">
-	<span class="add-pl">
+	<!-- <span class="add-pl">
 		<ion-icon name="add" add-deis></ion-icon>
-	</span>
-	 <ion-input placeholder="Type Message here..." ></ion-input>
-	 <a href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
+	</span> -->
+	 <ion-input [(ngModel)]="comment" placeholder="Type comments here..." ></ion-input>
+	 <a (click)="addComments()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
 	</ion-item>
   </ion-toolbar>
 </ion-footer>

@@ -1,26 +1,12 @@
-<ion-header>
+<ion-header *ngIf="is_loaded">
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-	<ion-title>Terms/Privacy Policy</ion-title>
+	<ion-title>{{content?.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content comments-bg class="ion-padding">
-<p section-top> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
-	
-	<div class="cont-alsa">
-		<h4> How We Collect Information </h4>
-		<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
-		</div>
-	<div class="cont-alsa">
-		<h4>Information We Provide</h4>
-		<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-	    <ul list-term>
-		    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</li>
-		    <li>Ipsum dolor sit amet, consectetur adipiscing elit.</li>
-		    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-		</ul>
-	</div>
+<ion-content comments-bg class="ion-padding" *ngIf="is_loaded">
+	<div [innerHTML]="content?.description"></div>
 </ion-content>

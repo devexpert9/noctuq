@@ -1,379 +1,75 @@
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <!-- <ion-back-button defaultHref="home-list"></ion-back-button> -->
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   
     <ion-title>Friends</ion-title>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" routerLink="/settings">
 		<ion-icon name="ios-settings"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content comments-bg>
-	<ion-row>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
+	<ion-segment [(ngModel)]="friendstabs">
+	  <ion-segment-button value="friends">
+	    <ion-label>Friends</ion-label>
+	  </ion-segment-button>
+	  <ion-segment-button value="requests">
+	    <ion-label>Friend Requests</ion-label>
+	  </ion-segment-button>
+	  <ion-segment-button value="search">
+	    <ion-label>Search</ion-label>
+	  </ion-segment-button>
+	</ion-segment>
+	<div [ngSwitch]="friendstabs">
+		<ion-row *ngSwitchCase="'friends'" >
+			<ion-col size="3" *ngFor="let friend of friends " routerLink="/public-profile/{{friend.friend_id}}">
+				<div class="user-box-l">
+					<div class="img-attw">
+						<img *ngIf="errors.indexOf(friend?.friend_image) >= 0" src="assets/img/user-icon.jpg"/> 
+						<img *ngIf="errors.indexOf(friend?.friend_image) == -1" src="{{friend?.is_social_image == '1' ? friend?.friend_image : IMAGES_URL+'/profile/'+friend?.friend_image}}"/> 
+						<!-- <div class="delte-s"> <ion-icon name="close"></ion-icon> </div> -->
+						<span class="active-dot"></span>
+					</div>
+					<h5> {{friend.friend_name}} </h5>
 				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
+			</ion-col>
+			<img *ngIf="friends == ''" src="assets/img/no_result_found.gif"/>
+		</ion-row>
+		<ion-row *ngSwitchCase="'requests'">
+			<ion-col size="3" *ngFor="let friend of friend_requests " routerLink="/public-profile/{{friend.friend_id}}">
+				<div class="user-box-l">
+					<div class="img-attw">
+						<img *ngIf="errors.indexOf(friend?.friend_image) >= 0" src="assets/img/user-icon.jpg"/> 
+						<img *ngIf="errors.indexOf(friend?.friend_image) == -1" src="{{friend?.is_social_image == '1' ? friend?.friend_image : IMAGES_URL+'/profile/'+friend?.friend_image}}"/> 
+						<!-- <div class="delte-s"> <ion-icon name="close"></ion-icon> </div> -->
+						<span class="active-dot"></span>
+					</div>
+					<h5> {{friend.friend_name}} </h5>
 				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
+			</ion-col>
+			<img *ngIf="friend_requests == ''" src="assets/img/no_result_found.gif"/>
+		</ion-row>
+		<ion-row *ngSwitchCase="'search'">
+			<ion-searchbar (search)="searchUsers()" [(ngModel)]="search_term" placeholder="Search users by name,email..." showCancelButton="never"></ion-searchbar>
+
+			<ion-col size="3" *ngFor="let user of search_users" routerLink="/public-profile/{{user._id}}">
+				<div class="user-box-l">
+					<div class="img-attw">
+						<img *ngIf="errors.indexOf(user?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+						<img *ngIf="errors.indexOf(user?.image) == -1" src="{{user?.is_social_image == '1' ? user?.image : IMAGES_URL+'/profile/'+user?.image}}"/> 
+						<!-- <div class="delte-s add-f"> <ion-icon name="add"></ion-icon> </div> -->
+						<span class="active-dot"></span>
+					</div>
+					<h5> {{user.name}} </h5>
 				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-		<ion-col size="3">
-			<div class="user-box-l">
-				<div class="img-attw">
-					<img src="assets/img/user-icon.jpg">
-					<div class="delte-s"> <ion-icon name="close"></ion-icon> </div>
-					<span class="active-dot"></span>
-				</div>
-				<h5> Username </h5>
-			</div>
-		</ion-col>
-	</ion-row>
+			</ion-col>
+			<img *ngIf="search_users == ''" src="assets/img/no_result_found.gif"/>
+		</ion-row>
+	</div>
 </ion-content>
 <ion-footer>
   <div scrll-icon>

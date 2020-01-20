@@ -1,41 +1,17 @@
-<ion-header>
+<ion-header *ngIf="is_loaded">
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-	<ion-title>About</ion-title>
+	<ion-title>{{content?.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content comments-bg>
-	<div class="user-img">
+<ion-content comments-bg *ngIf="is_loaded">
+	<!-- <div class="user-img">
 	    <p>Set ut perspiciatis<br> unde omnis</p>
 		<img src="assets/img/user-about.png">
-	</div>
-	<div class="cont-alsa">		
-		<p class="ion-text-center"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
-	   <h4 class="ion-text-center">Sed ut perspiciatis</h4>
-	   <ion-row section-icons>
-	      <ion-col size="4" class="ion-text-center">
-		     <span>
-		        <img src="assets/img/files.png"/>
-			 </span>
-			 <h5>Aliquam</h5>
-	      </ion-col>
-		   <ion-col size="4" class="ion-text-center">
-		     <span>
-		       <img src="assets/img/paperplane.png"/>
-			 </span> 
-			  <h5>Quaerat</h5>
-	      </ion-col>
-		   <ion-col size="4" class="ion-text-center">
-		      <span>
-		         <img src="assets/img/arrow-right.png"/>
-			  </span>
-			   <h5>Voluptatem</h5>
-	      </ion-col>
-	   </ion-row>
-	   <p class="ion-text-center"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  </p>
-	 
-	</div>
+	</div> -->
+	<div [innerHTML]="content?.description"></div>
 </ion-content>
+

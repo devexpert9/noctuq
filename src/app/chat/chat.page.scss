@@ -38,13 +38,18 @@ ion-content[comments-bg] {
 			    /*padding: 10px;*/
 			    /*border-radius: 3px;*/
 			    /*box-shadow: 1px 1px 0px rgba(0,0,0, .1);*/
-				img	{
+				[pro-img]	{
 					width:45px;
 					height:45px;
 					vertical-align: middle;
 					margin-right: 10px;
 					object-fit: cover;
 					border-radius: 100px;
+				}
+				[attach-img]{
+					width:200px;
+					height:200px;
+					object-fit: cover;
 				}
 				span {
 					font-size: 14px;
