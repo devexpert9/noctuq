@@ -1,11 +1,12 @@
 <ion-header>
-  <ion-toolbar  color="primary" text-center>
+  <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <!-- <ion-back-button defaultHref="home-list"></ion-back-button> -->
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   
     <ion-title>Profile</ion-title>
-	<ion-buttons slot="end">
+	<ion-buttons slot="end" routerLink="/settings">
 		<ion-icon name="ios-settings"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
@@ -15,22 +16,58 @@
 	<div class="profile-sets">
 		<div class="prfl-top">
 			<div class="img-edt">
-				<img *ngIf="errors.indexOf(profile?.image) >= 0" src="assets/img/default.png"/> 
-				<img *ngIf="errors.indexOf(profile?.image) == -1" src="{{profile?.is_social_image == '1' ? profile?.image : IMAGES_URL+'/profile/'+profile?.image}}"/> 
-				<ion-icon name="create"></ion-icon>
+				<ng-container *ngIf="is_image_selected">
+					<img [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(image_url))" />
+				</ng-container>
+				<ng-container *ngIf="!is_image_selected">
+					<img *ngIf="errors.indexOf(profile?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+					<img *ngIf="errors.indexOf(profile?.image) == -1" src="{{profile?.is_social_image == '1' ? profile?.image : IMAGES_URL+'/profile/'+profile?.image}}"/> 
+				</ng-container>
+				<ion-icon *ngIf="is_edit" name="create" (click)="selectImage()"></ion-icon>
 			</div>
-			<h5> {{profile?.name}} </h5>
+			<h5 *ngIf="!is_edit"> {{profile?.name}} </h5>
+			<h5 *ngIf="is_edit"> 
+				<ion-input type="text" placeholder="Name" [(ngModel)]="profile.name"></ion-input> 
+			</h5>
 		</div>
 		<div class="profl-btm">
-			<p>  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
+			<p *ngIf="!is_edit">  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
+			<p *ngIf="is_edit">  
+				<ion-textarea [(ngModel)]="profile.about" placeholder="Say something about you..."></ion-textarea> 
+			</p>
+				<div userDetails>
+				<ion-item no-padding>
+					<ion-label><ion-icon name="mail-open"></ion-icon> Email</ion-label>
+					<p *ngIf="!is_edit">{{profile?.email}}</p>
+					<p *ngIf="is_edit">
+						<ion-input type="email" placeholder="Email Address" [(ngModel)]="profile.email"></ion-input>
+					</p>
+				</ion-item>
+				<ion-item no-padding >
+					<ion-label><ion-icon name="call"></ion-icon> Phone</ion-label>
+					<p *ngIf="!is_edit">{{errors.indexOf(profile?.phone) == -1 ? profile?.phone : 'not added'}}</p>
+					<p *ngIf="is_edit">
+						<ion-input type="text" placeholder="Phone Number" [(ngModel)]="profile.phone"></ion-input>
+					</p>
+				</ion-item>
+			</div>
+			<div class="totl-frns" (click)="goEdit()" *ngIf="!is_edit">
+				<ion-icon  name="create"></ion-icon> <span> Edit Profile </span>
+			</div>
+
+			<div class="totl-frns" (click)="update()" *ngIf="is_edit">
+				<ion-icon name="checkmark" ></ion-icon>  
+				<span> Update Profile </span>
+			</div>
+
 			<div class="totl-frns" routerLink="/friends">
 				<ion-icon name="contacts"></ion-icon>  <span> {{profile?.friends}} {{profile?.friends == '1' ? 'Friend' : 'Friends'}} </span>
 			</div>
 		</div>
-		<div class="profl-btm">
+	<!-- 	<div class="profl-btm">
 			<div class="totl-frns" (click)="logout()">
 				<ion-icon name="log-out"></ion-icon>  <span> Log out </span>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </ion-content>

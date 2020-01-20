@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user/user.service';
+import { ActivatedRoute } from '@angular/router';
+import { config } from '../config';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
+
 
 @Component({
   selector: 'app-feed-gallery',
@@ -6,21 +12,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed-gallery.page.scss'],
 })
 export class FeedGalleryPage implements OnInit {
-masonryItems = [
-    { img : 'assets/img/selfie.jpg' },
-    { img : 'assets/img/selfie1.png'  },
-    { img : 'assets/img/selfie2.jpg'  },
-    { img : 'assets/img/selfie3.jpg'  },
-    { img : 'assets/img/selfie4.jpg'  },
-    { img : 'assets/img/selfie5.jpg'  },
-    { img : 'assets/img/selfie6.jpg'  },
-    { img : 'assets/img/selfie7.jpg'  },
-    { img : 'assets/img/selfie8.jpg'  },
-    { img : 'assets/img/selfie9.jpg'  }
-  ];
-  constructor() { }
+userId:any;
+event_id:any;
+masonryItems:any;
+errors:any=['',null,undefined];
+IMAGES_URL:any=config.IMAGES_URL;
+  constructor(public userService: UserService,private activatedRoute: ActivatedRoute, private photoViewer: PhotoViewer, private streamingMedia: StreamingMedia) {
+    this.event_id = activatedRoute.snapshot.paramMap.get('id'); 
+  }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter(){
+    var token = localStorage.getItem('niteowl_auth_token');
+    this.userId = this.userService.decryptData(token,config.ENC_SALT);
+    this.getFeedUsers();
+  }
+
+  getFeedUsers(){
+    this.userService.presentLoading();
+    this.userService.postData({eventId : this.event_id, userId : this.userId},'all_feeds').subscribe((result) => {
+      this.userService.stopLoading();
+      this.masonryItems = result;
+    },
+    err => {
+      this.userService.stopLoading();
+      this.userService.presentToast('Unable to fetch feeds, Please try again','danger');
+    });
+  }
+
+  openImage(path){
+    this.photoViewer.show(path);
+  }
+
+  playVideo(path){ 
+    console.log(path)
+    let options: StreamingVideoOptions = {
+      successCallback: () => { console.log('Video played') },
+      errorCallback: (e) => { console.log('Error streaming') },
+      orientation: 'potrait',
+      shouldAutoClose: true,
+      controls: false
+    };
+
+    this.streamingMedia.playVideo(path, options);
   }
 
 }

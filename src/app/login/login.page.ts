@@ -4,6 +4,9 @@ import { config } from '../config';
 import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Events } from '@ionic/angular';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -18,7 +21,7 @@ password:any;
 remember_me:any;
 errors:any=['',null,undefined];
 is_submit:Boolean=false;
-  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus) { 
+  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus, private fcm: FCM, public events:Events) { 
   	this.reg_exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   }
 
@@ -32,9 +35,9 @@ is_submit:Boolean=false;
   		this.password = login_cookies.password;
   	}
     if(this.is_mobile_app == 'true'){
-      // this.fcm.getToken().then(token => {
-      //   this.fcm_token = token;
-      // });
+      this.fcm.getToken().then(token => {
+        this.fcm_token = token;
+      });
     }
   }
 
@@ -83,7 +86,7 @@ is_submit:Boolean=false;
     var userId = this.userService.encryptData(result.data._id,config.ENC_SALT);
     localStorage.setItem('niteowl_auth_token',userId);
     localStorage.setItem('niteowl_sessions',JSON.stringify(result.data));
-    // this.events.publish('user_logged_in:true',result.data);
+    this.events.publish('user_log_activity:true','');
   }
 
   facebookLogin(){
@@ -101,6 +104,7 @@ is_submit:Boolean=false;
             image: profile['picture_large']['data']['url'],
             fcm_token: this.fcm_token
           };
+          this.fb.logout();
           this.socialLogin(dict);  
         }
         else{
@@ -126,7 +130,7 @@ is_submit:Boolean=false;
             image: result.imageUrl,
             fcm_token: this.fcm_token
           };
-
+          this.googlePlus.disconnect();
           this.socialLogin(dict);    
         }
         else{

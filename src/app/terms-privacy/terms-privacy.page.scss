@@ -1,34 +1,54 @@
 ion-content[comments-bg] {
-	 --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;
+	/* --background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;*/
+	[section-top]
+	{
+		font-size: 13px;
+		letter-spacing: 0.3px;
+		line-height: 19px;
+		font-weight: 500;
+		margin-top: 0;
+	}
 	.cont-alsa {
-		padding: 30px 25px 10px;
-		color: #fff;
+		/*padding: 30px 25px 10px;*/
+		color: var(--ion-color-black);
 		h4  {
-			font-size: 18px;
+	        font-size: 18px;
 			letter-spacing: 1px;
 			margin: 0px;
 			margin-bottom: 4px;
-			border-bottom: 2px solid #ffffff2b;
-			padding-bottom: 10px;
+			/* border-bottom: 2px solid #ffffff2b; */
+			padding-bottom: 5px;
 			margin-bottom: 15px;
 			position: relative;
+			font-weight: 600;
+			text-transform: uppercase;
 			&:after {
 				content: "";
 				position: absolute;
 				width: 40px;
 				height: 2px;
-				background: #fff;
+				background: var(--ion-color-black);
 				bottom: -2px;
 				left: 0;
 			}
 		}
 		p {
-			font-size: 12px;
+			font-size: 13px;
 			margin: 0px;
 			margin-bottom: 10px;
-			font-weight: 200;
+			font-weight: 500;
 			letter-spacing: 0.3px;
 			line-height: 19px;
+		}
+		[list-term]
+		{
+		  li {
+				font-size: 13px;
+				letter-spacing: 0.3px;
+				line-height: 19px;
+				font-weight: 500;
+				margin-bottom: 5px;
+             }
 		}
 	}
 }

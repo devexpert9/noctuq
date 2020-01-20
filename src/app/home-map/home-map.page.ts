@@ -41,7 +41,7 @@ page_type:any;
     this.map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
 
       var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
-      self.userService.postData({userId: self.userId},api_endpoint).subscribe((result) => { 
+      self.userService.postData({userId: self.userId, genres : [], venues : []},api_endpoint).subscribe((result) => { 
       	  if(result.total > 0){
       	  	var counter = 0;
       	  	result.data.forEach(function(eve){
@@ -49,7 +49,7 @@ page_type:any;
       	  		if(counter == 0){
 			      let position = {
 			        target: self.coordinates,
-			        zoom: 17
+			        zoom: 12
 			      };
 			      self.map.animateCamera(position);
       	  		}
@@ -57,13 +57,20 @@ page_type:any;
 			        position: self.coordinates,
 			        // icon: "assets/img/map_marker.png",
 			        title: eve.venue_type+':'+eve.title,
-			        infoClick: () => {
-			          self.router.navigate(['/clubs/'+eve._id]);
-			        }
+              id: eve._id
+			        // infoClick: () => {
+			        //   self.router.navigate(['/clubs/'+eve._id]);
+			        // }
 		      	};
 			    self.map.addMarker(self.markerOptions).then((marker: Marker) => {
 			      marker.showInfoWindow();
+            // marker.on(GoogleMapsEvent.INFO_CLICK, function() {
+            marker.on(GoogleMapsEvent.INFO_CLICK).subscribe((res) => {
+              console.log('res')
+              console.log(res)
+            });
 			    });
+          
 			    counter = counter + 1;
       	  	});
       	  	self.userService.stopLoading();

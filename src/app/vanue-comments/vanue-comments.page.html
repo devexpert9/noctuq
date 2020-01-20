@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar  color="primary" text-center>
+  <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
-      <ion-back-button defaultHref="home-list"></ion-back-button>
+      <ion-back-button defaultHref="clubs/{{event_id}}"></ion-back-button>
     </ion-buttons>
   
     <ion-title>Comments</ion-title>
@@ -11,75 +11,34 @@
 <ion-content comments-bg>
 	<div class="commts">
 		<div class="comnt-single">
-			<div class="comnt-head">
-				<img src="assets/img/user-icon.jpg">
-				<span> Comments 120 </span>
+			<div class="comnt-head" *ngFor="let comm of comments">
+				<img *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+				<img *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
+				<div class="comt-body">
+					<span>{{comm.name}} <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
+					<p>{{comm.comment}}</p>
+				</div>
 			</div>
-			<div class="comt-body">
-				Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-			</div>
+			<!-- <div class="comnt-single commnt-right">
+				<div class="comnt-head" routerLink="/public-profile">
+					<img src="assets/img/selfie7.jpg">
+					<div class="comt-body">
+						<span>Shelton Bishop <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
+						<p>Hi, <br> Event is suprb!</p>
+					</div>
+				</div>
+			</div> -->
 		</div>
-		<div class="other-cmnt">
-			<div class="comnt-single commnt-right">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-			<div class="comnt-single">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-			<div class="comnt-single commnt-right">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-			<div class="comnt-single">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-			<div class="comnt-single commnt-right">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-			<div class="comnt-single">
-				<div class="comnt-head" routerLink="/public-profile">
-					<img src="assets/img/user-icon.jpg">
-				</div>
-				<div class="comt-body">
-					Lorem ipsum dolor sit amet, consecte adipis elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
-				</div>
-			</div>
-		</div>
-		
 	</div>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="foot-mgs"> 
     <ion-item color="none" lines="none">
-	<span class="add-pl">
+	<!-- <span class="add-pl">
 		<ion-icon name="add" add-deis></ion-icon>
-	</span>
-	 <ion-input placeholder="Type Message here..." ></ion-input>
-	 <a href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
+	</span> -->
+	 <ion-input [(ngModel)]="comment" placeholder="Type comments here..." ></ion-input>
+	 <a (click)="addComments()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
 	</ion-item>
   </ion-toolbar>
 </ion-footer>

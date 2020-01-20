@@ -4,8 +4,17 @@ ion-content[bg-black] {
 masonry {
     padding:0.5%;
 }
-
-.brick { width:48.5%; margin:0.5%; margin-bottom:0px;  } 
+ng-masonry-grid-item p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding:var(--ion-value-10);
+    color: var(--ion-color-white);
+    margin: var(--ion-value-0);
+}
+.brick { width:48.5%; margin:0.5%; margin-bottom:var(--ion-value-0);} 
 [scrll-icon] {
     background: transparent;
     position: fixed;
@@ -16,10 +25,10 @@ masonry {
     text-align: center;
 	ion-icon  {
 		background: rgba(255, 255, 255, 0.41);
-		width: 35px;
-		height: 35px;
+		width: var(--ion-value-35);
+		height: var(--ion-value-35);
 		border-radius: 50%;
-		color: #fff;
+		color: var(--ion-color-white);
 	}
 }
 .grid ng-masonry-grid-item {

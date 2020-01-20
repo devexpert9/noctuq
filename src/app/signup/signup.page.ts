@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
+import { Router } from '@angular/router';
 import { config } from '../config';
+import { FCM } from '@ionic-native/fcm/ngx';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -18,7 +21,7 @@ dob:any;
 errors:any=['',null,undefined];
 is_submit:Boolean=false;
 max_year_dob:any;
-  constructor(public userService: UserService) { 
+  constructor(public userService: UserService, private router : Router, private fcm: FCM) { 
   	this.reg_exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.max_year_dob = new Date().getFullYear() - 18;
   }
@@ -28,9 +31,9 @@ max_year_dob:any;
 
   ionViewDidEnter(){
     if(this.is_mobile_app == 'true'){
-      // this.fcm.getToken().then(token => {
-      //   this.fcm_token = token;
-      // });
+      this.fcm.getToken().then(token => {
+        this.fcm_token = token;
+      });
     }
   }
 
@@ -58,6 +61,7 @@ max_year_dob:any;
       if(result.status == 1){
         this.is_submit = false;
         this.userService.presentToast('Registered successfully! An email sent on your registered email address, please verify your account.','success');
+        this.router.navigate(['/login']);
       }
       else if(result.status == 2){
         this.userService.presentToast('Account already exists with this email','danger');

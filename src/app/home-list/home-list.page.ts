@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
-import { IonInfiniteScroll } from '@ionic/angular'; 
+import { ModalController, IonInfiniteScroll } from '@ionic/angular'; 
 import { Router, ActivatedRoute } from '@angular/router';
+import { FiltersPage } from '../filters/filters.page';
 
 @Component({
   selector: 'app-home-list',
@@ -11,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HomeListPage implements OnInit {
 @ViewChild(IonInfiniteScroll, {static: true}) infiniteScroll: IonInfiniteScroll;
+@ViewChild('content', {static: true}) private content: any;
 userId:any;
 all_events:any=[];
 errors:any=['',null,undefined];
@@ -21,22 +23,44 @@ is_more_records:boolean = true;
 is_loaded:boolean = false;
 scroll_event:any;
 page_type:any;
-  constructor(public userService: UserService, private activatedRoute: ActivatedRoute) { 
+search_term:any;
+all_genres:any;
+genres:any=[];
+all_venues:any;
+venues:any=[];
+min_price:number=0;
+max_price:number;
+mile_radius:number=0;
+price_limit:number = 5000;
+can_hot_menu_at_top:number;
+allow_city_region:number;
+  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController) { 
     this.records_per_page = 10;
+    this.max_price = this.price_limit;
     this.page_type = activatedRoute.snapshot.paramMap.get('type');
     console.log(this.page_type)
+    this.get_venues_genres();
   }
 
   ngOnInit() {
   }
 
   ionViewDidEnter(){
-    this.is_loaded = false;
-    this.all_events = [];
-    this.start = 0;
+    this.scrollToTop();
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
-    this.getEvents({},'0');
+    var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+    this.can_hot_menu_at_top = niteowl_sessions.can_hot_menu_at_top;
+    this.allow_city_region = niteowl_sessions.allow_city_region;
+
+    var self = this;
+    setTimeout(function(){
+      self.start = 0;
+      self.is_loaded = false;
+      self.all_events = [];
+      self.is_more_records = true; 
+      self.getEvents({},'0');
+    },500);
   }
 
   getEvents(event={},type=''){
@@ -52,7 +76,20 @@ page_type:any;
     var self = this;
     setTimeout(() => {
       var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
-      self.userService.postData({userId: self.userId, records_per_page: self.records_per_page, start: self.start},api_endpoint).subscribe((result) => { 
+      self.userService.postData({
+        userId: self.userId, 
+        records_per_page: self.records_per_page, 
+        start: self.start, 
+        search_term : self.search_term,
+        genres : self.genres,
+        venues : self.venues,
+        min_price: self.min_price,
+        max_price: self.max_price,
+        mile_radius: self.mile_radius,
+        can_hot_menu_at_top: this.can_hot_menu_at_top,
+        allow_city_region: this.allow_city_region
+
+      },api_endpoint).subscribe((result) => { 
           self.is_loaded = true;
           var loaded_records = self.start+self.records_per_page;
           if(loaded_records >= result.total){
@@ -60,7 +97,7 @@ page_type:any;
           }
           self.all_events = self.all_events.concat(result.data);
           if(type == '0'){
-            this.userService.stopLoading();
+            self.userService.stopLoading();
           }
           else{
             if(type == '1'){
@@ -71,16 +108,108 @@ page_type:any;
         err => {
           self.is_more_records = false;
           self.is_loaded = true;
-          self.all_events = [];
+          // self.all_events = [];
           if(type == '0'){
-            this.userService.stopLoading();
+            self.userService.stopLoading();
           }
           else{
             self.scroll_event.target.complete();
           }
-          this.userService.presentToast('Unable to fetch results, Please try again','danger');
+          self.userService.presentToast('Unable to fetch results, Please try again','danger');
       });
     }, 500);
+  }
+
+  get_venues_genres(){
+    this.userService.postData({},'get_venues_genres').subscribe((result) => {
+      this.all_genres = result.genres;
+      this.all_venues = result.venues;
+      console.log(result)
+    },
+    err => {
+      this.all_genres = [];
+      this.all_venues = [];
+    });
+  }
+
+  search(){
+    this.is_loaded = false;
+    this.all_events = [];
+    this.start = 0;
+    this.is_more_records = true;
+    this.getEvents({},'0');
+  }
+
+  clear_search(){
+    this.is_loaded = false;
+    this.all_events = [];
+    this.start = 0;
+    this.is_more_records = true;
+    this.getEvents({},'0');
+  }
+
+  async filterPage() {
+    const modal = await this.modalController.create({
+      component: FiltersPage,
+      componentProps: { 
+        filters : { 
+          all_genres: this.all_genres,
+          all_venues: this.all_venues,
+          genres: this.genres,
+          venues: this.venues,
+          min_price: this.min_price,
+          max_price: this.max_price,
+          price_limit: this.price_limit,
+          mile_radius: this.mile_radius
+        }
+      }
+    });
+    modal.onDidDismiss().then((detail) => {
+      console.log('detail')
+      console.log(detail)
+       if(this.errors.indexOf(detail.data) == -1) {
+          if(detail.data.reset == '1'){
+            this.genres = [];
+            this.venues = [];
+            this.min_price = 0;
+            this.max_price = this.price_limit;
+            this.mile_radius = 0;
+            this.scrollToTop();
+            var self = this;
+            setTimeout(function(){
+              self.start = 0;
+              self.is_loaded = false;
+              this.is_more_records = true;
+              self.all_events = [];
+              self.getEvents({},'0');
+            },500);
+          }
+          if(detail.data.applied == '1'){
+            this.genres = detail.data.genres;
+            this.venues = detail.data.venues;
+            this.min_price = detail.data.min_price;
+            this.max_price = detail.data.max_price;
+            this.mile_radius = detail.data.mile_radius;
+            this.scrollToTop();
+            var self = this;
+            setTimeout(function(){
+              self.start = 0;
+              self.is_loaded = false;
+              this.is_more_records = true;
+              self.all_events = [];
+              self.getEvents({},'0');
+            },500);
+          }
+       }
+    });
+    return await modal.present();
+  }
+
+  scrollToTop() {
+    var self = this;
+    setTimeout(function(){
+      self.content.scrollToTop(300);
+    },100);
   }
 
 }
