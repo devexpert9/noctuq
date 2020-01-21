@@ -1,49 +1,51 @@
-<ion-content class="ion-padding">
-	<div halfColored></div>
-	<div logo class="ion-text-center">
-		<img height="" src="assets/img/logo.png"/>
-	</div>
-	<div login-form>
-		<div roundedForm>
-			<ion-item>
-				<ion-input [(ngModel)]="email" placeholder="Email Address"></ion-input>
-				<ion-label icon-left>
-					<ion-icon name="mail"></ion-icon>
-				</ion-label>
-			</ion-item>
-			<span error *ngIf="errors.indexOf(email) >= 0 && is_submit == true">Please enter your email address</span>
-			<span error *ngIf="errors.indexOf(email) == -1 && is_submit == true && !reg_exp.test(email.toLowerCase())">Please enter valid email address</span>
-			<ion-item>
-				<ion-input [(ngModel)]="password" type="password" placeholder="Password"></ion-input>
-				<ion-label icon-left>
-					<ion-icon ios="ios-lock" md="md-lock"></ion-icon>
-				</ion-label>
-			</ion-item>
-			<span error *ngIf="errors.indexOf(password) >= 0 && is_submit == true">Please enter your password</span>
-		<!-- <div remember-me class="ion-text-center">                
-			<ion-checkbox [(ngModel)]="remember_me" slot="end"></ion-checkbox>
-			<ion-label>Remember Me</ion-label>
-		</div> -->
-		<div btn-bottom class="ion-text-center">
-			<ion-button (click)="login()" shape="round" color="ltblack">
-				Login
-			</ion-button> 
+<ion-content>
+	<div class="webContainer">
+		<div halfColored></div>
+			<div logo class="ion-text-center">
+				<img height="" src="assets/img/logo.png"/>
+			</div>
+		<div login-form>
+			<div roundedForm>
+				<ion-item>
+					<ion-input [(ngModel)]="email" placeholder="Email Address"></ion-input>
+					<ion-label icon-left>
+						<ion-icon name="mail"></ion-icon>
+					</ion-label>
+				</ion-item>
+				<span error *ngIf="errors.indexOf(email) >= 0 && is_submit == true">Please enter your email address</span>
+				<span error *ngIf="errors.indexOf(email) == -1 && is_submit == true && !reg_exp.test(email.toLowerCase())">Please enter valid email address</span>
+				<ion-item>
+					<ion-input [(ngModel)]="password" type="password" placeholder="Password"></ion-input>
+					<ion-label icon-left>
+						<ion-icon ios="ios-lock" md="md-lock"></ion-icon>
+					</ion-label>
+				</ion-item>
+				<span error *ngIf="errors.indexOf(password) >= 0 && is_submit == true">Please enter your password</span>
+			<!-- <div remember-me class="ion-text-center">                
+				<ion-checkbox [(ngModel)]="remember_me" slot="end"></ion-checkbox>
+				<ion-label>Remember Me</ion-label>
+			</div> -->
+			<div btn-bottom class="ion-text-center">
+				<ion-button (click)="login()" shape="round" color="ltblack">
+					Login
+				</ion-button> 
+			</div>
+			<p class="text-center"><a routerLink="/forgotpassword" href="javascript:void(0)"> Forgot Password? </a></p>
 		</div>
-		<p class="text-center"><a routerLink="/forgotpassword" href="javascript:void(0)"> Forgot Password? </a></p>
-	</div>
 
-	<div social-icons class="ion-text-center">
-		<ion-button (click)="facebookLogin()">
-			<ion-icon name="logo-facebook"></ion-icon>
-		</ion-button>
-		<ion-button (click)="googleLogin()">
-			<ion-icon name="logo-google"></ion-icon>
-		</ion-button>
-	</div>
+		<div social-icons class="ion-text-center">
+			<ion-button (click)="facebookLogin()">
+				<ion-icon name="logo-facebook"></ion-icon>
+			</ion-button>
+			<ion-button (click)="googleLogin()">
+				<ion-icon name="logo-google"></ion-icon>
+			</ion-button>
+		</div>
 
-	<div bottom-links class="ion-text-center">
-		<a routerLink="/login-host" href="javascript:void(0)"> Host </a>
-		<a routerLink="/signup" href="javascript:void(0)"> New User </a>
+		<div bottom-links class="ion-text-center">
+			<a routerLink="/login-host" href="javascript:void(0)"> Host </a>
+			<a routerLink="/signup" href="javascript:void(0)"> New User </a>
+		</div>
 	</div>
 </div>
 </ion-content>

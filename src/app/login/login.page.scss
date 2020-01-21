@@ -16,7 +16,7 @@ p.text-center{
 	margin: 10px 0 0;
 }
  [logo]{
-     margin-top:0;
+     margin-top:40px;
      position: relative;
      z-index: 5;
      img{
@@ -33,7 +33,7 @@ p.text-center{
  	position: relative;
     z-index:5;
  	margin-top: var(--ion-value-25);
-    padding:0;
+    padding: 20px;
 	a
 	{
 	  color: var(--ion-color-ltblack);

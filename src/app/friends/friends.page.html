@@ -1,3 +1,26 @@
+<div class="webHeader">
+  <div class="webContainer">
+    <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
+    <div class="ritNavbar">
+      <ul>
+        <li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+        <li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
+        <li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
+        <li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
+        <li>
+          <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+        </li>
+        <li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
+          <ul>
+            <li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
+            <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
+            <li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
@@ -13,6 +36,9 @@
 </ion-header>
 
 <ion-content comments-bg>
+  <div class="webContainer">
+
+  	<div class="webFriendsPage">
 	<ion-segment [(ngModel)]="friendstabs">
 	  <ion-segment-button value="friends">
 	    <ion-label>Friends</ion-label>
@@ -24,7 +50,7 @@
 	    <ion-label>Search</ion-label>
 	  </ion-segment-button>
 	</ion-segment>
-	<div [ngSwitch]="friendstabs">
+	<div [ngSwitch]="friendstabs" class="webTabsCont">
 		<ion-row *ngSwitchCase="'friends'" >
 			<ion-col size="3" *ngFor="let friend of friends " routerLink="/public-profile/{{friend.friend_id}}">
 				<div class="user-box-l">
@@ -67,9 +93,18 @@
 					<h5> {{user.name}} </h5>
 				</div>
 			</ion-col>
-			<img *ngIf="search_users == ''" src="assets/img/no_result_found.gif"/>
+			<div style="text-align:center;width: 100%;">
+				<img *ngIf="search_users == ''" src="assets/img/no_result_found.gif"/>
+			</div>
 		</ion-row>
 	</div>
+	</div>
+</div>
+
+<!-- webFooter -->
+<footer webFooter>© Copyright 2020. All rights reserved.</footer>
+<!-- // end -->
+
 </ion-content>
 <ion-footer>
   <div scrll-icon>

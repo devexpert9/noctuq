@@ -13,6 +13,7 @@ ng-masonry-grid-item p {
     padding:var(--ion-value-10);
     color: var(--ion-color-white);
     margin: var(--ion-value-0);
+    text-transform:capitalize;
 }
 .brick { width:48.5%; margin:0.5%; margin-bottom:var(--ion-value-0);} 
 [scrll-icon] {

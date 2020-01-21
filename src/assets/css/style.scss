@@ -56,3 +56,347 @@ ion-checkbox
 [error]{
   color:red;
 }
+
+
+/*
+=========================================
+  Display Hidden on Phone
+==========================================
+*/
+.webHeader, [webFooter], .mapListFilter .filtr-ics{
+  display: none;
+}
+[filterHead]{
+  display: block;
+}
+
+
+/*
+=====================================
+  Website CSS
+==============================
+*/
+@media (min-width:992px){
+  ion-header{
+    display: none;
+  }
+  .webHeader{
+    width: 100%;
+    float: left;
+    background: #111;
+    padding:10px 0;
+    display: flex;
+    align-items: center;
+  }
+  .webHeader > .webContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  a.webLogo img {
+    max-width: 200px;
+  }
+  .ritNavbar {
+    margin-left: auto;
+  }
+  .webContainer{
+    max-width: 1200px;
+    width: 95%;
+    margin:0 auto;
+  }
+  .ritNavbar {
+    margin-left: auto;
+  }
+  .ritNavbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  .ritNavbar ul li {
+    display: inline-block;
+    position: relative;
+  }
+  .ritNavbar ul li ion-searchbar input{
+    border-radius: 50px;
+    width: 220px;
+    padding-right: 10px;
+  }
+  .ritNavbar ul li ion-searchbar{
+    width: 220px;
+    padding: 0;
+  }
+  .ritNavbar ul li ion-searchbar .searchbar-clear-button ion-icon{
+    width: 18px !important;
+    color: #666;
+  }
+  .ritNavbar ul li ion-searchbar input{
+    border-radius: 50px !important;
+    padding-right: 30px !important;
+    padding-left: 45px !important;
+    font-size: 14px !important;
+  }
+  .ritNavbar ul li a {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+  }
+  .ritNavbar ul li:last-child a img{
+    width:40px;
+    height: 40px;
+    border-radius: 70px;
+    object-fit: cover;
+    margin-right:10px;
+  }
+  .ritNavbar ul li:last-child a ion-icon{
+    opacity: .5;
+  }
+  .ritNavbar ul li:last-child ul{
+    position: absolute;
+    background: #fff;
+    right: 0;
+    z-index: 999;
+    visibility:hidden;
+    opacity: 0;
+    padding: 8px 15px;
+    margin: 0px 0 0;
+    display: block;
+    transition: .3s;
+    width: 150px;
+    box-shadow: 0 0 10px rgba(0,0,0, .2);
+  }
+  .ritNavbar ul li:last-child:hover ul{
+    visibility:visible;
+    opacity: 1;
+  }
+  .ritNavbar ul li:last-child ul:after{
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+    position: absolute;
+    top: -8px;
+    right: 0;
+    left: 0;
+    margin: auto;
+  }
+  .ritNavbar ul li:last-child ul li{
+    display: block;
+  }
+  .ritNavbar ul li:last-child ul li a{
+    color: #111;
+    padding: 7px 0;
+  }
+  .ritNavbar ul li:last-child ul li a:hover{
+    color: #000;
+  }
+  .ritNavbar ul li:last-child ul li a ion-icon{
+    opacity: 1;
+    font-size: 20px;
+    color: #111;
+    margin-right: 7px;
+  }
+  .set-serch{
+    display: none;
+  }
+  [list-events] [appcontainer][homeLists] ion-card a img{
+    height: 250px !important;
+  }
+  [webFooter]{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: #111;
+    padding:20px 0;
+    margin:60px 0 0;
+    font-size: 13px;
+    width: 100%;
+    float: left;
+  }
+  ion-content [login-form]{
+    position: relative;
+    z-index: 5;
+    padding: 0;
+    max-width: 450px;
+    margin: 50px auto 0;
+  }
+  [login-host][login-hostbg] {
+    --background: #111;
+  }
+  [insideLoginhost]{
+    max-width: 450px;
+    margin:15% auto 0;
+  }
+  ion-content[login-host] [btn-bottom] ion-button{
+    --ion-color-base: #fff !important;
+    --ion-color-contrast: #111 !important;
+  }
+  ion-content[login-host] [login-url] [logo] h2{
+    color: #fff !important;
+  }
+  [webAboutPage] [AboutContn]{
+    padding:50px 80px;
+    min-height: 480px;
+  }
+  ion-content[comments-bg][webAboutPage]{
+    --background:none !important; 
+  }
+  ion-content[comments-bg] [briefly-explain]{
+    background: #111;
+  }
+  [briefly-explain] [btn-bottom]{
+    max-width:250px;
+    margin:30px auto 0;
+  }
+  ion-content[comments-bg] [briefly-explain]{
+    padding-top:50px !important;
+  }
+  ion-content[comments-bg] [report-top]{
+    padding: 50px 15% !important;
+  }
+  [briefly-explain]:before{
+    border-bottom-color: #2f2f2f !important;
+  }
+  .mapListFilter{
+    display: flex;
+    align-items: center;
+    padding:30px 20px 0px;
+  }
+  .mapListFilter .filtr-ics{
+    display: flex;
+    margin-left: auto;
+    border:1px solid #ddd;
+    border-radius: 50px;
+    padding:8px 15px;
+    text-decoration: none;
+    color: #111;
+    align-items: center;
+  }
+  .webSettings{
+    padding:30px 0 0;
+    min-height: 480px;
+  }
+  .webSettings ion-list{
+    padding: 0;
+  }
+  .webSettings ion-list ion-item{
+    --padding-start: 0;
+  }
+  .webListDetail{
+    padding:40px 0 0;
+  }
+  ion-content[event-dtsl] .webListDetail ion-card img.img-main{
+    max-height: 400px !important;
+    height: auto !important;
+  }
+  ion-content[event-dtsl] .webListDetail ion-card[dls-a] ion-card-content{
+    padding:30px 0 !important;
+  }
+  [live-feed] .img-feed{
+    max-width: 450px;
+    margin:40px auto;
+  }
+  [live-feed] .img-feed img{
+    max-width: 100%;
+  }
+  [vanueFooter]{
+    box-shadow: -5px -5px 25px rgba(0,0,0, .1);
+  }
+  .profile-sets{
+    max-width:550px;
+    margin:auto;
+  }
+  ion-content[comments-bg] .profile-sets .prfl-top h5{
+    letter-spacing: 0;
+    margin: 6px 0 0px;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 21px;
+  }
+  ion-content[comments-bg] .profile-sets .profl-btm .totl-frns{
+    font-size: 15px !important;
+    margin-right: 10px;
+  }
+  [userdetails] ion-item ion-label + p{
+    width: 70%;
+    text-align: right;
+  }
+  .webFriendsPage{
+    padding: 40px 0;
+    min-height: 480px;
+  }
+  .webTabsCont{
+    padding:20px;
+    background: #ebf2f7;
+  }
+  .webFriendsPage ion-segment{
+    max-width: 480px;
+  }
+  ion-content[comments-bg] .user-box-l .img-attw{
+    width: 93px;
+    margin: auto;
+  }
+  ion-content[comments-bg] .user-box-l{
+    padding: 40px 20px !important;
+    background: #fff;
+  }
+  ion-content[comments-bg] .user-box-l .img-attw img{
+    width: 95px !important;
+    height: 95px !important;
+  }
+  ion-content[comments-bg] .user-box-l h5{
+    font-size: 16px !important;
+  }
+  .profile-sets{
+    min-height: 480px;
+  }
+  ion-content[comments-bg] .profile-sets{
+    padding:50px 0 10px !important;
+  }
+  [appcontainer][homeLists]{
+    float: left;
+    width: 100%;
+  }
+  ion-content [list-events] ion-card{
+    margin:15px 15px 0 0!important;
+    height: 250px;
+    width: 32.4% !important;
+  }
+  ion-content [list-events] ion-card:nth-child(3n){
+    margin-right:0 !important;
+  }
+  [filterHead] ion-toolbar{
+    padding-right: 15px;
+  }
+  [webFeedMasonry]{
+    max-width: 700px;
+    width: 100%;
+    margin:40px auto;
+  }
+  [webFeedMasonry] ng-masonry-grid-item img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+}
+
+@media (min-width: 992px) and (max-width:1200px){
+  ion-content [list-events] ion-card{
+    width: 32.2% !important;
+  }
+}
+
+@media (min-width:992px){
+  [scrll-icon]{
+    display: none;
+  }
+}

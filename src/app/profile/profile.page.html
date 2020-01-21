@@ -1,3 +1,26 @@
+<div class="webHeader">
+  <div class="webContainer">
+    <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
+    <div class="ritNavbar">
+      <ul>
+        <li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+        <li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
+        <li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
+        <li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
+        <li>
+          <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+        </li>
+        <li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
+          <ul>
+            <li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
+            <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
+            <li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
@@ -13,6 +36,7 @@
 </ion-header>
 
 <ion-content comments-bg *ngIf="is_loaded">
+  <div class="webContainer">
 	<div class="profile-sets">
 		<div class="prfl-top">
 			<div class="img-edt">
@@ -39,14 +63,14 @@
 				<ion-item no-padding>
 					<ion-label><ion-icon name="mail-open"></ion-icon> Email</ion-label>
 					<p *ngIf="!is_edit">{{profile?.email}}</p>
-					<p *ngIf="is_edit">
+					<p *ngIf="is_edit" slot="end">
 						<ion-input type="email" placeholder="Email Address" [(ngModel)]="profile.email"></ion-input>
 					</p>
 				</ion-item>
 				<ion-item no-padding >
 					<ion-label><ion-icon name="call"></ion-icon> Phone</ion-label>
 					<p *ngIf="!is_edit">{{errors.indexOf(profile?.phone) == -1 ? profile?.phone : 'not added'}}</p>
-					<p *ngIf="is_edit">
+					<p *ngIf="is_edit" slot="end">
 						<ion-input type="text" placeholder="Phone Number" [(ngModel)]="profile.phone"></ion-input>
 					</p>
 				</ion-item>
@@ -67,7 +91,35 @@
 	<!-- 	<div class="profl-btm">
 			<div class="totl-frns" (click)="logout()">
 				<ion-icon name="log-out"></ion-icon>  <span> Log out </span>
-			</div>
+			</div<div class="webHeader">
+  <div class="webContainer">
+    <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
+    <div class="ritNavbar">
+      <ul>
+        <li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+        <li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
+        <li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
+        <li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
+        <li>
+          <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+        </li>
+        <li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
+          <ul>
+            <li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
+            <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
+            <li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+>
 		</div> -->
 	</div>
+	</div>
+
+<!-- webFooter -->
+<footer webFooter>© Copyright 2020. All rights reserved.</footer>
+<!-- // end -->
 </ion-content>

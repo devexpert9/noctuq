@@ -177,3 +177,13 @@ ion-footer {
 		}
 	}
 }
+.comnt-single.commnt-right {
+	display: flex !important;
+    justify-content: flex-end !important;
+    .comnt-head{
+		max-width: 80%;
+    	display: flex;
+	    flex-direction: row-reverse !important;
+	    justify-content: flex-end !important;
+    }
+}

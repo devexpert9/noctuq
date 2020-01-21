@@ -9,22 +9,24 @@
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content login-host> 
-	<div login-url class="ion-no-padding">
-		<div class="set-serch">	
-			<ion-item color="none" lines="none">
-				<ion-input placeholder="https://noctuq.com" ></ion-input>
-			</ion-item>
-	   </div>
-	   <div logo class="ion-text-center">
-	      <img height="70px" src="assets/img/logo.png"/>
-		  <h2>Welcome to noctuq</h2>
-	   </div>
-	</div>
-	<div btn-bottom class="ion-padding ion-text-center">
-	   <ion-button routerLink="/login" color="ltblack" shape="round">
-	    Host Login <ion-icon name="arrow-dropright"></ion-icon>
-	   </ion-button> 
+<ion-content login-host login-hostbg>
+	<div insideLoginhost>
+		<div login-url class="ion-no-padding">
+			<div class="set-serch">	
+				<ion-item color="none" lines="none">
+					<ion-input placeholder="https://noctuq.com" ></ion-input>
+				</ion-item>
+		   </div>
+		   <div logo class="ion-text-center">
+		      <img height="70px" src="assets/img/logo.png"/>
+			  <h2>Welcome to noctuq</h2>
+		   </div>
+		</div>
+		<div btn-bottom class="ion-padding ion-text-center">
+		   <ion-button routerLink="/login" color="ltblack" shape="round">
+		    Host Login <ion-icon name="arrow-dropright"></ion-icon>
+		   </ion-button> 
+		</div>
 	</div>
 
 </ion-content>

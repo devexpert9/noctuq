@@ -101,6 +101,9 @@ ion-content[comments-bg]{
 	padding-right: 20px;
 	padding-left: 20px;
 	ion-item{
+		
+		--highlight-color-focused: var(--ion-color-ltblack);
+		--highlight-background:  var(--ion-color-ltblack);
 		ion-label{
 			font-size: 13px;
 			padding:0;

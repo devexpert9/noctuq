@@ -1,3 +1,26 @@
+<div class="webHeader">
+	<div class="webContainer">
+		<a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
+		<div class="ritNavbar">
+			<ul>
+				<li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+				<li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
+				<li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
+				<li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
+				<li>
+					<ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+				</li>
+				<li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
+					<ul>
+						<li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
+						<li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
+						<li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
@@ -9,6 +32,7 @@
 </ion-header>
 
 <ion-content comments-bg>
+	<div class="webContainer">
 	<div class="commts">
 		<div class="comnt-single">
 			<div class="comnt-head" *ngFor="let comm of comments">
@@ -30,8 +54,10 @@
 			</div> -->
 		</div>
 	</div>
+</div>
+
 </ion-content>
-<ion-footer>
+<ion-footer vanueFooter>
   <ion-toolbar class="foot-mgs"> 
     <ion-item color="none" lines="none">
 	<!-- <span class="add-pl">
