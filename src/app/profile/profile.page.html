@@ -65,7 +65,7 @@
 					</p>
 				</ion-item>
 				<ion-item no-padding >
-					<ion-label><ion-icon name="happy"></ion-icon> Description</ion-label>
+					<ion-label style="padding:5px 0 0"><ion-icon name="happy"></ion-icon> Biography</ion-label>
 					<p *ngIf="!is_edit">{{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}}</p>
 					<p *ngIf="is_edit"><ion-textarea [(ngModel)]="profile.about" placeholder="Say something about you..."></ion-textarea></p>
 				</ion-item>

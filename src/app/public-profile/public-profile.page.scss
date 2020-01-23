@@ -68,7 +68,7 @@ ion-content[comments-bg]{
     			line-height: 150%;
 			}
 			.totl-frns {
-				font-size: 18px;
+				font-size:14px;
 				font-weight: 600;
 				line-height: 26px;
 				background: var(--ion-color-ltblack);
@@ -78,11 +78,9 @@ ion-content[comments-bg]{
 				border-radius: 50px;
 				margin-top: 15px;
 				ion-icon {
-					font-size: 25px;
+					font-size:20px;
 					vertical-align: bottom;
-					margin-right: 10px;
-					border-right: 1px solid  var(--ion-color-ltblack);
-					padding-right: 10px;
+					margin-right: 5px;
 				}
 				span {
 					display: inline-block;

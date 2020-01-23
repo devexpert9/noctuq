@@ -20,6 +20,11 @@ ion-header{
 	}
 }
 ion-content[comments-bg]{
+	.webTabsCont{
+		ion-row{
+			padding:20px;
+		}
+	}
 	 .user-box-l {
 		text-align: center;
 		color: var(--ion-color-white);
@@ -73,7 +78,16 @@ ion-content[comments-bg]{
 			margin: 5px 0px;
 			color: var(--ion-color-ltblack);
 		}
-	} 
+	}
+	ion-searchbar{
+		--border-radius: 100px !important;
+		border-radius: 100px !important;
+		border: 1px solid #ddd;
+	    padding: 0;
+	    overflow: hidden;
+	    max-width:100%;
+	    margin:0px auto 10px;
+	}
 }
 [scrll-icon] {
     background: transparent;

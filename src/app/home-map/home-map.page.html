@@ -5,10 +5,6 @@
     <!-- <ion-icon name="ios-settings"></ion-icon> -->
     <ion-menu-button></ion-menu-button>
   </ion-buttons>
-  <ion-buttons slot="start" btn-sts>
-	<a href="javascript:void(0)" class="map-ics"> Map View </a>
-	<a href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
-  </ion-buttons>
     <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
 	
 	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-map">
@@ -18,16 +14,20 @@
        <ion-icon name="star" star-head></ion-icon>
 	</ion-buttons>
 
-	<ion-buttons slot="end" routerLink="/profile">
+	<ion-buttons slot="end" routerLink="/profile" style="margin:0 15px 0 5px;">
        <ion-icon name="ios-contact"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content> 
+<ion-content>
+  <ion-buttons slot="start" btn-sts>
+  <a href="javascript:void(0)" class="map-ics"> Map View </a>
+  <a href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
+  </ion-buttons>
 <div header_height></div>
-<div map-home>
+<!-- <div map-home>
 	<div #map style="height:100%;"></div>
-</div>
+</div> -->
 
 <!-- webFooter -->
 <app-footer></app-footer>

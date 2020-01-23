@@ -77,6 +77,9 @@ ion-checkbox
 ==============================
 */
 @media (min-width:992px){
+  ion-content{
+    top: 67px;
+  }
   ion-header{
     display: none;
   }
@@ -386,6 +389,9 @@ ion-checkbox
     height: auto;
     object-fit: contain;
   }
+  [userDetails] ion-item ion-label{
+    font-size: 5px !important;
+  }
 
 }
 
@@ -399,9 +405,9 @@ ion-checkbox
   [scrll-icon]{
     display: none;
   }
-  [header_height] {
+  /*[header_height] {
     height: 40px;
-}
+  }*/
 [only-web]{
   display: block;
 }
