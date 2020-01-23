@@ -88,35 +88,40 @@ is_favorite:any;
   	});   
   }
 
+  canRate(){
+    if(this.is_rated == 0){
+      this.rateIt();
+    }
+  }
+
   async rateIt(){
-    console.log('aaaaaaaa')
     const modal = await this.modalController.create({
       component: RatingPage
     });
     modal.onDidDismiss().then((detail) => {
-      console.log('detail')
-      console.log(detail)
-       // if(this.errors.indexOf(detail.data) == -1) {
-
-       // }
+      if(this.errors.indexOf(detail.data) == -1) {
+        this.add_rating(detail.data);
+      }
     });
+    modal.present();
   }
 
-  // rate_it(rating){
-  //   this.userService.presentLoading();
-  //   this.userService.postData({event_id: this.event_id, userId: this.userId, rating: rating},'add_rating').subscribe((result) => {
-  //     this.userService.stopLoading();
-  //     if(result.status == 1){
-  //       this.userService.presentToast('Rated successfully.','success');
-  //     }
-  //     else{
-  //       this.userService.presentToast('Error while rating, Please try again','danger');
-  //     }
-  //   },
-  //   err => {
-  //     this.userService.stopLoading();
-  //     this.userService.presentToast('Error while rating, Please try again','danger');
-  //   });
-  // }
+  add_rating(rating){
+    this.userService.presentLoading();
+    this.userService.postData({event_id: this.event_id, userId: this.userId, rating: rating},'add_rating').subscribe((result) => {
+      this.userService.stopLoading();
+      if(result.status == 1){
+        this.is_rated = 1;
+        this.userService.presentToast('Rated successfully.','success');
+      }
+      else{
+        this.userService.presentToast('Error while rating, Please try again','danger');
+      }
+    },
+    err => {
+      this.userService.stopLoading();
+      this.userService.presentToast('Error while rating, Please try again','danger');
+    });
+  }
 
 }

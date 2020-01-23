@@ -57,7 +57,7 @@ export class AppComponent {
       events.subscribe('user_log_activity:true', data => {
         this.checkUserAuth();
       });
-      this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword'];
+      this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword','/login/host'];
   }
 
   ngOnInit(){

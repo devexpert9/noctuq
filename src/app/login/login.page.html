@@ -33,7 +33,7 @@
 			<p class="text-center"><a routerLink="/forgotpassword" href="javascript:void(0)"> Forgot Password? </a></p>
 		</div>
 
-		<div social-icons class="ion-text-center">
+		<div social-icons class="ion-text-center" *ngIf="page_type != 'host'">
 			<ion-button (click)="fbLogin()">
 				<ion-icon name="logo-facebook"></ion-icon>
 			</ion-button>
@@ -43,7 +43,7 @@
 		</div>
 
 		<div bottom-links class="ion-text-center">
-			<a routerLink="/login-host" href="javascript:void(0)"> Host </a>
+			<a routerLink="/login-host" href="javascript:void(0)">New Host </a>
 			<a routerLink="/signup" href="javascript:void(0)"> New User </a>
 		</div>
 	</div>

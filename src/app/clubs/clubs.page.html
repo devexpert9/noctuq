@@ -31,8 +31,7 @@
 				<div mainHdng>
 
 					<div botm-star>
-						<ngx-stars [size]='1' [readonly]="true" [initialStars]="avg_rating?.length > 0 ? avg_rating[0]['average'] : 0" [maxStars]="5" [color]="'#f90'"></ngx-stars>
-						<ion-icon (click)="rateIt()" name="create"></ion-icon>
+						<ngx-stars (click)="canRate()" [size]='1' [readonly]="true" [initialStars]="avg_rating?.length > 0 ? avg_rating[0]['average'] : 0" [maxStars]="5" [color]="'#f90'"></ngx-stars>
 					</div> 
 					<h1>{{event?.venue_type}}:</h1>
 					<h3 str-rigt>{{event?.title}} 	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>

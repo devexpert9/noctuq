@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController} from '@ionic/angular';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-rating',
@@ -7,8 +8,9 @@ import { ModalController} from '@ionic/angular';
   styleUrls: ['./rating.page.scss'],
 })
 export class RatingPage implements OnInit {
-
-  constructor(public modalController: ModalController) { }
+rating:number;
+errors:any = ['',null,undefined];
+  constructor(public modalController: ModalController, public userService:UserService) { }
 
   ngOnInit() {
   }
@@ -17,8 +19,17 @@ export class RatingPage implements OnInit {
   	this.modalController.dismiss(data);
   }
 
-  rateIt(){
+  onRatingSet(event){
+  	this.rating = event;
+  }
 
+  rateIt(){
+  	if(this.errors.indexOf(this.rating) == -1){
+  		this.closeModal(this.rating);
+  	}
+  	else{
+  		this.userService.presentToast('Please select rating.','danger');
+  	}
   }
 
 }

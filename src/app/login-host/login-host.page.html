@@ -1,32 +1,56 @@
-<ion-header>
-  <ion-toolbar  color="ltblack" text-center>
- <!--  <ion-buttons slot="start">
-    <ion-icon name="ios-settings"></ion-icon>
-  </ion-buttons> -->
-    <ion-title>Web Site</ion-title>
-	 <ion-buttons slot="end">
-       <ion-icon name="ios-contact"></ion-icon>
-  </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content login-host login-hostbg>
-	<div insideLoginhost>
-		<div login-url class="ion-no-padding">
-			<div class="set-serch">	
-				<ion-item color="none" lines="none">
-					<ion-input placeholder="https://noctuq.com" ></ion-input>
-				</ion-item>
-		   </div>
-		   <div logo class="ion-text-center">
-		      <img height="70px" src="assets/img/logo.png"/>
-			  <h2>Welcome to noctuq</h2>
-		   </div>
-		</div>
-		<div btn-bottom class="ion-padding ion-text-center">
-		   <ion-button routerLink="/login" color="ltblack" shape="round">
-		    Host Login <ion-icon name="arrow-dropright"></ion-icon>
+<ion-content class="ion-padding">
+<div halfColored></div>
+   <div logo class="ion-text-center">
+      <img height="" src="assets/img/logo.png"/>
+   </div>
+   <div login-form>
+     	<div roundedForm>
+     <ion-item>
+           <ion-input [(ngModel)]="name" placeholder="Full Name"></ion-input>
+		   	<ion-label icon-left>
+				<ion-icon name="contact"></ion-icon>
+			</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(name) >= 0 && is_submit == true">Please enter your name</span>
+<!-- 		   <ion-item>
+	<ion-label icon-left>
+					<ion-icon name="ios-calendar"></ion-icon>
+				</ion-label>
+      <ion-datetime [(ngModel)]="dob" displayFormat="MMM D, YYYY" min="1900" max="{{max_year_dob}}" placeholder="Date of Birth"></ion-datetime>
+    </ion-item>
+    <span error *ngIf="errors.indexOf(dob) >= 0 && is_submit == true">Please select your date of birth</span>  -->
+       <ion-item>
+           <ion-input [(ngModel)]="email" placeholder="Email Address"></ion-input>
+		   <ion-label icon-left>
+					<ion-icon name="mail"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(email) >= 0 && is_submit == true">Please enter your email address</span>
+		<span error *ngIf="errors.indexOf(email) == -1 && is_submit == true && !reg_exp.test(email.toLowerCase())">Please enter valid email address</span>
+		<ion-item>
+           <ion-input [(ngModel)]="password" type="password" placeholder="Password"></ion-input>
+		   <ion-label icon-left>
+					<ion-icon name="lock"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(password) >= 0 && is_submit == true">Please enter your password</span>	
+		<span error *ngIf="errors.indexOf(password) == -1 && is_submit == true && password.length < 6">Please enter atleast 6 digits password</span>
+		<ion-item>
+           <ion-input [(ngModel)]="confirm_password" type="password" placeholder="Verify Password"></ion-input>
+		   <ion-label icon-left>
+					<ion-icon name="lock"></ion-icon>
+				</ion-label>
+        </ion-item>
+        <span error *ngIf="errors.indexOf(confirm_password) >= 0 && is_submit == true">Please enter password again</span>	
+		<span error *ngIf="errors.indexOf(confirm_password) == -1 && is_submit == true && password != confirm_password">Please enter same password again</span>
+ 
+		<div btn-bottom class="ion-text-center">
+		   <ion-button (click)="register()" color="ltblack" shape="round">
+			  Sign Up
 		   </ion-button> 
-		</div>
-	</div>
+        </div>	 
+   </div>
+   <p class="text-center">Already have an host account? <a routerLink="/login/host" href="javascript:void(0)">Sign in</a></p>
 
+   </div>
 </ion-content>

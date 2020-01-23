@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuardService } from './services/auth-guard.service';
+import { AuthGuardService } from './services/guard-user/auth-guard.service';
+import { AuthGuardHostService } from './services/guard-host/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
@@ -9,6 +10,7 @@ const routes: Routes = [
   },
   { path: 'login-host', loadChildren: './login-host/login-host.module#LoginHostPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'login/:type', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'forgotpassword', loadChildren: './forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
   { path: 'home-list', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
@@ -30,7 +32,8 @@ const routes: Routes = [
   { path: 'feed-gallery/:id', loadChildren: './feed-gallery/feed-gallery.module#FeedGalleryPageModule', canActivate: [AuthGuardService] },
   { path: 'make-live-feed/:id', loadChildren: './make-live-feed/make-live-feed.module#MakeLiveFeedPageModule', canActivate: [AuthGuardService] },
   { path: 'verify/:id', loadChildren: './verify-account/verify-account.module#VerifyAccountPageModule' },
-  { path: 'rating', loadChildren: './rating/rating.module#RatingPageModule' }
+  { path: 'rating', loadChildren: './rating/rating.module#RatingPageModule' },
+  { path: 'host-events', loadChildren: './host-events/host-events.module#HostEventsPageModule', canActivate: [AuthGuardHostService] }
 ];
 
 @NgModule({

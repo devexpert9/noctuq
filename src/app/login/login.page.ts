@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
@@ -23,7 +23,9 @@ password:any;
 remember_me:any;
 errors:any=['',null,undefined];
 is_submit:Boolean=false;
-  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus, private fcm: FCM, public events:Events, private socialAuthService: AuthService) { 
+page_type:any;
+  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus, private fcm: FCM, public events:Events, private socialAuthService: AuthService, public activatedRoute: ActivatedRoute) { 
+    this.page_type = activatedRoute.snapshot.paramMap.get('type');
   	this.reg_exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   }
 
@@ -49,8 +51,9 @@ is_submit:Boolean=false;
       return false;
     }
 
+    var API_ENDPOINT = this.page_type == 'host' ? 'loginHost' : 'loginUser';
     this.userService.presentLoading();
-    this.userService.postData({email: this.email, password: this.password, fcm_token: this.fcm_token},'loginUser').subscribe((result) => {
+    this.userService.postData({email: this.email, password: this.password, fcm_token: this.fcm_token}, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
         if(result.data.status == 1){
@@ -68,7 +71,8 @@ is_submit:Boolean=false;
           this.router.navigate(['/home-list']);
         }
         else if(result.data.status == 0){
-          this.userService.presentToast('Please verify your email address','danger');
+          var message = this.page_type == 'host' ? 'Your account is not approved yet.' : 'Please verify your email address.';
+          this.userService.presentToast(message,'danger');
         }
         else{
           this.userService.presentToast('Your account is de-activated! Please contact site admin','danger');
@@ -86,8 +90,14 @@ is_submit:Boolean=false;
 
   setSessions(result){
     var userId = this.userService.encryptData(result.data._id,config.ENC_SALT);
-    localStorage.setItem('niteowl_auth_token',userId);
-    localStorage.setItem('niteowl_sessions',JSON.stringify(result.data));
+    if(this.page_type == 'host'){
+      localStorage.setItem('niteowl_host_auth_token',userId);
+      localStorage.setItem('niteowl_host_sessions',JSON.stringify(result.data));
+    }
+    else{
+      localStorage.setItem('niteowl_auth_token',userId);
+      localStorage.setItem('niteowl_sessions',JSON.stringify(result.data));
+    }
     this.events.publish('user_log_activity:true','');
   }
 
