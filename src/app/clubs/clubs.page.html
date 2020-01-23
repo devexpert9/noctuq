@@ -19,7 +19,8 @@
 		<ion-card dls-a>
 			<div mainImg>
 				<span right-icns>
-					<ion-icon name="videocam" routerLink="/make-live-feed/{{event?._id}}"></ion-icon>
+					<ion-icon name="videocam" (click)="selectFeed()" ></ion-icon>
+					<!-- routerLink="/make-live-feed/{{event?._id}}" -->
 					<ion-icon name="chatboxes" routerLink="/venue-comments/{{event?._id}}"></ion-icon>
 					<ion-icon name="paper-plane" (click)="share()"></ion-icon>
 					<ion-icon name="pin" routerLink="/map/{{event?._id}}"></ion-icon>

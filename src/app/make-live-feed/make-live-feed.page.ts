@@ -53,7 +53,7 @@ API_URL:any=config.API_URL;
   takePicture(sourceType: PictureSourceType) {
     var options: CameraOptions = {
         quality: 50,
-        sourceType: sourceType,
+        // sourceType: sourceType,
         saveToPhotoAlbum: false,
         correctOrientation: true
     };
