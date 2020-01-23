@@ -99,7 +99,7 @@ ion-content[comments-bg]{
 	padding-right: 20px;
 	padding-left: 20px;
 	ion-item{
-		
+		--inner-padding-end: 0;
 		--highlight-color-focused: var(--ion-color-ltblack);
 		--highlight-background:  var(--ion-color-ltblack);
 		ion-label{
@@ -121,6 +121,12 @@ ion-content[comments-bg]{
 			margin:0;
 			color: #333;
 			max-width: 64%;
+			min-width: 64%;
+			text-align:right;
+			margin-left: auto;
+			ion-textarea{
+				margin:0;
+			}
 		}
 	}
 }

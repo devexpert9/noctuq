@@ -1,3 +1,13 @@
+ion-header{
+	ion-title{
+		text-align:center;
+	}
+	ion-button{
+	    position: absolute;
+	    right: 15px;
+	    top: 10px;
+	}
+}
 ion-content[live-feed] {
 	.img-feed {
 		height: 100%;
