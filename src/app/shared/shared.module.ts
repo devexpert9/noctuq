@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { FooterPage } from '../footer/footer.page';
 
 @NgModule({
   imports: [
@@ -13,10 +14,12 @@ import { TimeAgoPipe } from 'time-ago-pipe';
   	FormsModule,
   ],
   declarations: [
-     TimeAgoPipe
+     TimeAgoPipe,
+     FooterPage
   ],
   exports: [
-     TimeAgoPipe
+     TimeAgoPipe,
+     FooterPage
   ]
 })
 

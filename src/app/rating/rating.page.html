@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Rate Event</ion-title>
+    <ion-button (click)="closeModal()" slot="end" outline shape="round" fill="outline" size="small" color="white">
+	  <ion-icon name="close"></ion-icon>
+	</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ngx-stars [size]='1' [readonly]="true" [initialStars]="avg_rating?.length > 0 ? avg_rating[0]['average'] : 0" [maxStars]="5" [color]="'#f90'"></ngx-stars>
+	<div btn-bottom class="ion-text-center">
+	   <ion-button (click)="rateIt()" color="ltblack" shape="round">
+		  Sign Up
+	   </ion-button> 
+    </div>
+</ion-content>
+ 

@@ -27,16 +27,37 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { NgxStarsModule } from 'ngx-stars'; 
+
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider,FacebookLoginProvider } from "angular-6-social-login";
 
 import { FiltersPage } from './filters/filters.page';
+import { HeaderPage } from './header/header.page';
+import { RatingPage } from './rating/rating.page';
 
-import { socket_config } from './config';
+import { socket_config, social_config } from './config';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 const config: SocketIoConfig = { url: socket_config.SOCKET_URL, options: {} };
 
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider(social_config.FACEBOOK_ID)
+        },
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(social_config.GOOLGLE_CLIENT_ID)
+        }
+      ]
+  );
+  return config;
+}
+
 @NgModule({
-  declarations: [AppComponent, FiltersPage],
-  entryComponents: [FiltersPage], 
+  declarations: [AppComponent, FiltersPage, HeaderPage, RatingPage],
+  entryComponents: [FiltersPage, HeaderPage, RatingPage], 
   imports: [
     BrowserModule,
     CommonModule,
@@ -44,6 +65,7 @@ const config: SocketIoConfig = { url: socket_config.SOCKET_URL, options: {} };
     AppRoutingModule,
     HttpModule,
     FormsModule,
+    NgxStarsModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [
@@ -65,7 +87,8 @@ const config: SocketIoConfig = { url: socket_config.SOCKET_URL, options: {} };
     EmailComposer,
     FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: RequestOptions, useClass: CustomRequestOptions }
+    { provide: RequestOptions, useClass: CustomRequestOptions },
+    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ],
   bootstrap: [AppComponent]
 })

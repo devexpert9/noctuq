@@ -43,6 +43,9 @@
               },
               {
                 "input": "node_modules/ng-masonry-grid/ng-masonry-grid.css"
+              },
+              {
+                "input": "node_modules/ngx-lightbox/lightbox.css"
               }
             ],
             "scripts": []

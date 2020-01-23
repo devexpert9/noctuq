@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ClubsPage } from './clubs.page';
+import { SharedModule } from '../shared/shared.module';
+import { NgxStarsModule } from 'ngx-stars';
 
 const routes: Routes = [
   {
@@ -19,6 +21,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
+    NgxStarsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ClubsPage]

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { config } from '../config';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
+import { Lightbox } from 'ngx-lightbox';
 
 
 @Component({
@@ -14,11 +15,14 @@ import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-m
 export class FeedGalleryPage implements OnInit {
 userId:any;
 event_id:any;
-masonryItems:any;
+masonryItems:any; 
+played_ones:any=[];
 errors:any=['',null,undefined];
 IMAGES_URL:any=config.IMAGES_URL;
-  constructor(public userService: UserService,private activatedRoute: ActivatedRoute, private photoViewer: PhotoViewer, private streamingMedia: StreamingMedia) {
+is_mobile_app:any=config.IS_MOBILE_APP;
+  constructor(public userService: UserService,private activatedRoute: ActivatedRoute, private photoViewer: PhotoViewer, private streamingMedia: StreamingMedia, private _lightbox: Lightbox) {
     this.event_id = activatedRoute.snapshot.paramMap.get('id'); 
+    
   }
 
   ngOnInit() {
@@ -28,6 +32,7 @@ IMAGES_URL:any=config.IMAGES_URL;
     var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     this.getFeedUsers();
+
   }
 
   getFeedUsers(){
@@ -43,20 +48,34 @@ IMAGES_URL:any=config.IMAGES_URL;
   }
 
   openImage(path){
-    this.photoViewer.show(path);
+    if(this.is_mobile_app == 'true'){
+      this.photoViewer.show(path);
+    }
+    else{
+      this._lightbox.open([{
+        src: path,
+        caption: '',
+        thumb: path
+      }], 0);
+    }
   }
 
-  playVideo(path){ 
-    console.log(path)
-    let options: StreamingVideoOptions = {
-      successCallback: () => { console.log('Video played') },
-      errorCallback: (e) => { console.log('Error streaming') },
-      orientation: 'potrait',
-      shouldAutoClose: true,
-      controls: false
-    };
+  playVideo(path,i){ 
+    console.log(path,i)
+    if(this.is_mobile_app == 'true'){
+      let options: StreamingVideoOptions = {
+        successCallback: () => { console.log('Video played') },
+        errorCallback: (e) => { console.log('Error streaming') },
+        orientation: 'potrait',
+        shouldAutoClose: true,
+        controls: false
+      };
 
-    this.streamingMedia.playVideo(path, options);
+      this.streamingMedia.playVideo(path, options);
+    }
+    else{
+      this.played_ones.push(i);
+    }
   }
 
 }

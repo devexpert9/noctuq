@@ -44,6 +44,10 @@ is_loaded:boolean=false;
 		  isHtml: true
 		}
 
+    // if(this.)
+
+    // javascript:window.location='mailto:?subject=Interesting information&body=I thought you might find this information interesting: ' + window.location;"
+
 		// Send a text message using default options
 		this.emailComposer.open(email);
   	}

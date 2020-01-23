@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular'; 
+import { ActionSheetController, Platform, Events } from '@ionic/angular'; 
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router } from '@angular/router';
@@ -23,10 +23,13 @@ IMAGES_URL:any=config.IMAGES_URL;
 is_loaded:Boolean=false;
 is_edit:Boolean=false;
 is_image_selected:Boolean=false;
+isInvalid:Boolean=false;
 imgBlob:any;
 file_name:any;
 image_url:any;
-  constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef) { }
+is_mobile_app:any = config.IS_MOBILE_APP;
+allowedMimes:any=config.IMAGE_EXTENSIONS;
+  constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef, private events: Events) { }
 
   ngOnInit() {
   }
@@ -77,7 +80,12 @@ image_url:any;
 
     const formData = new FormData();
     if(this.is_image_selected){
-      formData.append('file', this.imgBlob, this.file_name); 
+      if(this.is_mobile_app == 'true'){
+        formData.append('file', this.imgBlob, this.file_name); 
+      }
+      else{
+        formData.append('file', this.imgBlob); 
+      }
     }
     formData.append('_id', this.profile._id);
     formData.append('name', this.profile.name);
@@ -89,6 +97,15 @@ image_url:any;
       this.userService.stopLoading();
       if(result.status == 1){
         this.is_edit = false;
+        var user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+        user_sessions.name = this.profile.name;
+        user_sessions.email = this.profile.email;
+        if(this.is_image_selected){
+          user_sessions.image = result.image;
+          user_sessions.is_social_image = '0';
+        }
+        localStorage.setItem('niteowl_sessions',JSON.stringify(user_sessions));
+        this.events.publish('user_log_activity:true','');
         this.userService.presentToast('Profile updated successfully.','success');
         if(this.is_image_selected){
           this.is_image_selected = false;
@@ -106,6 +123,25 @@ image_url:any;
       this.userService.stopLoading();
       this.userService.presentToast('Unable to update profile, Please try after some time.','danger');
     });
+  }
+
+  uploadImg(event){ 
+    var self = this;
+    this.isInvalid = false;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      var image_file = event.target.files[0];
+      if(self.allowedMimes.indexOf(image_file.type) == -1){
+        this.isInvalid = true;
+      }
+      else{
+        self.is_image_selected = true;
+        self.imgBlob = image_file;
+        self.image_url = window.URL.createObjectURL(image_file);
+        console.log(self.image_url)
+        self.ref.detectChanges();
+      }
+    }
   }
 
   async selectImage() {

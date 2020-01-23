@@ -66,8 +66,14 @@ can_update:Boolean = false;
 				allow_city_region: (this.allow_city_region == true) ? 1 : 0
 	  		},'update_user_settings').subscribe((result) => { 
 	  	  if(result.status == 1){
-	  	  	this.userService.presentToast('Settings updated','success')
-	  	  }
+          var user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+          user_sessions.can_push_notifications = (this.can_push_notifications == true) ? 1 : 0;
+          user_sessions.can_send_emails = (this.can_send_emails == true) ? 1 : 0;
+          user_sessions.can_hot_menu_at_top = (this.can_hot_menu_at_top == true) ? 1 : 0;
+          user_sessions.allow_city_region = (this.allow_city_region == true) ? 1 : 0;
+          localStorage.setItem('niteowl_sessions',JSON.stringify(user_sessions));
+  	  	  	this.userService.presentToast('Settings updated','success')
+  	  	  }
 	  	  else{
 	  	  	this.userService.presentToast('Error while updating settings,Please try after some time','danger')
 	  	  }

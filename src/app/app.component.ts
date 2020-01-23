@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { MenuController, Platform, Events } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { config } from './config';
 import { UserService } from './services/user/user.service';
-
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,11 +16,18 @@ export class AppComponent {
   IS_MOBILE_APP:any=config.IS_MOBILE_APP;
   isLoggedIn:boolean = false;
   errors:any = ['',null,undefined];
+  no_header_pages:any;
+  current_url:any;
   public appPages = [
     {
       title: 'Home',
       url: '/home-list',
       icon: 'assets/img/home.png'
+    },
+    {
+      title: 'Favorites',
+      url: '/home-list/favorites',
+      icon: 'assets/img/heart.png'
     },
     {
       title: 'About <b> Noctuq </b>',
@@ -50,6 +57,13 @@ export class AppComponent {
       events.subscribe('user_log_activity:true', data => {
         this.checkUserAuth();
       });
+      this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword'];
+  }
+
+  ngOnInit(){
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.current_url = event.url;
+    });
   }
 
   ionViewWillUnload(){

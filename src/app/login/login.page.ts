@@ -6,11 +6,13 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Events } from '@ionic/angular';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angular-6-social-login';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [AuthService]
 })
 export class LoginPage implements OnInit {
 reg_exp:any;
@@ -21,7 +23,7 @@ password:any;
 remember_me:any;
 errors:any=['',null,undefined];
 is_submit:Boolean=false;
-  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus, private fcm: FCM, public events:Events) { 
+  constructor(public userService: UserService, private router: Router, private fb: Facebook, private googlePlus: GooglePlus, private fcm: FCM, public events:Events, private socialAuthService: AuthService) { 
   	this.reg_exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   }
 
@@ -87,6 +89,49 @@ is_submit:Boolean=false;
     localStorage.setItem('niteowl_auth_token',userId);
     localStorage.setItem('niteowl_sessions',JSON.stringify(result.data));
     this.events.publish('user_log_activity:true','');
+  }
+
+  fbLogin(){
+    if(this.is_mobile_app == 'true'){
+      this.facebookLogin();
+    }
+    else{
+      this.socialSignIn('facebook');
+    }
+  }
+
+  gLogin(){
+    if(this.is_mobile_app == 'true'){
+      this.googleLogin();
+    }
+    else{
+      this.socialSignIn('google'); 
+    }
+  }
+
+  public socialSignIn(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform == "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    }else if(socialPlatform == "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    } 
+    
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        let dict ={
+          name: userData.name,
+          email: userData.email,
+          password: '',
+          provider: userData.provider,
+          providerId: userData.id,
+          baseUrl: config.BASE_URL,
+          image: userData.image,
+          fcm_token: this.fcm_token
+        };
+
+        this.socialLogin(dict);   
+    });
   }
 
   facebookLogin(){

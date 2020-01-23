@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+import { ModalController } from '@ionic/angular'; 
+import { RatingPage } from '../rating/rating.page';
 
 @Component({
   selector: 'app-clubs',
@@ -15,11 +17,13 @@ event_id:any;
 is_loaded:boolean = false;
 userId:any;
 event:any;
+is_rated:any;
+avg_rating:any;
 errors:any=['',null,undefined];
 IMAGES_URL:any=config.IMAGES_URL;
 options: LaunchNavigatorOptions = {};
 is_favorite:any;
-  constructor(private socialSharing: SocialSharing, private activatedRoute: ActivatedRoute,public userService:UserService, private launchNavigator: LaunchNavigator) { 
+  constructor(private socialSharing: SocialSharing, private activatedRoute: ActivatedRoute,public userService:UserService, private launchNavigator: LaunchNavigator,public modalController: ModalController) { 
     this.event_id = activatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -37,6 +41,8 @@ is_favorite:any;
       this.is_loaded = true;
       this.event = result.event;
       this.is_favorite = result.is_favorite;
+      this.is_rated = result.is_rated;
+      this.avg_rating = result.rating;
       console.log(result)
     },
     err => {
@@ -81,5 +87,36 @@ is_favorite:any;
   	  // Error!
   	});   
   }
+
+  async rateIt(){
+    console.log('aaaaaaaa')
+    const modal = await this.modalController.create({
+      component: RatingPage
+    });
+    modal.onDidDismiss().then((detail) => {
+      console.log('detail')
+      console.log(detail)
+       // if(this.errors.indexOf(detail.data) == -1) {
+
+       // }
+    });
+  }
+
+  // rate_it(rating){
+  //   this.userService.presentLoading();
+  //   this.userService.postData({event_id: this.event_id, userId: this.userId, rating: rating},'add_rating').subscribe((result) => {
+  //     this.userService.stopLoading();
+  //     if(result.status == 1){
+  //       this.userService.presentToast('Rated successfully.','success');
+  //     }
+  //     else{
+  //       this.userService.presentToast('Error while rating, Please try again','danger');
+  //     }
+  //   },
+  //   err => {
+  //     this.userService.stopLoading();
+  //     this.userService.presentToast('Error while rating, Please try again','danger');
+  //   });
+  // }
 
 }

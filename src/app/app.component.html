@@ -1,3 +1,4 @@
+<app-header *ngIf="no_header_pages.indexOf(current_url) == -1 && current_url?.indexOf('/verify/') == -1"></app-header>
 <ion-app>
     <ion-menu contentId="main-content" type="overlay" *ngIf="isLoggedIn">
       <ion-header>

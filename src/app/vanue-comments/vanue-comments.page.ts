@@ -49,26 +49,38 @@ IMAGES_URL:any=config.IMAGES_URL;
 
   addComments(){
   	if(this.errors.indexOf(this.comment) == -1){
-  		this.userService.presentLoading();
-	    this.userService.postData({event_id: this.event_id, userId: this.userId, comment: this.comment},'add_comments').subscribe((result) => {
-	      this.userService.stopLoading();
-	      this.comments.push({
-          name : this.mySession.name,
-          image : this.mySession.image,
-          is_social_image : this.mySession.is_social_image,
-          comment : this.comment,
-          created_at : new Date(),
-          event_id : this.event_id,
-          userId : this.userId,
-          _id : result._id
-        });
-        this.comment = '';
-	      console.log(result)
-	    },
-	    err => {
-	      this.userService.stopLoading();
-	      this.userService.presentToast('Unable to add comments, Please try again','danger');
-	    });
+      if(this.comment.length > 300){
+        this.userService.presentToast('Comment should not exceed 300 characters.','danger');
+      }
+      else{
+    		this.userService.presentLoading();
+  	    this.userService.postData({event_id: this.event_id, userId: this.userId, comment: this.comment},'add_comments').subscribe((result) => {
+  	      this.userService.stopLoading();
+          if(result.status == 1){
+            this.comments.push({
+              name : this.mySession.name,
+              image : this.mySession.image,
+              is_social_image : this.mySession.is_social_image,
+              comment : this.comment,
+              created_at : new Date(),
+              event_id : this.event_id,
+              userId : this.userId,
+              _id : result._id
+            });
+            this.comment = '';
+          }
+          else if(result.status == 2){
+            this.userService.presentToast('You can add only 1 comment in a day.Try after 24 hrs.','danger');
+          }
+          else{
+            this.userService.presentToast('Unable to add comments, Please try again','danger');
+          }
+  	    },
+  	    err => {
+  	      this.userService.stopLoading();
+  	      this.userService.presentToast('Unable to add comments, Please try again','danger');
+  	    });
+      }
   	}
   	else{
   		this.userService.presentToast('Please enter your comments','danger');

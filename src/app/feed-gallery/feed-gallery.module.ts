@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '../shared/shared.module';
 
 import { FeedGalleryPage } from './feed-gallery.page';
 // import { NgxMasonryModule } from 'ngx-masonry';
 // import { MasonryModule } from 'angular2-masonry';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
+import { LightboxModule } from 'ngx-lightbox';
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +24,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    NgMasonryGridModule
+    NgMasonryGridModule,
+    SharedModule,
+    LightboxModule
 	// NgxMasonryModule,
 	// MasonryModule 
   ],

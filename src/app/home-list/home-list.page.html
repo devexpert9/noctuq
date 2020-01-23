@@ -1,26 +1,4 @@
-<div class="webHeader">
-	<div class="webContainer">
-		<a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
-		<div class="ritNavbar">
-			<ul>
-				<li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
-				<li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
-				<li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
-				<li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
-				<li>
-					<ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
-				</li>
-				<li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
-					<ul>
-						<li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
-						<li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
-						<li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
+
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
   <!-- <ion-buttons slot="start"  routerLink="/settings">
@@ -35,12 +13,12 @@
   </ion-buttons-->
     <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
 	
-	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-list">
+<!-- 	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-list">
        <ion-icon name="home" star-head></ion-icon>
 	</ion-buttons>
 	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites">
        <ion-icon name="star" star-head></ion-icon>
-	</ion-buttons>
+	</ion-buttons> -->
 
 	<ion-buttons slot="end" routerLink="/profile">
        <ion-icon name="ios-contact"></ion-icon>
@@ -48,6 +26,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content login-host #content>
+	<div header_height></div>
 	<div class="webContainer">
 		<div login-url class="ion-no-padding">
 		   <div class="set-serch">
@@ -67,6 +46,8 @@
 				  <a href="javascript:void(0)" class="list-ics"> List View </a>
 			    </ion-buttons>
 
+			    <ion-searchbar style="display: none;" only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
 				<a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> &nbsp;Filter</a>
 			</div>
 		  	<div AppContainer homeLists>
@@ -76,7 +57,7 @@
 					<ion-card-header>
 						<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
 						<div description>
-						  <p [innerHTML]="event?.venue_description.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
+						  <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
 						</div>
 					</ion-card-header>
 					
@@ -91,7 +72,7 @@
 	</div>
 
 <!-- webFooter -->
-<footer webFooter>© Copyright 2020. All rights reserved.</footer>
+<app-footer></app-footer>
 <!-- // end -->
 </ion-content>
 <ion-footer>

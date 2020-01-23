@@ -1,31 +1,9 @@
-<div class="webHeader">
-	<div class="webContainer">
-		<a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
-		<div class="ritNavbar">
-			<ul>
-				<li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
-				<li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
-				<li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
-				<li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
-				<li>
-					<ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
-				</li>
-				<li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
-					<ul>
-						<li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
-						<li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
-						<li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
+
 <ion-header>
 	<ion-toolbar  color="ltblack" text-center>
 		<ion-buttons slot="start">
-			<!-- <ion-back-button defaultHref="home-list"></ion-back-button> -->
-			<ion-menu-button></ion-menu-button>
+			<ion-back-button defaultHref="home-list"></ion-back-button>
+			<!-- <ion-menu-button></ion-menu-button> -->
 		</ion-buttons>
 
 		<ion-title>Venue</ion-title>
@@ -35,6 +13,7 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content event-dtsl *ngIf="is_loaded">
+<div header_height></div>
 	<div class="webContainer">
 		<div class="webListDetail">
 		<ion-card dls-a>
@@ -50,15 +29,13 @@
 				<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}" class="img-main"/> 
 				<span class="price-top"> ${{event?.price}} </span>
 				<div mainHdng>
+
 					<div botm-star>
-						<ion-icon name="star"></ion-icon> 
-						<ion-icon name="star"></ion-icon>
-						<ion-icon name="star"></ion-icon>
-						<ion-icon name="star"></ion-icon>
-						<ion-icon name="star"></ion-icon>
-					</div>
+						<ngx-stars [size]='1' [readonly]="true" [initialStars]="avg_rating?.length > 0 ? avg_rating[0]['average'] : 0" [maxStars]="5" [color]="'#f90'"></ngx-stars>
+						<ion-icon (click)="rateIt()" name="create"></ion-icon>
+					</div> 
 					<h1>{{event?.venue_type}}:</h1>
-					<h3 str-rigt>{{event?.title}} 	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'star-outline' : 'star'}}"></ion-icon></h3>
+					<h3 str-rigt>{{event?.title}} 	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
 				</div>
 	<!--ion-card-header>
 	  <ion-card-title>{{event?.venue_type}}: </ion-card-title>
@@ -95,7 +72,7 @@
 </div>
 
 <!-- webFooter -->
-<footer webFooter>© Copyright 2020. All rights reserved.</footer>
+<app-footer></app-footer>
 <!-- // end -->
 </ion-content>
 

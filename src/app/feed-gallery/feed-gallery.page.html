@@ -1,26 +1,4 @@
-<div class="webHeader">
-  <div class="webContainer">
-    <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
-    <div class="ritNavbar">
-      <ul>
-        <li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
-        <li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
-        <li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
-        <li><a href="javascript:void(0)" routerLink="/report-problem">Report</a></li>
-        <li>
-          <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
-        </li>
-        <li><a routerLink="/profile" href="javascript:void(0)"><img src="assets/img/user-about.png" alt=""> Shelton B. <ion-icon name="arrow-dropdown"></ion-icon></a>
-          <ul>
-            <li><a href="javascript:void(0)" *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
-            <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
-            <li><a href="javascript:void(0)" routerLink="/login"><ion-icon name="log-out"></ion-icon> Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+
 <ion-header>
   <ion-toolbar  color="ltblack" text-center>
 	<ion-buttons slot="start">
@@ -34,6 +12,7 @@
 </ion-header>
 
 <ion-content>
+<div header_height></div>
   <div class="webContainer">
     <div webFeedMasonry>
   <ng-masonry-grid
@@ -43,8 +22,18 @@
     [scrollAnimationOptions]="{ animationEffect: 'effect-4', minDuration : 0.4, maxDuration : 0.7 }">
     <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let item of masonryItems; let i = index "> 
         <img (click)="openImage(IMAGES_URL+'/feeds/'+item?.feed_name)" *ngIf="item?.type == 'image'" src="{{IMAGES_URL+'/feeds/'+item?.feed_name}}"/> 
-        <img (click)="playVideo(IMAGES_URL+'/feeds/'+item?.feed_name)" *ngIf="item?.type == 'video' && errors.indexOf(item?.thumbnail) >= 0" src="assets/img/play_video.jpg"/> 
-        <img (click)="playVideo(IMAGES_URL+'/feeds/'+item?.feed_name)" *ngIf="item?.type == 'video' && errors.indexOf(item?.thumbnail) == -1" src="{{IMAGES_URL+'/feeds/'+item?.thumbnail}}"/> 
+        <ng-container *ngIf="played_ones.indexOf(i) == -1">
+          <img (click)="playVideo(IMAGES_URL+'/feeds/'+item?.feed_name,i)" *ngIf="item?.type == 'video' && errors.indexOf(item?.thumbnail) >= 0" src="assets/img/play_video.jpg"/> 
+
+          <img (click)="playVideo(IMAGES_URL+'/feeds/'+item?.feed_name,i)" *ngIf="item?.type == 'video' && errors.indexOf(item?.thumbnail) == -1" src="{{IMAGES_URL+'/feeds/'+item?.thumbnail}}"/> 
+        </ng-container>
+
+        <ng-container *ngIf="played_ones.indexOf(i) >= 0">
+          <video class="video-js vjs-default-skin" width="300px" height="267px" autoplay controls preload="none" [poster]="IMAGES_URL+'/feeds/'+item?.thumbnail" data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+            <source [src]="IMAGES_URL+'/feeds/'+item?.feed_name" type='video/mp4' />
+          </video>
+        </ng-container>
+
 		    <p>{{item.name}}</p> 
       </ng-masonry-grid-item>
   </ng-masonry-grid>
@@ -57,7 +46,7 @@
 
 
   <!-- webFooter -->
-<footer webFooter>© Copyright 2020. All rights reserved.</footer>
+<app-footer></app-footer>
 <!-- // end -->
 </ion-content>
 <ion-footer> 
