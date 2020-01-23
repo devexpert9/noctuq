@@ -59,6 +59,9 @@
 						<div description>
 						  <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
 						</div>
+						<div fav-div *ngIf="page_type == 'favorites'" >
+							<ion-icon name="heart"></ion-icon>
+						</div>
 					</ion-card-header>
 					
 				</ion-card>
@@ -75,8 +78,8 @@
 <app-footer></app-footer>
 <!-- // end -->
 </ion-content>
-<ion-footer>
+<!-- <ion-footer>
   <div scrll-icon *ngIf="all_events != ''">
 	<ion-icon name="arrow-down"></ion-icon>
   </div>
-</ion-footer>
+</ion-footer> -->
