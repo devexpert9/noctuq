@@ -1,9 +1,13 @@
 /* Header Css Start*/
-ion-header
-{
+ion-header{
+	padding:0 15px;
+	background: #222;
 	&:after
 	{
 	 display:none;
+	}
+	ion-title{
+		padding-left: 0;
 	}
 }
 /* Header Css Ends*/
@@ -12,21 +16,18 @@ ion-header
 {
 	[location]
 	{
-		[heading]
-		{
+		[heading]{
 			  border:none;
 			  &:after{
 				display:none
 			  }
 		}
-		[border-right] {
-		border-right: 1px solid #222;
-		padding-right: 10px;
+		[border-right]{
+			border-right: 1px solid #222;
+			padding-right: 10px;
 		}
-	ion-item
-	{
-	&[no-border]
-	{
+	ion-item{
+		&[no-border]{
 	    border:none!important;
 		ion-range{
 		    position: relative;    padding: 0px 36px;
@@ -58,8 +59,8 @@ ion-header
 	}
 	&[price-range]
 	{
-	[heading]
-	{ margin-top: 20px
+	[heading]{
+		margin-top: 20px
 	}
 	  h2
 	  {
@@ -69,45 +70,36 @@ ion-header
 	  }
 	}
 	}
-		[heading] {
-		margin: 0;
-		font-size: 14px;
-		color: #000;
-		font-family: 'Quicksand', sans-serif!important;
-		border-bottom: 2px solid #222;	
-		padding-bottom: 5px;
-			&:after {
-				width:50px;
-				height:2px;
-				background: var(--ion-color-primary);
-				display: block;
-				content: '';
-				position: absolute;
-				bottom:5px;
+		[heading]{
+			margin: 0;
+			font-size: 14px;
+			color: #000;
+			font-weight: 900;
+			font-family: 'Quicksand', sans-serif!important;
+		}
+	[check-filter]{
+		margin-bottom: 10px;
+		margin-left: -5px;
+		margin-right: -5px;
+		ion-item{
+			--min-height: 30px;
+			ion-checkbox{
+				width: 18px;
+				min-width: 18px;
+				height: 18px;
+				margin: 0;
+				--background: #fff !important;
+				--border-color: #222 !important;
+				--border-radius: 5px;
 			}
-	}
-	[check-filter]
-	{     margin-bottom: 10px;
-		  ion-item
-		  {    --min-height: 30px;
-				ion-checkbox
-				{  width: 18px;
-					min-width: 18px;
-					height: 18px;
-				  margin: 0;
-				  --background: #fff !important;
-				  --border-color: #222 !important;
-				  --border-radius: 5px;
-				}
-				h2
-				{
-					font-size: 12px !important;
-					color: #222;
-					margin: 0 0 0 10px;
-					font-family: 'Quicksand', sans-serif!important;
-						line-height: normal;
-				}
-		  }
+			h2{
+				font-size: 12px !important;
+				color: #222;
+				margin: 0 0 0 10px;
+				font-family: 'Quicksand', sans-serif!important;
+				line-height: normal;
+			}
+		}
 	}
 }  
 /* Filters Css Ends */
