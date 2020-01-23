@@ -148,6 +148,7 @@ ion-checkbox
     padding: 0 15px;
     display: flex;
     align-items: center;
+    text-transform: uppercase;
   }
   .ritNavbar ul li:last-child a img{
     width:40px;
@@ -390,7 +391,7 @@ ion-checkbox
     object-fit: contain;
   }
   [userDetails] ion-item ion-label{
-    font-size: 5px !important;
+    font-size: 15px !important;
   }
 
 }

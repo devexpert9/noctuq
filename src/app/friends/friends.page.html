@@ -31,7 +31,7 @@
 	</ion-segment>
 	<div [ngSwitch]="friendstabs" class="webTabsCont">
 		<ion-row *ngSwitchCase="'friends'" >
-			<ion-col size="4" *ngFor="let friend of friends " routerLink="/public-profile/{{friend.friend_id}}">
+			<ion-col size="4" size-md="3" *ngFor="let friend of friends " routerLink="/public-profile/{{friend.friend_id}}">
 				<div class="user-box-l">
 					<div class="img-attw">
 						<img *ngIf="errors.indexOf(friend?.friend_image) >= 0" src="assets/img/user-icon.jpg"/> 
@@ -45,7 +45,7 @@
 			<img *ngIf="friends == ''" src="assets/img/no_result_found.gif"/>
 		</ion-row>
 		<ion-row *ngSwitchCase="'requests'">
-			<ion-col size="4" *ngFor="let friend of friend_requests " routerLink="/public-profile/{{friend.friend_id}}">
+			<ion-col size="4" size-md="3" *ngFor="let friend of friend_requests " routerLink="/public-profile/{{friend.friend_id}}">
 				<div class="user-box-l">
 					<div class="img-attw">
 						<img *ngIf="errors.indexOf(friend?.friend_image) >= 0" src="assets/img/user-icon.jpg"/> 
@@ -61,7 +61,7 @@
 		<ion-row *ngSwitchCase="'search'">
 			<ion-searchbar (search)="searchUsers()" [(ngModel)]="search_term" placeholder="Search users by name,email..." showCancelButton="never"></ion-searchbar>
 
-			<ion-col size="4" *ngFor="let user of search_users" routerLink="/public-profile/{{user._id}}">
+			<ion-col size="4" size-md="3" *ngFor="let user of search_users" routerLink="/public-profile/{{user._id}}">
 				<div class="user-box-l">
 					<div class="img-attw">
 						<img *ngIf="errors.indexOf(user?.image) >= 0" src="assets/img/user-icon.jpg"/> 
