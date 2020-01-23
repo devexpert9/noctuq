@@ -1,3 +1,8 @@
+ion-header{
+	ion-title{
+		padding: 0 40px 0 0;
+	}
+}
 ion-content[comments-bg] {
 	/*--background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;*/
 	--background: url('../../assets/img/loginbg.jpg')no-repeat bottom center/cover;
@@ -6,7 +11,7 @@ ion-content[comments-bg] {
 		padding: var(--ion-value-35) var(--ion-value-25);
 		background:var(--ion-color-white);
 		.logo-cntrs {
-			padding: var(--ion-value-0)  var(--ion-value-0)  var(--ion-value-25);
+			padding: var(--ion-value-0)  var(--ion-value-0)  0;
 			text-align: center;
 			img {
 				/* width: 100%; */

@@ -32,17 +32,24 @@
 				<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
 				</ng-container>
 			</div>
-			<h5 *ngIf="!is_edit"> {{profile?.name}} </h5>
+			<!-- <h5 >  </h5>
 			<h5 *ngIf="is_edit"> 
 				<ion-input type="text" placeholder="Name" [(ngModel)]="profile.name"></ion-input> 
-			</h5>
+			</h5> -->
 		</div>
 		<div class="profl-btm">
-			<p *ngIf="!is_edit">  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
+			<!-- <p *ngIf="!is_edit">  {{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}} </p>
 			<p *ngIf="is_edit">  
 				<ion-textarea [(ngModel)]="profile.about" placeholder="Say something about you..."></ion-textarea> 
-			</p>
+			</p> -->
 				<div userDetails>
+				<ion-item no-padding>
+					<ion-label><ion-icon name="contact"></ion-icon> Name</ion-label>
+					<p *ngIf="!is_edit">{{profile?.name}}</p>
+					<p *ngIf="is_edit" slot="end">
+						<ion-input type="text" placeholder="Name" [(ngModel)]="profile.name"></ion-input>
+					</p>
+				</ion-item>
 				<ion-item no-padding>
 					<ion-label><ion-icon name="mail-open"></ion-icon> Email</ion-label>
 					<p *ngIf="!is_edit">{{profile?.email}}</p>
@@ -56,6 +63,11 @@
 					<p *ngIf="is_edit" slot="end">
 						<ion-input type="text" placeholder="Phone Number" [(ngModel)]="profile.phone"></ion-input>
 					</p>
+				</ion-item>
+				<ion-item no-padding >
+					<ion-label><ion-icon name="happy"></ion-icon> Description</ion-label>
+					<p *ngIf="!is_edit">{{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}}</p>
+					<p *ngIf="is_edit"><ion-textarea [(ngModel)]="profile.about" placeholder="Say something about you..."></ion-textarea></p>
 				</ion-item>
 			</div>
 			<div class="totl-frns" (click)="goEdit()" *ngIf="!is_edit">
