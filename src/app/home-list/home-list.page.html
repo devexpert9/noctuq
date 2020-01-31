@@ -42,11 +42,12 @@
 		<div list-events>
 			<div class="mapListFilter">
 				<ion-buttons btn-sts>
-				  <a href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
+				  <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
+				  <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-map/favorites"> Map View </a>
 				  <a href="javascript:void(0)" class="list-ics"> List View </a>
 			    </ion-buttons>
 
-			    <ion-searchbar style="display: none;" only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+			    <ion-searchbar only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
 
 				<a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> &nbsp;Filter</a>
 			</div>
@@ -67,10 +68,11 @@
 				</ion-card>
 				
 				<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
-			</div>
-			<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
+				<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
 		        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
 			</ion-infinite-scroll>
+			</div>
+			
 		</div>
 	</div>
 

@@ -10,11 +10,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 declare var window: any; 
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  selector: 'app-host-profile',
+  templateUrl: './host-profile.page.html',
+  styleUrls: ['./host-profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class HostProfilePage implements OnInit {
 public win: any = window;
 userId:any;
 errors:any=['',null,undefined,'undefined'];
@@ -37,25 +37,24 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
   ionViewDidEnter(){
     this.is_loaded = false;
     this.is_edit = false;
-  	var token = localStorage.getItem('niteowl_auth_token');
+  	var token = localStorage.getItem('niteowl_host_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     this.getProfile();
   }
 
   getProfile(){
     this.userService.presentLoading();
-    this.userService.postData({_id : this.userId},'get_profile').subscribe((result) => {
+    this.userService.postData({_id : this.userId},'get_host_profile').subscribe((result) => {
       this.userService.stopLoading();
       if(this.errors.indexOf(result) == -1){
         this.is_loaded = true;
-        localStorage.setItem('niteowl_sessions',JSON.stringify(result));
+        localStorage.setItem('niteowl_host_sessions',JSON.stringify(result));
         this.profile = result;
         this.profile.phone = this.errors.indexOf(this.profile.phone) == -1 ? this.profile.phone : '';
-        this.profile.about = this.errors.indexOf(this.profile.about) == -1 ? this.profile.about : '';
       }
       else{
         this.userService.presentToast('Session expired, Please login again','danger');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login/host']);
       }
     },
     err => {
@@ -95,19 +94,19 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     formData.append('phone', this.profile.phone);
     formData.append('about', this.profile.about);
 
-    this.userService.postData(formData,'update_profile').subscribe((result) => {
+    this.userService.postData(formData,'update_host_profile').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
         this.is_edit = false;
-        var user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+        var user_sessions = JSON.parse(localStorage.getItem('niteowl_host_sessions'));
         user_sessions.name = this.profile.name;
         user_sessions.email = this.profile.email;
         if(this.is_image_selected){
           user_sessions.image = result.image;
           user_sessions.is_social_image = '0';
         }
-        localStorage.setItem('niteowl_sessions',JSON.stringify(user_sessions));
-        this.events.publish('user_log_activity:true','');
+        localStorage.setItem('niteowl_host_sessions',JSON.stringify(user_sessions));
+        //this.events.publish('user_log_activity:true','');
         this.userService.presentToast('Profile updated successfully.','success');
         if(this.is_image_selected){
           this.is_image_selected = false;
@@ -215,6 +214,12 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
         self.ref.detectChanges();
     };
     reader.readAsArrayBuffer(file);
+  }
+
+  logout(){
+  	localStorage.removeItem('niteowl_host_auth_token');
+    localStorage.removeItem('niteowl_host_sessions');
+    this.router.navigate(['/login/host']);
   }
 
 }

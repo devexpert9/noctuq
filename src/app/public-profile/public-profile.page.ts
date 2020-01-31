@@ -15,6 +15,7 @@ errors:any=['',null,undefined];
 profile:any;
 IMAGES_URL:any=config.IMAGES_URL;
 is_loaded:Boolean=false;
+mySession:any;
   constructor(public userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { 
   	this.is_loaded = false;
   	this.toId = activatedRoute.snapshot.paramMap.get('id');
@@ -26,6 +27,7 @@ is_loaded:Boolean=false;
   ionViewDidEnter(){
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
+    this.mySession = JSON.parse(localStorage.getItem('niteowl_sessions'));
     this.getProfile();
   }
 
@@ -50,7 +52,7 @@ is_loaded:Boolean=false;
 
   addFriend(){
   	this.userService.presentLoading();
-    this.userService.postData({toId : this.toId, userId : this.userId},'add_friend').subscribe((result) => {
+    this.userService.postData({toId : this.toId, userId : this.userId, from_name : this.mySession.name},'add_friend').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
         this.profile.sent_request = 1;
@@ -71,7 +73,7 @@ is_loaded:Boolean=false;
 
   change_status(type){
     this.userService.presentLoading();
-    this.userService.postData({toId : this.toId, userId : this.userId, status : type},'accept_reject_friend_request').subscribe((result) => {
+    this.userService.postData({toId : this.toId, userId : this.userId, status : type, from_name : this.mySession.name},'accept_reject_friend_request').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
         this.profile.coming_request = 0;

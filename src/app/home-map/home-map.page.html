@@ -7,12 +7,12 @@
   </ion-buttons>
     <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
 	
-	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-map">
+<!-- 	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-list/favorites">
        <ion-icon name="home" star-head></ion-icon>
 	</ion-buttons>
-	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-map/favorites">
+	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list">
        <ion-icon name="star" star-head></ion-icon>
-	</ion-buttons>
+	</ion-buttons> -->
 
 	<ion-buttons slot="end" routerLink="/profile" style="margin:0 15px 0 5px;">
        <ion-icon name="ios-contact"></ion-icon>
@@ -22,13 +22,22 @@
 <ion-content>
   <ion-buttons slot="start" btn-sts>
   <a href="javascript:void(0)" class="map-ics"> Map View </a>
-  <a href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
+  <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="list-ics" routerLink="/home-list/favorites"> List View </a>
+  <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
   </ion-buttons>
 <div header_height></div>
-<!-- <div map-home>
+<!-- <div map-home *ngIf="is_mobile_app == 'true'">
 	<div #map style="height:100%;"></div>
 </div> -->
-
+<!-- *ngIf="is_mobile_app == 'false'" -->
+<agm-map 
+[latitude]="lat" 
+[longitude]="lng" 
+[zoom]="zoom" >
+   <agm-marker  *ngFor="let data of all_events " [latitude]="data.location.lat" [longitude]="data.location.lng">
+   <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.venue_type}}: {{data?.title}}</a></agm-info-window>
+ </agm-marker>
+</agm-map>
 <!-- webFooter -->
 <app-footer></app-footer>
 <!-- // end -->

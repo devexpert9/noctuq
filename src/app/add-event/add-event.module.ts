@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomeMapPage } from './home-map.page';
-import { SharedModule } from '../shared/shared.module';
-import { AgmCoreModule } from '@agm/core';
-
+import { AddEventPage } from './add-event.page';
+import { NgxGeoautocompleteModule } from 'ngx-geoautocomplete';
 const routes: Routes = [
   {
     path: '',
-    component: HomeMapPage
+    component: AddEventPage
   }
 ];
 
@@ -21,13 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedModule,
     RouterModule.forChild(routes),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAIkAmlsGxoP63HLptMlKqpbgAv7IZBKM4',
-      libraries: ['places']
-    })
+    NgxGeoautocompleteModule.forRoot()
   ],
-  declarations: [HomeMapPage]
+  declarations: [AddEventPage]
 })
-export class HomeMapPageModule {}
+export class AddEventPageModule {}

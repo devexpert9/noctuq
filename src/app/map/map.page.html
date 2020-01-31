@@ -13,9 +13,18 @@
 
 <ion-content>
 <div header_height></div>
-<div map-home>
+<!-- <div map-home *ngIf="is_mobile_app == 'true'">
 	<div #map style="height:100%;"></div>
-</div>
+</div> -->
+<!-- *ngIf="is_mobile_app == 'false'" -->
+<agm-map 
+[latitude]="lat" 
+[longitude]="lng" 
+[zoom]="zoom" >
+  <agm-marker 
+  [latitude]="lat" 
+  [longitude]="lng"></agm-marker>
+</agm-map>
 
 <!-- webFooter -->
 <app-footer></app-footer>

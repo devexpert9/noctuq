@@ -1,5 +1,8 @@
 /*@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');*/
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+@import "~ngx-sharebuttons/styles/share-buttons";
+@import "~ngx-sharebuttons/styles/themes/circles/circles-theme";
+
  html , body
 {
 font-family: 'Quicksand', sans-serif!important;
@@ -412,4 +415,18 @@ ion-checkbox
 [only-web]{
   display: block;
 }
+}
+@media (max-width:991px){
+[only-web]{
+  display: none;
+}
+}
+
+.map-window{
+  text-decoration: none;
+  color: #222;
+}
+.infinite-scroll-enabled{
+  display: flex;
+  justify-content: center
 }

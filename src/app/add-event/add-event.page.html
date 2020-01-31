@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="ltblack" text-center>
+  <ion-buttons slot="start" float-left routerLink="/host-events">
+   <ion-back-button defaultHref="host-events"></ion-back-button>
+  </ion-buttons>
+    <ion-title pls>{{isEdit == '1' ? 'Edit' : 'Add'}} Event</ion-title>
+	<!-- <ion-buttons slot="end" routerLink="/profile">
+       <ion-icon name="ios-contact"></ion-icon>
+	</ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div login-form>
+     	<div roundedForm>
+	     	<ion-item>
+	     		<ion-label>Event Title</ion-label>
+	           <ion-input [(ngModel)]="title" placeholder="Event Title"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(title) >= 0 && is_submit == true">Please enter event title</span>
+
+	        <ion-item>
+			    <ion-label>Venue Type</ion-label>
+			    <ion-select [(ngModel)]="venue_type" placeholder="Select Venue Type">
+			      <ion-select-option *ngFor="let venue of all_venues" value="{{venue._id}}">{{venue.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(venue_type) >= 0 && is_submit == true">Please select venue type</span>
+
+		  	<ion-item>
+			    <ion-label>Genre</ion-label>
+			    <ion-select multiple [(ngModel)]="genre_type" placeholder="Select Genre">
+			      <ion-select-option *ngFor="let genre of all_genres" value="{{genre._id}}">{{genre.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(genre_type) >= 0 && is_submit == true">Please select genre</span>
+
+			<ion-item>
+			<ion-label>Price</ion-label>
+	           <ion-input [(ngModel)]="price" type="number" placeholder="Price"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter price</span>
+
+	        <ion-item>
+			<ion-label>Location</ion-label>
+	           <ngxgeo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ngxgeo-autocomplete>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(location) >= 0 && is_submit == true">Please enter venue location</span>
+
+	        <ion-item>
+			  <ion-label>Description</ion-label>
+			  <ion-textarea [(ngModel)]="description" placeholder="Description">
+			  </ion-textarea>
+			</ion-item>	
+			<span error *ngIf="errors.indexOf(description) >= 0 && is_submit == true">Please enter event description</span>
+
+			<ion-item>
+			  <ion-label>Make it Hot</ion-label>
+			  <ion-checkbox color="primary" [(ngModel)]="is_hot"></ion-checkbox>
+			</ion-item>	
+
+			<ion-row>
+			<ng-container *ngIf="is_mobile_app == 'true'"><ion-button (click)="selectImage()"><ion-icon  name="create"></ion-icon> Select Image</ion-button></ng-container>
+			<ng-container *ngIf="is_mobile_app == 'false'">
+			<label for="user-img">
+				<ion-icon name="create"></ion-icon>Select Image
+			</label>
+			<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
+			</ng-container>
+			</ion-row>
+
+			<ion-row>
+			<ng-container *ngIf="is_image_selected">
+				<img width="200" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(image_url))" />
+				<img width="200" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(image_url)" />
+			</ng-container>
+
+			<ng-container *ngIf="!is_image_selected && isEdit == '1' && errors.indexOf(prev_image_url) == -1">
+				<img width="200" src="{{IMAGES_URL+'/events/thumbnails/'+prev_image_url}}" />
+			</ng-container>
+			</ion-row>
+	 
+			<div btn-bottom class="ion-text-center">
+			   <ion-button (click)="add_event()" color="ltblack" shape="round">
+				  {{isEdit == '1' ? 'Edit' : 'Add'}} Event
+			   </ion-button> 
+	        </div>	 
+   		</div>
+   </div>
+</ion-content>

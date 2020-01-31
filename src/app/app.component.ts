@@ -81,20 +81,21 @@ export class AppComponent {
           console.log(data);
           if (data.wasTapped) {
             console.log('Received in background');
-            // if(data.type == '1'){
-            //   this.router.navigate(['/messages']);
-            // }
-            // if(data.type == '2' || data.type == '4'){
-            //   this.router.navigate(['/myappointments/'+data.dataId]);
-            // }
-            // if(data.type == '3'){
-            //   this.router.navigate(['/notifications']);
-            // }
+            this.router.navigate(['/friends']);
           } else {
             console.log('Received in foreground');
-            // if(data.type == '4'){
-            //   this.appointment_reminder(data.dataId,data.body);
-            // }
+            if(data.type == '1'){
+              this.userService.presentToast('You have new message from '+data,'success');
+            }
+            if(data.type == '2'){
+              this.userService.presentToast('You have new friend request from '+data,'success');
+            }
+            if(data.type == '3'){
+              this.userService.presentToast(data+' has accepted your friend request','success');
+            }
+            if(data.type == '4'){
+              this.userService.presentToast(data+' has rejected your friend request','success');
+            }
           }
         });
       }

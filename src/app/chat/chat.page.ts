@@ -31,6 +31,9 @@ errors:any = ['',null,undefined];
 mySession:any;
 new_message:any;
 IMAGES_URL:any=config.IMAGES_URL;
+is_mobile_app:any = config.IS_MOBILE_APP;
+allowedMimes:any=config.IMAGE_EXTENSIONS;
+
   constructor(public userService: UserService, private activatedRoute: ActivatedRoute, private socket: Socket, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
   	this.toId = activatedRoute.snapshot.paramMap.get('id');
     this.getUpdates().subscribe(new_message => {
@@ -80,7 +83,7 @@ IMAGES_URL:any=config.IMAGES_URL;
   }
 
   add_chat(message){
-    this.userService.postData({fromId: this.userId, toId: this.toId, message : message, type : 'text'},'add_chat').subscribe((result) => { 
+    this.userService.postData({fromId: this.userId, toId: this.toId, message : message, type : 'text', from_name : this.mySession.name},'add_chat').subscribe((result) => { 
     	if(result.status == 1){
     		this.socket.connect();
     		this.socket.emit('send_message', {_id : result.data, fromId : this.userId, message : message, toId : this.toId, type : 'text', created_at : new Date() });
@@ -93,10 +96,16 @@ IMAGES_URL:any=config.IMAGES_URL;
 
   add_chat_image(imgBlob,file_name){
     const formData = new FormData();
-    formData.append('file', imgBlob, file_name); 
+    if(this.is_mobile_app == 'true'){
+      formData.append('file', imgBlob, file_name); 
+    }
+    else{
+      formData.append('file', imgBlob); 
+    }
     formData.append('fromId', this.userId);
     formData.append('toId', this.toId);
     formData.append('type', 'image');
+    formData.append('from_name', this.mySession.name);
     this.userService.postData(formData,'add_chat_image').subscribe((result) => { 
       if(result.status == 1){
         this.socket.connect();
@@ -130,6 +139,26 @@ IMAGES_URL:any=config.IMAGES_URL;
       ]
     });
     await actionSheet.present();
+  }
+
+  uploadImg(event){ 
+    var self = this;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      var image_file = event.target.files[0];
+      if(self.allowedMimes.indexOf(image_file.type) == -1){
+        this.userService.presentToast('Please select valid image.','danger');
+      }
+      else{
+        var imgBlob = image_file;
+        var image_url = window.URL.createObjectURL(image_file);
+
+        self.add_chat_image(imgBlob,'');
+        self.chats.push({fromId : self.userId, message : image_url, toId : self.toId, type : 'image', temp_image : '2', created_at : new Date()});
+        self.scrollToBottom();
+        self.ref.detectChanges();
+      }
+    }
   }
 
   takePicture(sourceType: PictureSourceType,selection_type) {

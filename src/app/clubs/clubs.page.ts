@@ -32,9 +32,14 @@ is_favorite:any;
 file_name:any;
 imgBlob:any;
 API_URL:any=config.API_URL;
-
+BASE_URL:any=config.BASE_URL;
+share_url:any;
+is_mobile_app:any = config.IS_MOBILE_APP;
+share_message:any;
   constructor(private socialSharing: SocialSharing, private activatedRoute: ActivatedRoute, public userService:UserService, private launchNavigator: LaunchNavigator, public modalController: ModalController, private videoCapturePlus: VideoCapturePlus, private camera: Camera, private file: File, private filePath: FilePath,private ref: ChangeDetectorRef, private transfer: FileTransfer, public actionSheetController: ActionSheetController, private router:Router) { 
     this.event_id = activatedRoute.snapshot.paramMap.get('id');
+    this.share_url = this.BASE_URL+'#/clubs/'+this.event_id;
+    console.log(this.share_url)
   }
 
   ngOnInit() {
@@ -54,6 +59,7 @@ API_URL:any=config.API_URL;
       this.is_rated = result.is_rated;
       this.avg_rating = result.rating;
       console.log(result)
+      this.share_message = 'Share this events with your nearest friends and be the part of '+this.event.venue_type+':'+this.event.title+' at '+this.event.address+'.  '+ this.share_url;
     },
     err => {
       this.is_loaded = true;
@@ -91,7 +97,7 @@ API_URL:any=config.API_URL;
   
   share(){
 	  // Share via email
-  	this.socialSharing.share('Upscale House - Live Bands, Dancing, Food, Drinks').then(() => {
+  	this.socialSharing.share(this.share_message).then(() => {
   	  // Success!
   	}).catch(() => {
   	  // Error!
@@ -99,7 +105,7 @@ API_URL:any=config.API_URL;
   }
 
   canRate(){
-    if(this.is_rated == 0){
+    if(this.is_rated == 0 && (this.userId != 0 && this.errors.indexOf(this.userId) == -1)){
       this.rateIt();
     }
   }
@@ -120,7 +126,13 @@ API_URL:any=config.API_URL;
     this.userService.presentLoading();
     this.userService.postData({event_id: this.event_id, userId: this.userId, rating: rating},'add_rating').subscribe((result) => {
       this.userService.stopLoading();
+      console.log(this.avg_rating)
       if(result.status == 1){
+        if(this.avg_rating.length == 0){
+          this.avg_rating.push({average : Number(rating)});
+          this.ref.detectChanges();
+        }
+        console.log(this.avg_rating)
         this.is_rated = 1;
         this.userService.presentToast('Rated successfully.','success');
       }

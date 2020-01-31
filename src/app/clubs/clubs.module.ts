@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { ClubsPage } from './clubs.page';
 import { SharedModule } from '../shared/shared.module';
 import { NgxStarsModule } from 'ngx-stars';
+import { ShareButtonsModule } from 'ngx-sharebuttons';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -23,7 +25,10 @@ const routes: Routes = [
     IonicModule,
     SharedModule,
     NgxStarsModule,
-    RouterModule.forChild(routes)
+    ShareButtonsModule.forRoot(),
+    RouterModule.forChild(routes),
+    HttpClientModule,
+    HttpClientJsonpModule
   ],
   declarations: [ClubsPage]
 })

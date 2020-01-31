@@ -4,6 +4,8 @@ import { config } from '../config';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular'; 
 import { Router, ActivatedRoute } from '@angular/router';
 import { FiltersPage } from '../filters/filters.page';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 @Component({
   selector: 'app-home-list',
@@ -34,8 +36,9 @@ mile_radius:number=0;
 price_limit:number = 5000;
 can_hot_menu_at_top:number;
 allow_city_region:number;
-  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController) { 
-    this.records_per_page = 10;
+is_mobile_app:any = config.IS_MOBILE_APP;
+  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController, private geolocation: Geolocation) { 
+    this.records_per_page = 9;
     this.max_price = this.price_limit;
     this.page_type = activatedRoute.snapshot.paramMap.get('type');
     console.log(this.page_type)
@@ -52,6 +55,9 @@ allow_city_region:number;
     var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
     this.can_hot_menu_at_top = niteowl_sessions.can_hot_menu_at_top;
     this.allow_city_region = niteowl_sessions.allow_city_region;
+
+    console.log('niteowl_sessions')
+    console.log(niteowl_sessions)
 
     var self = this;
     setTimeout(function(){
@@ -75,48 +81,73 @@ allow_city_region:number;
     }
     var self = this;
     setTimeout(() => {
-      var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
-      self.userService.postData({
-        userId: self.userId, 
-        records_per_page: self.records_per_page, 
-        start: self.start, 
-        search_term : self.search_term,
-        genres : self.genres,
-        venues : self.venues,
-        min_price: self.min_price,
-        max_price: self.max_price,
-        mile_radius: self.mile_radius,
-        can_hot_menu_at_top: this.can_hot_menu_at_top,
-        allow_city_region: this.allow_city_region
+      
+      if(self.is_mobile_app == 'true'){
+        self.geolocation.getCurrentPosition().then((resp) => {
+          console.log('mobile app')
+          var current_lng = resp.coords.longitude;
+          var current_lat = resp.coords.latitude;
+          callFn(event,type,current_lng,current_lat);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }
+      else{
+        navigator.geolocation.getCurrentPosition( pos => {
+          console.log('web app')
+          var current_lng = pos.coords.longitude;
+          var current_lat = pos.coords.latitude;
+          callFn(event,type,current_lng,current_lat);
+        });
+      }
+      function callFn(event,type,current_lng,current_lat){
+        var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
+        self.userService.postData({
+          userId: self.userId, 
+          records_per_page: self.records_per_page, 
+          start: self.start, 
+          search_term : self.search_term,
+          genres : self.genres,
+          venues : self.venues,
+          min_price: self.min_price,
+          max_price: self.max_price,
+          mile_radius: self.mile_radius,
+          can_hot_menu_at_top: self.can_hot_menu_at_top,
+          allow_city_region: self.allow_city_region,
+          current_lng : current_lng,
+          current_lat : current_lat,
+          miles : 10000
 
-      },api_endpoint).subscribe((result) => { 
-          self.is_loaded = true;
-          var loaded_records = self.start+self.records_per_page;
-          if(loaded_records >= result.total){
-           self.is_more_records = false;
-          }
-          self.all_events = self.all_events.concat(result.data);
-          if(type == '0'){
-            self.userService.stopLoading();
-          }
-          else{
-            if(type == '1'){
+        },api_endpoint).subscribe((result) => { 
+            self.is_loaded = true;
+            var loaded_records = self.start+self.records_per_page;
+            if(loaded_records >= result.total){
+             self.is_more_records = false;
+            }
+            self.all_events = self.all_events.concat(result.data);
+            if(type == '0'){
+              self.userService.stopLoading();
+            }
+            else{
+              if(type == '1'){
+                self.scroll_event.target.complete();
+              }
+            }
+          },
+          err => {
+            self.is_more_records = false;
+            self.is_loaded = true;
+            // self.all_events = [];
+            if(type == '0'){
+              self.userService.stopLoading();
+            }
+            else{
               self.scroll_event.target.complete();
             }
-          }
-        },
-        err => {
-          self.is_more_records = false;
-          self.is_loaded = true;
-          // self.all_events = [];
-          if(type == '0'){
-            self.userService.stopLoading();
-          }
-          else{
-            self.scroll_event.target.complete();
-          }
-          self.userService.presentToast('Unable to fetch results, Please try again','danger');
-      });
+            self.userService.presentToast('Unable to fetch results, Please try again','danger');
+        });
+      }
+      // });
     }, 500);
   }
 

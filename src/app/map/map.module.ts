@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MapPage } from './map.page';
 import { SharedModule } from '../shared/shared.module';
+import { AgmCoreModule } from '@agm/core';
 
 const routes: Routes = [
   {
@@ -21,7 +22,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAIkAmlsGxoP63HLptMlKqpbgAv7IZBKM4',
+      libraries: ['places']
+    })
   ],
   declarations: [MapPage]
 })

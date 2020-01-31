@@ -17,23 +17,26 @@ const routes: Routes = [
   { path: 'home-list/:type', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
   { path: 'home-map', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
   { path: 'home-map/:type', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
-  { path: 'clubs/:id', loadChildren: './clubs/clubs.module#ClubsPageModule', canActivate: [AuthGuardService] },
+  { path: 'clubs/:id', loadChildren: './clubs/clubs.module#ClubsPageModule' },
   { path: 'venue-comments/:id', loadChildren: './vanue-comments/vanue-comments.module#VanueCommentsPageModule', canActivate: [AuthGuardService] },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'friends', loadChildren: './friends/friends.module#FriendsPageModule', canActivate: [AuthGuardService] },
   { path: 'live-feed/:id', loadChildren: './live-feed/live-feed.module#LiveFeedPageModule', canActivate: [AuthGuardService] },
-  { path: 'map/:id', loadChildren: './map/map.module#MapPageModule', canActivate: [AuthGuardService] },
+  { path: 'map/:id', loadChildren: './map/map.module#MapPageModule' },
   { path: 'public-profile/:id', loadChildren: './public-profile/public-profile.module#PublicProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'chat/:id', loadChildren: './chat/chat.module#ChatPageModule', canActivate: [AuthGuardService] },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule', canActivate: [AuthGuardService] },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule', canActivate: [AuthGuardService] },
-  { path: 'terms-privacy', loadChildren: './terms-privacy/terms-privacy.module#TermsPrivacyPageModule', canActivate: [AuthGuardService] },
-  { path: 'report-problem', loadChildren: './report-problem/report-problem.module#ReportProblemPageModule', canActivate: [AuthGuardService] },
-  { path: 'feed-gallery/:id', loadChildren: './feed-gallery/feed-gallery.module#FeedGalleryPageModule', canActivate: [AuthGuardService] },
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+  { path: 'terms-privacy', loadChildren: './terms-privacy/terms-privacy.module#TermsPrivacyPageModule' },
+  { path: 'report-problem', loadChildren: './report-problem/report-problem.module#ReportProblemPageModule' },
+  { path: 'feed-gallery/:id', loadChildren: './feed-gallery/feed-gallery.module#FeedGalleryPageModule' },
   { path: 'make-live-feed/:id', loadChildren: './make-live-feed/make-live-feed.module#MakeLiveFeedPageModule', canActivate: [AuthGuardService] },
   { path: 'verify/:id', loadChildren: './verify-account/verify-account.module#VerifyAccountPageModule' },
   { path: 'rating', loadChildren: './rating/rating.module#RatingPageModule' },
-  { path: 'host-events', loadChildren: './host-events/host-events.module#HostEventsPageModule', canActivate: [AuthGuardHostService] }
+  { path: 'host-events', loadChildren: './host-events/host-events.module#HostEventsPageModule', canActivate: [AuthGuardHostService] },
+  { path: 'add-event', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
+  { path: 'edit-event/:id', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
+  { path: 'host-profile', loadChildren: './host-profile/host-profile.module#HostProfilePageModule', canActivate: [AuthGuardHostService] }
 ];
 
 @NgModule({

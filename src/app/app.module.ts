@@ -16,7 +16,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
-import { GoogleMaps } from "@ionic-native/google-maps/ngx";
+// import { GoogleMaps } from "@ionic-native/google-maps/ngx";
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -28,6 +28,8 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { NgxStarsModule } from 'ngx-stars'; 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider,FacebookLoginProvider } from "angular-6-social-login";
 
@@ -75,7 +77,7 @@ export function getAuthServiceConfigs() {
     Facebook,
     GooglePlus,
     LaunchNavigator,
-    GoogleMaps,
+    // GoogleMaps,
     Camera,
     File,
     FilePath,
@@ -86,6 +88,7 @@ export function getAuthServiceConfigs() {
     StreamingMedia,
     EmailComposer,
     FCM,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: RequestOptions, useClass: CustomRequestOptions },
     { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }

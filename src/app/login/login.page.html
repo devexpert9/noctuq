@@ -43,8 +43,10 @@
 		</div>
 
 		<div bottom-links class="ion-text-center">
-			<a routerLink="/login-host" href="javascript:void(0)">New Host </a>
-			<a routerLink="/signup" href="javascript:void(0)"> New User </a>
+			<a *ngIf="page_type != 'host'" routerLink="/login/host" href="javascript:void(0)">Host Login</a>
+			<a *ngIf="page_type == 'host'" routerLink="/login" href="javascript:void(0)">User Login</a>
+			<a *ngIf="page_type != 'host'" routerLink="/signup" href="javascript:void(0)"> New User </a>
+			<a *ngIf="page_type == 'host'" routerLink="/login-host" href="javascript:void(0)"> New Host </a>
 		</div>
 	</div>
 </div>

@@ -1,9 +1,54 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>host-events</ion-title>
+  <ion-toolbar  color="ltblack" text-center>
+  <ion-buttons slot="start" float-left routerLink="/add-event">
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-buttons>
+    <ion-title pls>My Events</ion-title>
+	<ion-buttons slot="end" routerLink="/host-profile">
+       <ion-icon name="ios-contact"></ion-icon>
+	</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content login-host #content>
+	<div header_height></div>
+	<div class="webContainer">
+	<div login-url class="ion-no-padding">
+		   <div class="set-serch">
+			   <ion-item color="none" lines="none">  
+				 <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+			   </ion-item>
+			</div>
+		</div>
+		<div list-events>
+			<!-- <div class="mapListFilter">
+
+			    <ion-searchbar style="display: none;" only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
+			</div> -->
+		  	<div AppContainer homeLists>
+				<ion-card img-srta *ngFor="let event of all_events; let index = index ">
+					<img routerLink="/clubs/{{event._id}}" *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
+					<img routerLink="/clubs/{{event._id}}" *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
+					<ion-card-header routerLink="/clubs/{{event._id}}">
+						<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
+						<div description>
+						  <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
+						</div>
+					</ion-card-header>
+					<div class="action-btns">
+						<ion-icon routerLink="/edit-event/{{event._id}}" eve-create name="create"></ion-icon>
+						<ion-icon (click)="deleteEvent(event._id, index)" eve-trash name="trash"></ion-icon>
+					</div>
+				</ion-card>
+				
+				<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
+			</div>
+			<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
+		        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+			</ion-infinite-scroll>
+		</div>
+	</div>
+<app-footer></app-footer>
 
 </ion-content>

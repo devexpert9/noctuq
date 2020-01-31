@@ -30,7 +30,9 @@
 					<p *ngIf="chat.type == 'text'">{{chat.message}}</p>
 					<img (click)="openImage(chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image == '1'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(chat.message))">
 
-					<img (click)="openImage(IMAGES_URL+'/chats/'+chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image != '1'" src="{{IMAGES_URL+'/chats/'+chat.message}}">
+					<img (click)="openImage(chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image == '2'" [src]="sanitizer.bypassSecurityTrustResourceUrl(chat.message)">
+
+					<img (click)="openImage(IMAGES_URL+'/chats/'+chat.message)" attach-img *ngIf="chat.type == 'image' && (chat?.temp_image != '1' && chat?.temp_image != '2')" src="{{IMAGES_URL+'/chats/'+chat.message}}">
 					<span><b><ion-icon name="time"></ion-icon> {{chat.created_at | timeAgo}}</b></span>
 				</div>
 			</div>
@@ -44,9 +46,13 @@
 <ion-footer vanueFooter>
   <ion-toolbar class="foot-mgs"> 
     <ion-item color="none" lines="none">
-	<span class="add-pl" (click)="selectImage()">
+	<span *ngIf="is_mobile_app == 'true'" class="add-pl" (click)="selectImage()">
 		<ion-icon name="add" add-deis></ion-icon>
 	</span>
+	<ng-container *ngIf="is_mobile_app == 'false'">
+	<label for="user-img" ><span  class="add-pl" ><ion-icon name="add"></ion-icon></span></label>
+	<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
+	</ng-container>
 	 <ion-input [(ngModel)]="chat_message" placeholder="Type Message here..." ></ion-input>
 	 <a (click)="send()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
 	</ion-item>

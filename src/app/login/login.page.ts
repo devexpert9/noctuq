@@ -68,7 +68,12 @@ page_type:any;
           this.password = '';
           this.userService.presentToast('Logged in successfully!','success');
           this.setSessions(result);
-          this.router.navigate(['/home-list']);
+          if(this.page_type == 'host'){
+            this.router.navigate(['/host-events']);
+          }
+          else{
+            this.router.navigate(['/home-list']);
+          }
         }
         else if(result.data.status == 0){
           var message = this.page_type == 'host' ? 'Your account is not approved yet.' : 'Please verify your email address.';

@@ -217,3 +217,13 @@ margin-bottom:var(--ion-value-10);
   50%  {opacity: 1;}
   100%  {opacity: .2;}
 }
+[loc-div]{
+	margin-top: 14px;
+    font-size: 15px;
+    color: #222;
+    ion-icon{
+    	top: 5px;
+	    position: relative;
+	    font-size: 20px;
+    }
+}
