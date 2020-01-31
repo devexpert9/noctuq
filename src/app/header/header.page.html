@@ -3,23 +3,34 @@
     <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
     <div class="ritNavbar">
       <ul>
-        <li><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+        <li *ngIf="isLoggedIn"><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>
+        <li *ngIf="isHostLoggedIn"><a href="javascript:void(0)" routerLink="/host-events">Home</a></li>
         <li><a href="javascript:void(0)" routerLink="/about">About Noctuq</a></li>
         <li><a href="javascript:void(0)" routerLink="/terms-privacy">Terms</a></li>
         <li><a href="javascript:void(0)" routerLink="/report-problem">Contact us</a></li>
         <li *ngIf="isLoggedIn">
         <a href="javascript:void(0)">
          <img *ngIf="errors.indexOf(user_sessions?.image) >= 0" src="assets/img/user-icon.jpg"/> 
-		 <img *ngIf="errors.indexOf(user_sessions?.image) == -1" src="{{user_sessions?.is_social_image == '1' ? user_sessions?.image : IMAGES_URL+'/profile/'+user_sessions?.image}}"/> 
+     <img *ngIf="errors.indexOf(user_sessions?.image) == -1" src="{{user_sessions?.is_social_image == '1' ? user_sessions?.image : IMAGES_URL+'/profile/'+user_sessions?.image}}"/> 
          {{user_sessions?.name}} <ion-icon name="arrow-dropdown"></ion-icon></a>
           <ul>
             <li><a href="javascript:void(0)" routerLink="/profile"  slot="end"><ion-icon name="person"></ion-icon> Profile</a></li>
             <li><a href="javascript:void(0)" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
             <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
-            <li><a (click)="logout()" href="javascript:void(0)"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+            <li><a (click)="logout('user')" href="javascript:void(0)"><ion-icon name="log-out"></ion-icon> Logout</a></li>
           </ul>
         </li>
-        <li *ngIf="!isLoggedIn"><a href="javascript:void(0)" routerLink="/login">Login</a></li>
+        <li *ngIf="isHostLoggedIn">
+        <a href="javascript:void(0)">
+         <img *ngIf="errors.indexOf(host_sessions?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+		 <img *ngIf="errors.indexOf(host_sessions?.image) == -1" src="{{IMAGES_URL+'/profile/'+host_sessions?.image}}"/> 
+         {{host_sessions?.name}} <ion-icon name="arrow-dropdown"></ion-icon></a>
+          <ul>
+            <li><a href="javascript:void(0)" routerLink="/host-profile"  slot="end"><ion-icon name="person"></ion-icon> Profile</a></li>
+            <li><a (click)="logout('host')" href="javascript:void(0)"><ion-icon name="log-out"></ion-icon> Logout</a></li>
+          </ul>
+        </li>
+        <li *ngIf="!isLoggedIn && !isHostLoggedIn"><a href="javascript:void(0)" routerLink="/login">Login</a></li>
       </ul>
     </div>
   </div>
