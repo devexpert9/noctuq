@@ -186,3 +186,13 @@ ion-content
     	color: red;
     }
 }
+
+@media only screen and (min-width:992px) {
+.mapListFilter {
+[btn-sts] {
+    min-width: 180px;
+    justify-content: flex-start;
+}
+}
+
+}

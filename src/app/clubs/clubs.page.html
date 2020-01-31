@@ -74,12 +74,55 @@
 </div>
 </div>
 
+ <ion-row btm-links show-desk>
+	<ion-col size="12" align-self-center>
+		<ul class="list-st-cnt">
+			
+			<li *ngIf="is_mobile_app == 'false'">
+				<!-- <ion-fab vertical="top" horizontal="end" edge slot="fixed" style="width: inherit;">
+				    <ion-fab-button size="small" color="primary3">
+				      <ion-icon name="md-share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list>
+				      	<ul fab_ul>
+							<li> <share-button button="facebook" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="twitter" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="google" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="pinterest" url="{{share_url}}"></share-button></li>
+						</ul>
+				    </ion-fab-list>
+				</ion-fab> -->
+				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab color="ltblack">
+				    <ion-fab-button color="ltblack">
+				      <ion-icon name="share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list side="end">
+				      <share-button button="facebook" url="{{share_url}}"><ion-icon name="logo-facebook"></ion-icon></share-button>
+				      <share-button button="twitter" url="{{share_url}}"><ion-icon name="logo-twitter"></ion-icon></share-button>
+				      <share-button button="whatsApp" url="{{share_url}}"><ion-icon name="logo-whatsapp"></ion-icon></share-button>
+				      <share-button button="email" url="{{share_url}}"><ion-icon name="mail"></ion-icon></share-button>
+				    </ion-fab-list>
+				  </ion-fab>
+			</li>
+			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
+			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/feed-gallery/{{event?._id}}"> 
+				<span class="">
+					<img src="assets/img/live.jpg">
+					Live 
+				</span>
+			</li>
+			
+		</ul>
+	</ion-col>
+</ion-row>
+
 <!-- webFooter -->
-<app-footer></app-footer>
+<app-footer foot-str></app-footer>
 <!-- // end -->
 </ion-content>
 
-<ion-footer *ngIf="is_loaded">
+<ion-footer *ngIf="is_loaded" big-hide>
   <ion-row btm-links>
 	<ion-col size="12" align-self-center>
 		<ul class="list-st-cnt">
@@ -98,17 +141,17 @@
 						</ul>
 				    </ion-fab-list>
 				</ion-fab> -->
-				<ion-fab vertical="bottom" horizontal="start" slot="fixed">
+				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab>
 				    <ion-fab-button>
 				      <ion-icon name="share"></ion-icon>
 				    </ion-fab-button>
 				    <ion-fab-list side="end">
-				      <share-button button="facebook" url="{{share_url}}"></share-button>
-				      <share-button button="twitter" url="{{share_url}}"></share-button>
-				      <share-button button="whatsApp" url="{{share_url}}"></share-button>
-				      <share-button button="email" url="{{share_url}}"></share-button>
+				      <share-button button="facebook" url="{{share_url}}"><ion-icon name="logo-facebook"></ion-icon></share-button>
+				      <share-button button="twitter" url="{{share_url}}"><ion-icon name="logo-twitter"></ion-icon></share-button>
+				      <share-button button="whatsApp" url="{{share_url}}"><ion-icon name="logo-whatsapp"></ion-icon></share-button>
+				      <share-button button="email" url="{{share_url}}"><ion-icon name="mail"></ion-icon></share-button>
 				    </ion-fab-list>
-				  </ion-fab>
+				</ion-fab>
 			</li>
 			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
 			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>

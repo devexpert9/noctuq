@@ -221,9 +221,22 @@ margin-bottom:var(--ion-value-10);
 	margin-top: 14px;
     font-size: 15px;
     color: #222;
+	padding: 0px 20px;
+    line-height: 24px;
     ion-icon{
     	top: 5px;
 	    position: relative;
 	    font-size: 20px;
     }
+}
+[btm-links][show-desk] ul.list-st-cnt li, [big-hide]  ul.list-st-cnt li {
+	ion-fab[st-new-fab] {
+		ion-icon {
+			    color: #fff;
+		}
+		ion-fab-list {
+			background: #111111;
+			border-radius: 50px;
+		}		
+	}
 }
