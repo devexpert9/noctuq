@@ -94,6 +94,7 @@ page_type:any;
   }
 
   setSessions(result){
+    localStorage.clear();
     var userId = this.userService.encryptData(result.data._id,config.ENC_SALT);
     if(this.page_type == 'host'){
       localStorage.setItem('niteowl_host_auth_token',userId);
