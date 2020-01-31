@@ -40,21 +40,18 @@
 	           <ion-input [(ngModel)]="price" type="number" placeholder="Price"></ion-input>
 	        </ion-item>
 	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter price</span>
-
-	        <ion-item>
-			<ion-label>Location</ion-label>
-	           <ngxgeo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ngxgeo-autocomplete>
-	        </ion-item>
+			<div class="locat-box">
+			<ngxgeo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ngxgeo-autocomplete>
 	        <span error *ngIf="errors.indexOf(location) >= 0 && is_submit == true">Please enter venue location</span>
-
-	        <ion-item>
-			  <ion-label>Description</ion-label>
+			</div>
+	        <ion-item class="clear">
+			  <!--ion-label>Description</ion-label-->
 			  <ion-textarea [(ngModel)]="description" placeholder="Description">
 			  </ion-textarea>
 			</ion-item>	
 			<span error *ngIf="errors.indexOf(description) >= 0 && is_submit == true">Please enter event description</span>
 
-			<ion-item>
+			<ion-item mark-hot>
 			  <ion-label>Make it Hot</ion-label>
 			  <ion-checkbox color="primary" [(ngModel)]="is_hot"></ion-checkbox>
 			</ion-item>	
@@ -62,7 +59,7 @@
 			<ion-row>
 			<ng-container *ngIf="is_mobile_app == 'true'"><ion-button (click)="selectImage()"><ion-icon  name="create"></ion-icon> Select Image</ion-button></ng-container>
 			<ng-container *ngIf="is_mobile_app == 'false'">
-			<label for="user-img">
+			<label for="user-img" class="slct-imgs">
 				<ion-icon name="create"></ion-icon>Select Image
 			</label>
 			<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
@@ -71,12 +68,12 @@
 
 			<ion-row>
 			<ng-container *ngIf="is_image_selected">
-				<img width="200" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(image_url))" />
-				<img width="200" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(image_url)" />
+				<img class="img-star" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(image_url))" />
+				<img class="img-star" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(image_url)" />
 			</ng-container>
 
 			<ng-container *ngIf="!is_image_selected && isEdit == '1' && errors.indexOf(prev_image_url) == -1">
-				<img width="200" src="{{IMAGES_URL+'/events/thumbnails/'+prev_image_url}}" />
+				<img class="img-star" src="{{IMAGES_URL+'/events/thumbnails/'+prev_image_url}}" />
 			</ng-container>
 			</ion-row>
 	 
@@ -87,4 +84,5 @@
 	        </div>	 
    		</div>
    </div>
+   <div class="heigt-57"></div>
 </ion-content>

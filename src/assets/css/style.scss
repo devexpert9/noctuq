@@ -428,7 +428,7 @@ app-filters ion-footer ion-button {
 ion-content[filters][padding] {
     top: 0;
 }
-[btm-links][show-desk] {
+[btm-links][show-desk], .btn-stra-sm {
 	display:block !important;
 }
 [btm-links][show-desk] {
@@ -489,16 +489,39 @@ app-footer[foot-str] {
 	}
 }
 [loc-div] {    padding: 0px 0px !important;}
+.add-evnt {
+	float: left;
+    width: 100%;
+	a.btn-stra-sm {
+		display: inline-block !important;
+		width: auto;
+		float: right;
+		background: #111;
+		color: #fff;
+		padding: 10px 20px;
+		border-radius: 50px;
+		text-decoration: none;
+		margin-top: 20px;
+		ion-icon {
+			position: relative;
+			top: 2px;
+		}	
+	}
+}
+.heigt-57 {
+    display: block;
+    height: 87px;
+    width: 100%;
+}
+
 }
 @media (max-width:991px){
 [only-web]{
   display: none;
 }
-[btm-links][show-desk] {
+[btm-links][show-desk], .btn-stra-sm {
 	display:none;
 }
-
-
 
 }
 
@@ -511,3 +534,28 @@ app-footer[foot-str] {
   justify-content: center
 }
 
+
+.locat-box {
+	clear: both; 
+	.custom-autocomplete  {
+		margin-bottom: 10px;
+		input#search_places  {
+			background: transparent;
+			border: none;
+			border-bottom: 1px solid #d6d6d6;
+			padding-left: 15px;
+			/* margin-bottom: 10px; */
+			&:focus, &:active {
+				outline:none;
+				box-shadow:none;
+			}
+		}
+		button.search-icon {
+			border:none;
+			i.search-default-icon {
+			    height: 17px;
+				width: 17px;
+			}
+		}
+	}
+} 

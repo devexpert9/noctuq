@@ -188,14 +188,38 @@ ion-content
 }
 .action-btns{
 	position: absolute;
-    right: 0;
-    top: 4px;
+	right: 10px;
+    top: 0px;
     font-size: 30px;
     padding: 2px;
     [eve-create]{
-    	color: #222;
+    	color: #fff;
+		background: #111;
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+		font-size: 14px;
+		text-align: center;
+		line-height: 35px;
+		border-radius: 50%;
     }
     [eve-trash]{
-    	color: red;
+    	color: #fff;
+		background: #F44336;
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+		font-size: 14px;
+		text-align: center;
+		line-height: 35px;
+		border-radius: 50%;
+		margin-left: 6px;
     }
+}
+
+@media only screen and (min-width:992px) {
+	ion-content [list-events] ion-card[img-srta] img {
+		height: 100%;
+		width: 100%;
+	}
 }
