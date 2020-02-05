@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MyChatsPage } from './my-chats.page';
-
+import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: '',
@@ -14,11 +14,12 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
+@NgModule({  
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+	SharedModule,
     RouterModule.forChild(routes)
   ],
   declarations: [MyChatsPage]

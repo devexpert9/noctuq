@@ -174,7 +174,7 @@ ion-checkbox
     margin: 0px 0 0;
     display: block;
     transition: .3s;
-    width: 150px;
+    width: 180px;
     box-shadow: 0 0 10px rgba(0,0,0, .2);
   }
   .ritNavbar ul li:last-child:hover ul{
@@ -559,3 +559,13 @@ app-footer[foot-str] {
 		}
 	}
 } 
+
+
+
+@media only screen and (min-width:992px) {
+footer[webFooter]  {
+    bottom: 63px !important;
+    position: relative;
+    margin-top: 100px;
+}
+}
