@@ -30,6 +30,16 @@ export class AppComponent {
       icon: 'assets/img/heart.png'
     },
     {
+      title: 'Messages',
+      url: '/messages',
+      icon: 'assets/img/messages.png'
+    },
+    {
+      title: 'Notifications',
+      url: '/notifications',
+      icon: 'assets/img/notification-solid.png'
+    },
+    {
       title: 'About <b> Noctuq </b>',
       url: '/about',
       icon: 'assets/img/about.png'

@@ -39,7 +39,7 @@ is_mobile_app:any = config.IS_MOBILE_APP;
   sendEmail(){
   	if(this.errors.indexOf(this.message) == -1){
   		var my_message = this.message;
-      var to_mail = 'info@niteowl.com';
+      var to_mail = this.content.email;
       var subject = 'Contact us - Nite Owl';
       var message_body = 'Hello team,%0D%0A'+my_message;
 	  	this.message = '';

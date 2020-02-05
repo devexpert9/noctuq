@@ -30,6 +30,35 @@
 	<div #map style="height:100%;"></div>
 </div> -->
 <!-- *ngIf="is_mobile_app == 'false'" -->
+
+<div class="webContainer">
+    <div login-url class="ion-no-padding">
+       <div class="set-serch">
+         <ion-item color="none" lines="none">
+          <!-- <ion-icon name="search"></ion-icon> -->
+         <!-- <ion-input (search)="search()" [(ngModel)]="search_term" placeholder="Search..." ></ion-input> -->
+         <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+         <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> </a>
+         <!-- <span no_of_filters>2</span> -->
+         </ion-item>
+      </div>
+    </div>
+    <div list-events>
+      <div class="mapListFilter">
+        <ion-buttons btn-sts>
+          <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-list/favorites" > List View </a>
+          <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-list"> List View </a>
+          <a  href="javascript:void(0)" class="list-ics" > Map View </a>
+          </ion-buttons>
+
+          <ion-searchbar  only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
+        <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> &nbsp;Filter</a>
+      </div>
+    </div>
+</div>
+
+
 <agm-map 
 [latitude]="lat" 
 [longitude]="lng" 

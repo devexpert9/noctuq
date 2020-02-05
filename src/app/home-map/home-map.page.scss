@@ -1,10 +1,40 @@
-[btn-sts]{
+/*[btn-sts]{
 	position: absolute;
 	z-index: 999;
 	left: 0;
 	right: 0;
 	margin:auto;
 }
+*/
+
+[btn-sts] {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 15px 0;
+	a.map-ics  {
+		color: #222;
+		font-size: 13px;
+		border: 1px solid #ddd;
+		text-decoration: none;
+		padding:10px 15px 10px 15px;
+		font-weight: 500;
+		border-radius: 50px 0 0 50px;
+	}
+	a.list-ics {
+		font-size: 13px;
+		border: 1px solid #222;
+		text-decoration: none;
+		padding:10px 15px 10px 15px;
+		background: #222;
+		color: #fff;
+		font-weight: 500;
+		border-radius: 0 50px 50px 0;
+	} 
+}
+
+
 [map-home] {
     height: 100%;
     width: 100%;
@@ -24,24 +54,25 @@ ion-title.ios.title-ios  {
 a.map-ics  {
 	
 	background: #fff;
-	color: #1f1878;
+	color: #222;
 	font-size: 13px;
-	border: 1px solid #fff;
+	border: 1px solid #ddd;
 	text-decoration: none;
-	padding: 3px;
+	padding: 10px 15px 10px 15px;
 	font-weight: 500;
 	border-radius: 50px 0 0 50px;
-    padding-left: 6px;
+	background: #fff;
 }
 a.list-ics {
 	font-size: 13px;
 	border: 1px solid #fff;
 	text-decoration: none;
-	padding: 3px;
-	color: #fff;
+	padding: 10px 15px 10px 15px;
+	color: #222;
 	font-weight: 500;
 	border-radius: 0 50px 50px 0;
-    padding-right: 5px;
+	background: #222;
+	color: #fff;
 } 
 }
 ion-title[pls] {padding-left:0px;}
@@ -51,4 +82,56 @@ ion-title[pls] {padding-left:0px;}
 }
 agm-map {
     height: 100%;
+}
+.set-serch {
+		padding: 13px 15px;
+		background: #222;
+		ion-item{
+			border-radius: 50px;
+			min-height: 34px;
+			line-height: 23px;
+			padding-left: 10px;
+			box-shadow: none !important;
+			--box-shadow: none !important;
+			padding-inline-start: 0;
+			ion-searchbar{
+				padding:0;
+				margin-left: -17px;
+				margin-right: 11px;
+				box-shadow: none !important;
+				input{
+					box-shadow: none !important;
+				}
+			}
+		}
+	}
+	[login-url]{
+			ion-item{
+				background:var(--ion-color-white);  
+				--min-height: var(--ion-value-40);
+				ion-input{		    
+					background: var(--ion-color-white);
+					font-size: var(--ion-value-16);
+					font-weight: 400;
+					--placeholder-color: #222;
+				}
+				ion-icon  {
+					color: #222;
+					font-size: var(--ion-value-20);
+				}
+				a.filtr-ics {
+					text-decoration: none;
+					margin-top: 4px;
+					z-index: 11;
+				}
+			}
+		}
+@media only screen and (min-width:992px) {
+.mapListFilter {
+[btn-sts] {
+    min-width: 210px;
+    justify-content: flex-start;
+}
+}
+
 }

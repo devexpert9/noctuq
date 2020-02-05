@@ -4,6 +4,8 @@ import { Platform } from "@ionic/angular";
 import { Router, ActivatedRoute } from '@angular/router';
 import { config } from '../config';
 import { UserService } from '../services/user/user.service';
+import { ModalController } from '@ionic/angular';
+import { FiltersPage } from '../filters/filters.page';
 
 @Component({
   selector: 'app-home-map',
@@ -22,8 +24,19 @@ all_events:any;
 lat:number;
 lng:number;
 zoom:number=12;
-  constructor(public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
+search_term:any;
+all_genres:any;
+all_venues:any;
+venues:any=[];
+genres:any=[];
+min_price:number=0;
+max_price:number;
+mile_radius:number=0;
+errors:any=['',null,undefined];
+price_limit:number = 5000;
+  constructor(public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService, public modalController:ModalController) { 
   	this.page_type = activatedRoute.snapshot.paramMap.get('type');
+    this.get_venues_genres();
     console.log(this.page_type)
   }
 
@@ -31,6 +44,7 @@ zoom:number=12;
   }
 
   ionViewDidEnter() {
+    this.search_term = '';
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
 
@@ -44,15 +58,95 @@ zoom:number=12;
     // }
   }
 
+  get_venues_genres(){
+    this.userService.postData({},'get_venues_genres').subscribe((result) => {
+      this.all_genres = result.genres;
+      this.all_venues = result.venues;
+      console.log(result)
+    },
+    err => {
+      this.all_genres = [];
+      this.all_venues = [];
+    });
+  }
+
+  search(){
+    var self = this;
+    setTimeout(function(){
+      self.initWebMap();
+    },1000);
+  }
+
+  clear_search(){
+    var self = this;
+    setTimeout(function(){
+      self.initWebMap();
+    },1000);
+  }
+
   initWebMap(){
+
     var api_endpoint = (this.page_type == 'favorites') ? 'my_favorites' : 'get_events';
-      this.userService.postData({userId: this.userId, genres : [], venues : []},api_endpoint).subscribe((result) => { 
+      this.userService.postData({
+        userId: this.userId, 
+        genres : this.genres, 
+        venues : this.venues, 
+        search_term : this.search_term,
+        min_price: this.min_price,
+        max_price: this.max_price,
+        mile_radius: this.mile_radius,
+        current_lng : '',
+        current_lat : '',
+        miles : 10000
+      },api_endpoint).subscribe((result) => { 
           if(result.total > 0){
             this.all_events = result.data;
             this.lat = Number(result.data[0]['location']['lat']);
             this.lng = Number(result.data[0]['location']['lng']);
           }
       });
+  }
+
+  async filterPage() {
+    const modal = await this.modalController.create({
+      component: FiltersPage,
+      componentProps: { 
+        filters : { 
+          all_genres: this.all_genres,
+          all_venues: this.all_venues,
+          genres: this.genres,
+          venues: this.venues,
+          min_price: this.min_price,
+          max_price: this.max_price,
+          price_limit: this.price_limit,
+          mile_radius: this.mile_radius
+        }
+      }
+    });
+    modal.onDidDismiss().then((detail) => {
+      console.log('detail')
+      console.log(detail)
+       if(this.errors.indexOf(detail.data) == -1) {
+          if(detail.data.reset == '1'){
+            this.genres = [];
+            this.venues = [];
+            this.min_price = 0;
+            this.max_price = this.price_limit;
+            this.mile_radius = 0;
+            // this.all_events = [];
+            this.initWebMap();
+          }
+          if(detail.data.applied == '1'){
+            this.genres = detail.data.genres;
+            this.venues = detail.data.venues;
+            this.min_price = detail.data.min_price;
+            this.max_price = detail.data.max_price;
+            this.mile_radius = detail.data.mile_radius;
+            this.initWebMap();
+          }
+       }
+    });
+    return await modal.present();
   }
 
   //  initMap() {
