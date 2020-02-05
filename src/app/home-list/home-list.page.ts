@@ -93,12 +93,14 @@ is_mobile_app:any = config.IS_MOBILE_APP;
         });
       }
       else{
-        navigator.geolocation.getCurrentPosition( pos => {
+        // navigator.geolocation.getCurrentPosition( pos => {
           console.log('web app')
-          var current_lng = pos.coords.longitude;
-          var current_lat = pos.coords.latitude;
+          // var current_lng = pos.coords.longitude;
+          // var current_lat = pos.coords.latitude;
+          var current_lng = '';
+          var current_lat = '';
           callFn(event,type,current_lng,current_lat);
-        });
+        // });
       }
       function callFn(event,type,current_lng,current_lat){
         var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
