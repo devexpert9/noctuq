@@ -19,7 +19,7 @@
 		<ion-card dls-a>
 			<div mainImg>
 				<span right-icns *ngIf="userId != 0 && errors.indexOf(userId) == -1">
-					<ion-icon name="videocam" (click)="selectFeed()" ></ion-icon>
+					<ion-icon *ngIf="is_mobile_app == 'true'" name="videocam" (click)="selectFeed()" ></ion-icon>
 					<!-- routerLink="/make-live-feed/{{event?._id}}" -->
 					<ion-icon name="chatboxes" routerLink="/venue-comments/{{event?._id}}"></ion-icon>
 					<!-- <ion-icon name="paper-plane" (click)="share()"></ion-icon> -->

@@ -37,8 +37,8 @@ const routes: Routes = [
   { path: 'add-event', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
   { path: 'edit-event/:id', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
   { path: 'host-profile', loadChildren: './host-profile/host-profile.module#HostProfilePageModule', canActivate: [AuthGuardHostService] },
-  { path: 'messages', loadChildren: './my-chats/my-chats.module#MyChatsPageModule' },
-  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' }
+  { path: 'messages', loadChildren: './my-chats/my-chats.module#MyChatsPageModule', canActivate: [AuthGuardService] },
+  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule', canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
