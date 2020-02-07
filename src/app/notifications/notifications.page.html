@@ -13,88 +13,59 @@
 	<div class="webContainer">
 		<div transctin-list>
 			<ion-list>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Jenny Thomas <span class="right-time"> <ion-icon name="time"></ion-icon> Just now </span> </h2>
-					<p>Lorem ipsum dolor sit amet, consectetur</p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user-about.png">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Hanry James <span class="right-time"> <ion-icon name="time"></ion-icon> 1 hour ago </span></h2>
-					<p>Sed ut perspiciatis unde omnis iste </p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/selfie6.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Maria James <span class="right-time"> <ion-icon name="time"></ion-icon> 3 hours ago </span></h2>
-					<p>Quis autem vel eum iure reprehenderit </p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Denial Hall <span class="right-time"> <ion-icon name="time"></ion-icon> 1 days ago</span></h2>
-					<p>At vero eos et accusamus et iusto </p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user-about.png">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Jenny Thomas <span class="right-time"> <ion-icon name="time"></ion-icon> 3 days ago </span></h2>
-					<p>Itaque earum rerum hic tenetur a sapiente </p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/selfie6.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>John Smith <span class="right-time"> <ion-icon name="time"></ion-icon> 1 week ago </span></h2>
-					<p>Quis autem vel eum iure reprehenderit </p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Jenny Thomas <span class="right-time"> <ion-icon name="time"></ion-icon> 2 months ago </span></h2>
-					<p>Excepteur sint occaecat cupidatat non</p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Jenny Thomas <span class="right-time"> <ion-icon name="time"></ion-icon> 3 months ago  </span></h2>
-					<p>Lorem ipsum dolor sit amet, consectetur</p>
-				  </ion-label>
-				</ion-item>
-				<ion-item lines="none">
-				  <ion-avatar slot="start">
-					<img src="assets/img/user.jpg">
-				  </ion-avatar>
-				  <ion-label>
-					<h2>Hanry James <span class="right-time"> <ion-icon name="time"></ion-icon> 4 months ago  </span></h2>
-					<p>Sed ut perspiciatis unde omnis iste </p>
-				  </ion-label>
-				</ion-item>
+				<ng-container *ngFor="let notis of all_notis; let index = index ">
+					<ion-item (click)="messages()" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '1'">
+					  <ion-avatar slot="start" class="message-img">
+						<img src="assets/img/messages.png">
+					  </ion-avatar>
+					  <ion-label>
+						<h2>New messages
+						</h2>
+						<p>You have {{notis?.data_params?.count}} {{notis?.data_params?.count == 1 ? 'unread message' : 'unread messages'}}<em>.</em> </p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '2'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>You have new friend request.</p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '3'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>Your friend request has been accepted.</p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '4'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>Your friend request has been declined.</p>
+					  </ion-label>
+					</ion-item>
+
+				</ng-container>
+				<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getNotifications($event,'1')">
+	            	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+				</ion-infinite-scroll>
 			</ion-list>
+			<div style="text-align: center;background: #ccc;padding: 15px;" *ngIf="all_notis == '' && is_loaded == true" class="alert alert-danger" role="alert">
+				No notifications found!
+			</div>
 		</div>
 	</div>
 	

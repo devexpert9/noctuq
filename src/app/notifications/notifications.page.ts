@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ToastController, LoadingController, IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router } from '@angular/router';
@@ -22,8 +22,8 @@ all_notis:any;
 errors:any = ['', null, undefined];
 is_mobile_app:any = config.IS_MOBILE_APP;
 scroll_event:any;
-  constructor(public toastController: ToastController, public userService: UserService, public loadingController: LoadingController, private router: Router) { 
-  	this.records_per_page = 8;
+  constructor(public userService: UserService, private router: Router) { 
+  	this.records_per_page = 10;
   }
 
   ngOnInit() {
@@ -94,6 +94,14 @@ scroll_event:any;
 	  		console.log('read...')
 	  	});
   	}
+  }
+
+  messages(){
+    this.router.navigate(['/messages']);
+  }
+
+  profile(){
+    this.router.navigate(['/friends'])
   }
 
 }

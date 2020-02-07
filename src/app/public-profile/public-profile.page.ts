@@ -16,6 +16,7 @@ profile:any;
 IMAGES_URL:any=config.IMAGES_URL;
 is_loaded:Boolean=false;
 mySession:any;
+is_mobile_app:any = config.IS_MOBILE_APP;
   constructor(public userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { 
   	this.is_loaded = false;
   	this.toId = activatedRoute.snapshot.paramMap.get('id');
@@ -98,7 +99,14 @@ mySession:any;
     localStorage.setItem('chat_name',this.profile.name);
     localStorage.setItem('chat_image',this.profile.image);
     localStorage.setItem('chat_is_social_image',this.profile.is_social_image);
-    this.router.navigate(['/chat/'+this.toId]);
+    if(this.is_mobile_app == 'true'){
+      this.router.navigate(['/chat/'+this.toId]);
+    }
+    else{
+      localStorage.setItem('open_chat_box','1');
+      localStorage.setItem('open_chat_box_id',this.toId);
+      this.router.navigate(['/messages']);
+    }
   }
 
 }

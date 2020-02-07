@@ -95,16 +95,16 @@ export class AppComponent {
           } else {
             console.log('Received in foreground');
             if(data.type == '1'){
-              this.userService.presentToast('You have new message from '+data,'success');
+              this.userService.presentToast('You have new message from '+data.data,'success');
             }
             if(data.type == '2'){
-              this.userService.presentToast('You have new friend request from '+data,'success');
+              this.userService.presentToast('You have new friend request from '+data.data,'success');
             }
             if(data.type == '3'){
-              this.userService.presentToast(data+' has accepted your friend request','success');
+              this.userService.presentToast(data.data+' has accepted your friend request','success');
             }
             if(data.type == '4'){
-              this.userService.presentToast(data+' has rejected your friend request','success');
+              this.userService.presentToast(data.data+' has rejected your friend request','success');
             }
           }
         });

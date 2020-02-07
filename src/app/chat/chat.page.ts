@@ -27,7 +27,7 @@ chats:any=[];
 chat_name:any;
 chat_image:any;
 chat_is_social_image:any;
-errors:any = ['',null,undefined];
+errors:any = ['',null,undefined,"null"];
 mySession:any;
 new_message:any;
 IMAGES_URL:any=config.IMAGES_URL;
@@ -86,7 +86,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     this.userService.postData({fromId: this.userId, toId: this.toId, message : message, type : 'text', from_name : this.mySession.name},'add_chat').subscribe((result) => { 
     	if(result.status == 1){
     		this.socket.connect();
-    		this.socket.emit('send_message', {_id : result.data, fromId : this.userId, message : message, toId : this.toId, type : 'text', created_at : new Date() });
+    		this.socket.emit('send_message', {_id : result.data, fromId : this.userId, message : message, toId : this.toId, type : 'text', created_at : new Date() , user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image});
     	}
     },
     err => {
@@ -109,7 +109,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     this.userService.postData(formData,'add_chat_image').subscribe((result) => { 
       if(result.status == 1){
         this.socket.connect();
-        this.socket.emit('send_message', {fromId : this.userId, message : result.file_name, toId : this.toId, type : 'image', created_at : new Date() });
+        this.socket.emit('send_message', {fromId : this.userId, message : result.file_name, toId : this.toId, type : 'image', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
       }
     },
     err => {

@@ -50,7 +50,7 @@ ion-content[comments-bg] {
 				}
 			}
 		}
-		ion-item:nth-child(2n) {
+		.active {
 			--background: #f9f9f9;
 			background-color: #f9f9f9;
 			border-left: 3px solid rgba(17, 17, 17, 0.33);
@@ -73,4 +73,7 @@ footer[webFooter]  {
     position: relative;
     margin-top: 100px;
 }
+}
+.message-img img{
+	border-radius: 0;
 }
