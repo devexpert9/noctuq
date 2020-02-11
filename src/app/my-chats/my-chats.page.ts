@@ -329,5 +329,9 @@ chat_image:any;
     });
   }
 
+  openImage(path){
+    this.photoViewer.show(path);
+  }
+
 }
 
