@@ -100,7 +100,7 @@ ion-checkbox
     align-items: center;
   }
   a.webLogo img {
-    max-width: 200px;
+    max-height:50px;
   }
   .ritNavbar {
     margin-left: auto;
@@ -251,7 +251,8 @@ ion-checkbox
   }
   [webAboutPage] [AboutContn]{
     padding:50px 80px;
-    min-height: 480px;
+    min-height: calc(100vh - 160px);
+    box-sizing: border-box;
   }
   ion-content[comments-bg][webAboutPage]{
     --background:none !important; 
@@ -320,6 +321,12 @@ ion-checkbox
   .profile-sets{
     max-width:550px;
     margin:auto;
+    min-height: calc(100vh - 160px);
+    box-sizing: border-box;
+  }
+  [list-events], .contentHeight{
+    min-height: calc(100vh - 160px);
+    box-sizing: border-box;    
   }
   ion-content[comments-bg] .profile-sets .prfl-top h5{
     letter-spacing: 0;
@@ -362,9 +369,6 @@ ion-checkbox
   ion-content[comments-bg] .user-box-l h5{
     font-size: 16px !important;
   }
-  .profile-sets{
-    min-height: 480px;
-  }
   ion-content[comments-bg] .profile-sets{
     padding:50px 0 10px !important;
   }
@@ -395,6 +399,47 @@ ion-checkbox
   }
   [userDetails] ion-item ion-label{
     font-size: 15px !important;
+  }
+  [comments-bg] .commts{
+    padding: 0px !important;
+    border: 1px solid #ddd;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: 25px;
+  }
+  ion-content[comments-bg] [transctin-list]{
+    padding: 25px 0px 10px !important;
+  }
+  .webContainer ion-row{
+    margin:0;
+    padding:0;
+  }
+  .webContainer ion-row ion-col{
+    margin:0;
+    padding:0;
+  }
+  .foot-mgs{
+    --background:#fcfcfc;
+    border: 1px solid #ddd;
+    border-left: 0; 
+    border-right: 0;
+  }
+  ion-content[comments-bg] [transctin-list] ion-list{
+    max-height:460px;
+    overflow-y: auto;
+  }
+  #chat_div{
+    min-height: 401px;
+    max-height: 401px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding:0 20px; 
+  }
+  .foot-mgs ion-item label{
+    margin-top:5px;
+  }
+  .foot-mgs ion-item ion-input{
+    margin-left: 5px;
   }
 
 }
@@ -485,7 +530,6 @@ app-footer[foot-str] {
     width: 100%;
 	[webFooter]{
 		margin-top: 20px;
-		margin-bottom: 60px;
 	}
 }
 [loc-div] {    padding: 0px 0px !important;}

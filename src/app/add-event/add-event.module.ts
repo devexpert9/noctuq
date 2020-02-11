@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddEventPage } from './add-event.page';
 import { NgxGeoautocompleteModule } from 'ngx-geoautocomplete';
+import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    NgxGeoautocompleteModule.forRoot()
+    NgxGeoautocompleteModule.forRoot(),
+    SharedModule
   ],
   declarations: [AddEventPage]
 })

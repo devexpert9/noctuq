@@ -11,7 +11,7 @@
 <ion-content comments-bg top-0>
 	<div header_height></div>
 	<div class="webContainer">
-		<div transctin-list>
+		<div transctin-list class="contentHeight">
 			<ion-list>
 				<ng-container *ngFor="let notis of all_notis; let index = index ">
 					<ion-item (click)="messages()" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '1'">
