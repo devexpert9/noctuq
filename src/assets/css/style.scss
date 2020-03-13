@@ -630,3 +630,28 @@ footer[webFooter]  {
     text-align: center;
     margin: 0 auto;
 }
+.set-serch
+{
+ion-searchbar
+{
+&.sc-ion-searchbar-ios-h
+{    margin-left: 0px!important;
+height: 42px;
+input.searchbar-input.sc-ion-searchbar-ios {
+background: transparent!important;
+}
+}
+ input.searchbar-input {
+ 
+    box-shadow: none!important;
+}
+}
+}
+@media only screen and (min-width:992px)
+{
+.ChangePassword
+{
+  --width:500px;
+  --height:360px;
+}
+}

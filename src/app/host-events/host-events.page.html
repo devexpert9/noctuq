@@ -33,9 +33,10 @@
 			  	<div AppContainer homeLists>
 					<div class="add-evnt">
 						<div class="page-tabs">
-							<a (click)="changePage('venues')" href="javascript:void(0);" class="{{page_type == 'venues' ? 'active' : ''}} btn-stra-sm"> Venue </a>
-							<a (click)="changePage('events')" href="javascript:void(0);" class="{{page_type == 'events' ? 'active' : ''}} btn-stra-sm"> Events </a>
-						</div>
+								<a (click)="changePage('venues')" href="javascript:void(0);" class="{{page_type == 'venues' ? 'active' : ''}} btn-stra-sm gridvenue"> Venue </a>
+								<a (click)="changePage('events')" href="javascript:void(0);" class="{{page_type == 'events' ? 'active' : ''}} btn-stra-sm gridevents"> Events </a>
+						
+							</div>
 						<a href="javascript:void(0);" class="btn-stra-sm" routerLink="/add-event" >
 							<ion-icon name="add"></ion-icon> Add Event 
 						</a>
@@ -43,8 +44,9 @@
 							<ion-icon name="add"></ion-icon> Add Venue 
 						</a>
 					</div>
+					<div listinner>
 					<ng-container *ngIf="page_type == 'events'">
-					<ion-card img-srta *ngFor="let event of all_events; let index = index ">
+					<ion-card  img-srta *ngFor="let event of all_events; let index = index ">
 						<img routerLink="/clubs/{{event._id}}" *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
 						<img routerLink="/clubs/{{event._id}}" *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
 						<ion-card-header routerLink="/clubs/{{event._id}}">
@@ -84,6 +86,7 @@
 						
 						<img *ngIf="all_venues == '' && is_loaded_v" src="assets/img/no_result_found.gif"/>
 					</ng-container>
+				</div>
 				</div>
 				<ion-infinite-scroll *ngIf="is_more_records && page_type == 'events'" threshold="100px" (ionInfinite)="getEvents($event,'1')">
 			        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>

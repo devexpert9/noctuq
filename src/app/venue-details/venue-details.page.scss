@@ -174,8 +174,8 @@ ul.list-st-cnt {
 			margin-bottom: 10px;
 			ion-icon {
 				position: absolute;
-			    right: 0;
-			    top: -25px;
+			    right: -13px;
+                top: -45px;
 			    font-size: 37px;
 			    color: var(--ion-color-white);
 			}
@@ -250,7 +250,7 @@ margin-bottom:var(--ion-value-10);
     z-index: 9999;
     left: 8px;
     background: #000; 
-    padding: 5px 6px;
+    padding: 4px 6px;
     font-size: 18px;
     border-radius: 50%;
     color: #fff;
@@ -280,4 +280,24 @@ ion-slides{
 	    padding: 7px;
 	    font-weight: 600;
 	}
+}
+@media only screen and (max-width: 991px)
+{
+  ion-content[event-dtsl] 
+  {
+    ion-card[dls-a]
+    {
+	img.img-main {
+    height: 250px;
+  }
+  }
+}
+}
+@media (min-width: 992px)
+{
+[btm-links][show-desk] {
+    max-width: 1200px;
+    width: 95%;
+    margin:0 auto  45px; 
+}
 }

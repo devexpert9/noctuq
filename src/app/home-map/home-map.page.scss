@@ -136,6 +136,18 @@ agm-map {
 				}
 			}
 		}
+@media only screen and (max-width:991px) {
+	.mapListFilter
+	{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		[btn-sts]
+		{
+		  margin-right:5px;
+		}
+	}
+	}
 @media only screen and (min-width:992px) {
 .mapListFilter {
 [btn-sts] {

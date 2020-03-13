@@ -47,13 +47,13 @@
 	        </ion-item>
 	        <span error *ngIf="errors.indexOf(date) >= 0 && is_submit == true">Please select event date</span> 
 
-	        <ion-item>
+	        <ion-item starttime>
 			<ion-label>Start Time</ion-label>
 	           <ion-datetime [(ngModel)]="start_time" displayFormat="HH:mm" placeholder="Start Time"></ion-datetime>
 	        </ion-item>
 	        <span error *ngIf="errors.indexOf(start_time) >= 0 && is_submit == true">Please select event start time</span>
 
-	        <ion-item>
+	        <ion-item endtime>
 			<ion-label>End Time</ion-label>
 	           <ion-datetime [(ngModel)]="end_time" displayFormat="HH:mm" placeholder="End Time"></ion-datetime>
 	        </ion-item>

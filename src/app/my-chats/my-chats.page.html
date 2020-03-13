@@ -32,7 +32,7 @@
 		</div>
 		</ion-col>
 		<ion-col size-lg="8" size-md="7"  hide-mooble-screen>
-			<div class="commts" *ngIf="isShow" comments-bg>
+			<div class="commts commentright" *ngIf="isShow" comments-bg>
 				<div id="chat_div">
 				<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" *ngFor="let chat of chats ">
 					<div class="comnt-head">
@@ -78,7 +78,7 @@
 
 			</div>
 			<div *ngIf="!isShow" style="margin-top: 26px">
-				<div style="text-align: center;background: #ccc;padding: 15px;" class="alert alert-danger" role="alert">
+				<div style="text-align: center;background: #ccc;padding: 15px;min-height: 80px;display: flex;align-items: center;justify-content: center;" class="alert alert-danger" role="alert">
 				Select user to chat !!
 			</div>
 			</div>

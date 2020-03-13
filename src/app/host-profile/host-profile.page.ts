@@ -130,6 +130,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
   async change_password(){
     const modal = await this.modalController.create({
       component: ChangePasswordPage,
+	   cssClass: 'ChangePassword',
       componentProps: { 
         user_type : 'host',
         userId : this.userId

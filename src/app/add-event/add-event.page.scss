@@ -169,7 +169,27 @@ label.slct-imgs {
 		margin-right: 6px;
 	}
 } 
+/*@media only screen and (max-width:767px) {
+ion-item
+{
+font-size:13px;
+--padding-end:0px;
+--padding-start:0px;
+--inner-padding-end:0px;
+&[starttime]
+{
+ width:49%;
+ float:left;
+}
+&[endtime]
+{
+  width:49%;
+ float:right;
+}
+}
+}*/
 @media only screen and (max-width:991px) {
+
 	[login-form] [roundedForm] {
 		border: none;
 		padding: 0px 15px;

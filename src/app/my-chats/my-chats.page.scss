@@ -5,7 +5,11 @@ ion-header{
 }
 
 ion-content[comments-bg] {
-
+.commentright
+{
+border-left: 1px solid #ddd;
+    margin-left: -1px;
+}
 [transctin-list] {
     padding: 25px 15px 10px; 
 	ion-list   {
