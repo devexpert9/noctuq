@@ -130,3 +130,13 @@ ion-content[comments-bg]{
 		}
 	}
 }
+[chg-pass]{
+	background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 5px 10px;
+	ion-icon{
+		top: 2px;
+    	position: relative;
+	}
+}

@@ -208,9 +208,20 @@ page_type:any;
     this.userService.postData(dict,'social_login').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
-        this.userService.presentToast('Login successfully!','success');
-        this.setSessions(result);
-        this.router.navigate(['/home-list']);
+        if(result.data.status == 1){
+          this.userService.presentToast('Login successfully!','success');
+          this.setSessions(result);
+          this.router.navigate(['/home-list']);
+        }
+        else if(result.data.status == 3){
+          this.userService.presentToast('Your account is deleted. Please try with different email address.','danger');
+        }
+        else if(result.data.status == 2){
+          this.userService.presentToast('Your account is deactivated.Please contact site admin','danger');
+        }
+        else{
+          this.userService.presentToast('Error while logging in! Please try later','danger');
+        }
       }
       else{
         this.userService.presentToast('Error while logging in! Please try later','danger');

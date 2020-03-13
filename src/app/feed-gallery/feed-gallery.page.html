@@ -35,6 +35,8 @@
         </ng-container>
 
 		    <p>{{item.name}}</p> 
+        <span title="Delete" del-feed (click)="delete(item?._id,i)"><ion-icon name="close"></ion-icon></span>
+        <span title="Report" del-feed flag (click)="flag(item?._id,i)"><ion-icon name="flag"></ion-icon></span>
       </ng-masonry-grid-item>
   </ng-masonry-grid>
 
@@ -49,8 +51,8 @@
 <app-footer></app-footer>
 <!-- // end -->
 </ion-content>
-<ion-footer> 
+<!-- <ion-footer> 
   <div scrll-icon>
 	<ion-icon name="arrow-down"></ion-icon>
   </div>
-</ion-footer>     
+</ion-footer>  -->    

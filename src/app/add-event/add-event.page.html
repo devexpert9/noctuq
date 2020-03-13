@@ -20,8 +20,8 @@
 	        <span error *ngIf="errors.indexOf(title) >= 0 && is_submit == true">Please enter event title</span>
 
 	        <ion-item>
-			    <ion-label>Venue Type</ion-label>
-			    <ion-select [(ngModel)]="venue_type" placeholder="Select Venue Type">
+			    <ion-label>Select Venue</ion-label>
+			    <ion-select [(ngModel)]="venue_type" placeholder="Select Venue">
 			      <ion-select-option *ngFor="let venue of all_venues" value="{{venue._id}}">{{venue.name}}</ion-select-option>
 			    </ion-select>
 		  	</ion-item>
@@ -36,25 +36,40 @@
 		  	<span error *ngIf="errors.indexOf(genre_type) >= 0 && is_submit == true">Please select genre</span>
 
 			<ion-item>
-			<ion-label>Price</ion-label>
-	           <ion-input [(ngModel)]="price" type="number" placeholder="Price"></ion-input>
+			<ion-label>Event Price</ion-label>
+	           <ion-input [(ngModel)]="price" type="number" placeholder="Event Price"></ion-input>
 	        </ion-item>
-	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter price</span>
-			<div class="locat-box">
-			<ngxgeo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ngxgeo-autocomplete>
-	        <span error *ngIf="errors.indexOf(location) >= 0 && is_submit == true">Please enter venue location</span>
-			</div>
+	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter event price</span>
+
+	        <ion-item>
+			<ion-label>Date</ion-label>
+	           <ion-datetime [(ngModel)]="date" displayFormat="MMM D, YYYY" min="{{current_date}}" placeholder="Date"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(date) >= 0 && is_submit == true">Please select event date</span> 
+
+	        <ion-item>
+			<ion-label>Start Time</ion-label>
+	           <ion-datetime [(ngModel)]="start_time" displayFormat="HH:mm" placeholder="Start Time"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(start_time) >= 0 && is_submit == true">Please select event start time</span>
+
+	        <ion-item>
+			<ion-label>End Time</ion-label>
+	           <ion-datetime [(ngModel)]="end_time" displayFormat="HH:mm" placeholder="End Time"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(end_time) >= 0 && is_submit == true">Please select event end time</span>
+
 	        <ion-item class="clear">
 			  <!--ion-label>Description</ion-label-->
-			  <ion-textarea [(ngModel)]="description" placeholder="Description">
+			  <ion-textarea maxlength="500" [(ngModel)]="description" placeholder="Description">
 			  </ion-textarea>
 			</ion-item>	
 			<span error *ngIf="errors.indexOf(description) >= 0 && is_submit == true">Please enter event description</span>
 
-			<ion-item mark-hot>
+<!-- 			<ion-item mark-hot>
 			  <ion-label>Make it Hot</ion-label>
 			  <ion-checkbox color="primary" [(ngModel)]="is_hot"></ion-checkbox>
-			</ion-item>	
+			</ion-item>	 -->
 
 			<ion-row>
 			<ng-container *ngIf="is_mobile_app == 'true'"><ion-button (click)="selectImage()"><ion-icon  name="create"></ion-icon> Select Image</ion-button></ng-container>

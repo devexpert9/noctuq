@@ -33,7 +33,10 @@
 			   <ion-item color="none" lines="none">
 				  <!-- <ion-icon name="search"></ion-icon> -->
 				 <!-- <ion-input (search)="search()" [(ngModel)]="search_term" placeholder="Search..." ></ion-input> -->
-				 <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+				 <ion-searchbar *ngIf="view_type == 'events'" (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
+				 <ion-searchbar *ngIf="view_type == 'venues'" (search)="search_v()" [(ngModel)]="search_term_v" (ionClear)="clear_search_v()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
 				 <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> </a>
 				 <!-- <span no_of_filters>2</span> -->
 			   </ion-item>
@@ -41,36 +44,66 @@
 		</div>
 		<div list-events>
 			<div class="mapListFilter">
+				<ion-buttons btn-sts only-map>
+				  <a *ngIf="page_type != 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-map"> <ion-icon name="pin"></ion-icon></a>
+				  <a *ngIf="page_type == 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-map/favorites"> <ion-icon name="pin"></ion-icon></a>
+				</ion-buttons>
+
 				<ion-buttons btn-sts>
-				  <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-map"> Map View </a>
-				  <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-map/favorites"> Map View </a>
-				  <a href="javascript:void(0)" class="list-ics"> List View </a>
+				  <a (click)="changeView('events')" href="javascript:void(0)" class="map-ics {{view_type == 'events' ? 'active' : ''}}"> Events </a>
+				  <a href="javascript:void(0)" (click)="changeView('venues')" class="list-ics {{view_type == 'venues' ? 'active' : ''}}"> Venue </a>
 			    </ion-buttons>
 
-			    <ion-searchbar  only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+			    <ion-searchbar *ngIf="view_type == 'events'" only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
+			    <ion-searchbar *ngIf="view_type == 'venues'" only-web (search)="search_v()" [(ngModel)]="search_term_v" (ionClear)="clear_search_v()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
 
 				<a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> &nbsp;Filter</a>
 			</div>
 		  	<div AppContainer homeLists>
-				<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
-					<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
-					<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
-					<ion-card-header>
-						<ion-card-title>{{event?.venue_type}}: {{event?.title}} </ion-card-title>
+		  		<ng-container *ngIf="view_type == 'events'">
+					<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
+						<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
+						<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
+						<ion-card-header>
+							<ion-card-title>{{event?.title}} - {{event?.time}} </ion-card-title>
+							<div description>
+								<p>Hosted at : {{event?.venue_type}}</p>
+							  <!-- <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p> -->
+							</div>
+							<div fav-div *ngIf="page_type == 'favorites'" >
+								<ion-icon name="heart"></ion-icon>
+							</div>
+						</ion-card-header>
+						<span date-div> {{event?.date | date : 'MMM d'}} </span>
+					</ion-card>
+					
+					<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
+					<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
+			        	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+					</ion-infinite-scroll>
+				</ng-container>
+				<ng-container *ngIf="view_type == 'venues'">
+					<ion-card img-srta *ngFor="let event of all_venues_list; let ind = index ">
+					<img routerLink="/venues/{{event._id}}" *ngIf="event?.images?.length == 0" src="assets/img/no-image-available.png"/> 
+					<img routerLink="/venues/{{event._id}}" *ngIf="event?.images?.length > 0" src="{{IMAGES_URL+'/venues/thumbnails/'+event?.images[0]['file_name']}}"/> 
+					<ion-card-header routerLink="/venues/{{event._id}}">
+						<ion-card-title>{{event?.name}} </ion-card-title>
 						<div description>
-						  <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p>
-						</div>
-						<div fav-div *ngIf="page_type == 'favorites'" >
-							<ion-icon name="heart"></ion-icon>
+						<p *ngIf="errors.indexOf(event?.current_event) == -1">
+							{{event?.current_event?.title}} - {{event?.current_event?.time}}
+						</p>
+						  <!-- <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p> -->
 						</div>
 					</ion-card-header>
-					
 				</ion-card>
 				
-				<img *ngIf="all_events == '' && is_loaded" src="assets/img/no_result_found.gif"/>
-				<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getEvents($event,'1')">
-		        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
-			</ion-infinite-scroll>
+				<img *ngIf="all_venues_list == '' && is_loaded_v" src="assets/img/no_result_found.gif"/>
+				<ion-infinite-scroll *ngIf="is_more_records_v" threshold="100px" (ionInfinite)="getVenues($event,'1')">
+		        	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+				</ion-infinite-scroll>
+
+				</ng-container>
 			</div>
 			
 		</div>

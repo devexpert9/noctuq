@@ -230,7 +230,7 @@ margin-bottom:var(--ion-value-10);
     }
 }
 [show-desk]{
-	margin-bottom: 25px;
+	margin-bottom: 45px;
 }
 [btm-links][show-desk] ul.list-st-cnt li, [big-hide]  ul.list-st-cnt li {
 	ion-fab[st-new-fab] {
@@ -243,6 +243,7 @@ margin-bottom:var(--ion-value-10);
 		}		
 	}
 }
+
 [eve-create-host]{
 	position: absolute;
     top: 8px;
@@ -261,4 +262,22 @@ margin-bottom:var(--ion-value-10);
     z-index: 9;
     color: #fff;
     font-size: 15px;
+}
+ion-slides{
+	z-index: 0;
+}
+[upcoming-eves] ion-card{
+	width: 33.33%;
+	img{
+		max-height: 257px;
+	}
+	[price-div]{
+		position: absolute;
+	    top: 0;
+	    right: 0;
+	    background: black;
+	    color: #fff;
+	    padding: 7px;
+	    font-weight: 600;
+	}
 }

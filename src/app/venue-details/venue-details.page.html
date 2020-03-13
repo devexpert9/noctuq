@@ -6,7 +6,7 @@
 			<!-- <ion-menu-button></ion-menu-button> -->
 		</ion-buttons>
 
-		<ion-title>Event</ion-title>
+		<ion-title>Venue</ion-title>
 		<ion-buttons slot="end" routerLink="/settings" *ngIf="userId != 0 && errors.indexOf(userId) == -1">
 			<ion-icon name="ios-settings"></ion-icon>
 		</ion-buttons>
@@ -26,11 +26,22 @@
 					<!-- <ion-icon name="pin" routerLink="/map/{{event?._id}}"></ion-icon> -->
 
 				</span>
-				<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png" class="img-main" /> 
-				<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}" class="img-main"/> 
+				<ng-container *ngIf="all_images?.length == 0">
+					<img src="assets/img/no-image-available.png" class="img-main" /> 
+				</ng-container>
+				<ng-container *ngIf="all_images?.length == 1">
+					<img src="{{IMAGES_URL+'/venues/original/'+all_images[0]['file_name']}}" class="img-main"/> 
+				</ng-container>
+				<ng-container *ngIf="all_images?.length > 1">
+					<ion-slides pager="true" [options]="slideOpts">
+				      <ion-slide *ngFor="let img of all_images">
+				        <img src="{{IMAGES_URL+'/venues/original/'+img.file_name}}" class="img-main"/> 
+				      </ion-slide>
+				    </ion-slides>
+				</ng-container>
 				<span class="price-top"> ${{event?.price}} </span>
-				<span class="date-div"> {{event?.date | date : 'MMM d'}} </span>
-				<span *ngIf="event?.hostId == hostId" eve-create-host routerLink="/edit-event/{{event?._id}}"> <ion-icon name="create"></ion-icon> </span>
+				<span *ngIf="errors.indexOf(current_event) == -1" class="date-div"> {{current_event?.date | date : 'MMM d'}} </span>
+				<span *ngIf="event?.hostId == hostId" eve-create-host routerLink="/edit-venue/{{event?._id}}"> <ion-icon name="create"></ion-icon> </span>
 				<div mainHdng>
 
 					<div botm-star>
@@ -38,62 +49,29 @@
 
 						<ngx-stars *ngIf="avg_rating?.length > 0" (click)="canRate()" [size]='1' [readonly]="true" [initialStars]="avg_rating[0]['average']" [maxStars]="5" [color]="'#f90'"></ngx-stars>
 					</div> 
-					<h1>{{event?.title}} - {{event?.time}}</h1>
-					<h3 str-rigt>Hosted at: {{event?.venue_type}} 	<ion-icon *ngIf="userId != 0 && errors.indexOf(userId) == -1" (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
+					<h1>{{event?.name}}</h1>
+					<h3 str-rigt> 
+					<span *ngIf="errors.indexOf(current_event) == -1">		
+						{{current_event?.title}} - {{current_event?.time}}
+					</span> 	
+					<ion-icon *ngIf="userId != 0 && errors.indexOf(userId) == -1" (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
 				</div>
-	<!--ion-card-header>
-	  <ion-card-title>{{event?.venue_type}}: </ion-card-title>
-	  <ion-card-subtitle str-rigt>{{event?.title}} 
-	  	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'star-outline' : 'star'}}"></ion-icon>
-	  </ion-card-subtitle>
-			<ion-row botm-star>
-				<ion-col size="6">
-					<span class="rate-tl"> Rate </span>
-					<ul class="icon-fir">
-						<li> <ion-icon name="flame"></ion-icon> </li>
-						<li> <ion-icon name="flame"></ion-icon> </li>
-						<li> <ion-icon name="flame"></ion-icon> </li>
-						<li> <ion-icon name="flame"></ion-icon> </li>
-						<li> <ion-icon name="flame"></ion-icon> </li>
-					</ul>
-				</ion-col>
-				<ion-col size="6" right-icns>
-					<ion-icon name="videocam" routerLink="/make-live-feed"></ion-icon>
-					<ion-icon name="chatboxes" routerLink="/vanue-comments"></ion-icon>
-				</ion-col>
-			</ion-row>
-		</ion-card-header-->
 	</div>
 	<div loc-div><ion-icon name="pin"></ion-icon>{{event?.address}}</div>
+	<div loc-div *ngIf="event?.venue_type?.length > 0">
+		<span *ngFor="let venue of event?.venue_type; let last = last ">
+		{{venue.name}}{{last != true ? ', ' : ''}}
+		</span>
+	</div>
 	<ion-card-content [innerHTML]="event?.venue_description">
-	</ion-card-content>
-	<!-- <div class="list-st-cnt">
-		<a class="linc-x"  routerLink="/feed-gallery/{{event?._id}}">
-			<ion-icon src="assets/img/live.svg"></ion-icon>
-		</a>
-	</div> -->	
+	</ion-card-content>	
 </ion-card>
-</div>
-</div>
 
  <ion-row btm-links show-desk>
 	<ion-col size="12" align-self-center>
 		<ul class="list-st-cnt">
 			
 			<li *ngIf="is_mobile_app == 'false'">
-				<!-- <ion-fab vertical="top" horizontal="end" edge slot="fixed" style="width: inherit;">
-				    <ion-fab-button size="small" color="primary3">
-				      <ion-icon name="md-share"></ion-icon>
-				    </ion-fab-button>
-				    <ion-fab-list>
-				      	<ul fab_ul>
-							<li> <share-button button="facebook" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="twitter" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="google" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="pinterest" url="{{share_url}}"></share-button></li>
-						</ul>
-				    </ion-fab-list>
-				</ion-fab> -->
 				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab color="ltblack">
 				    <ion-fab-button color="ltblack">
 				      <ion-icon name="share"></ion-icon>
@@ -119,6 +97,28 @@
 	</ion-col>
 </ion-row>
 
+<h3 *ngIf="upcoming_events != ''">Upcoming events</h3>
+<ion-row upcoming-eves *ngIf="upcoming_events != ''">
+	<ion-card *ngFor="let eve of upcoming_events ">
+	  <ion-card-header>
+	    <ion-card-subtitle>
+	    	<img routerLink="/clubs/{{eve._id}}" *ngIf="errors.indexOf(eve?.image) >= 0" src="assets/img/no-image-available.png"/> 
+			<img routerLink="/clubs/{{eve._id}}" *ngIf="errors.indexOf(eve?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+eve?.image}}"/> 
+	    </ion-card-subtitle>
+	    <ion-card-title routerLink="/clubs/{{eve._id}}">{{eve?.title}}</ion-card-title>
+	    <span price-div>${{eve?.price}}</span>
+	  </ion-card-header>
+
+	  <ion-card-content>
+	    {{eve?.date | date : 'MMM d'}} on {{eve?.time}}
+	  </ion-card-content>
+	</ion-card>
+</ion-row>
+</div>
+</div>
+
+
+
 <!-- webFooter -->
 <app-footer foot-str></app-footer>
 <!-- // end -->
@@ -130,19 +130,6 @@
 		<ul class="list-st-cnt">
 			
 			<li *ngIf="is_mobile_app == 'false'">
-				<!-- <ion-fab vertical="top" horizontal="end" edge slot="fixed" style="width: inherit;">
-				    <ion-fab-button size="small" color="primary3">
-				      <ion-icon name="md-share"></ion-icon>
-				    </ion-fab-button>
-				    <ion-fab-list>
-				      	<ul fab_ul>
-							<li> <share-button button="facebook" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="twitter" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="google" url="{{share_url}}"></share-button></li>
-							<li> <share-button button="pinterest" url="{{share_url}}"></share-button></li>
-						</ul>
-				    </ion-fab-list>
-				</ion-fab> -->
 				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab>
 				    <ion-fab-button color="ltblack">
 				      <ion-icon name="share"></ion-icon>

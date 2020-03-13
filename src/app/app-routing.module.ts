@@ -12,13 +12,13 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'login/:type', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
-  { path: 'forgotpassword', loadChildren: './forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
+  { path: 'forgotpassword/:type', loadChildren: './forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
   { path: 'home-list', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
   { path: 'home-list/:type', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
   { path: 'home-map', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
   { path: 'home-map/:type', loadChildren: './home-map/home-map.module#HomeMapPageModule', canActivate: [AuthGuardService] },
   { path: 'clubs/:id', loadChildren: './clubs/clubs.module#ClubsPageModule' },
-  { path: 'venue-comments/:id', loadChildren: './vanue-comments/vanue-comments.module#VanueCommentsPageModule', canActivate: [AuthGuardService] },
+  { path: 'venue-comments/:id', loadChildren: './vanue-comments/vanue-comments.module#VanueCommentsPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'friends', loadChildren: './friends/friends.module#FriendsPageModule', canActivate: [AuthGuardService] },
   { path: 'live-feed/:id', loadChildren: './live-feed/live-feed.module#LiveFeedPageModule', canActivate: [AuthGuardService] },
@@ -38,7 +38,11 @@ const routes: Routes = [
   { path: 'edit-event/:id', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
   { path: 'host-profile', loadChildren: './host-profile/host-profile.module#HostProfilePageModule', canActivate: [AuthGuardHostService] },
   { path: 'messages', loadChildren: './my-chats/my-chats.module#MyChatsPageModule', canActivate: [AuthGuardService] },
-  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule', canActivate: [AuthGuardService] }
+  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule', canActivate: [AuthGuardService] },
+  { path: 'add-venue', loadChildren: './add-venue/add-venue.module#AddVenuePageModule' , canActivate: [AuthGuardHostService] },
+  { path: 'edit-venue/:id', loadChildren: './add-venue/add-venue.module#AddVenuePageModule' , canActivate: [AuthGuardHostService] },
+  { path: 'venues/:id', loadChildren: './venue-details/venue-details.module#VenueDetailsPageModule' },
+  { path: 'change-password', loadChildren: './change-password/change-password.module#ChangePasswordPageModule' }
 ];
 
 @NgModule({

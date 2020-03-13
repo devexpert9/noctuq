@@ -1,4 +1,4 @@
-var MAIN_URL = 'http://54.234.87.202';
+var MAIN_URL = 'http://54.242.197.170';
 var MAIN_URL_PORT = '3001'; 
 var SOCKET_URL_PORT = '3002'; 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -19,8 +19,11 @@ step:any = '1';
 otp_id:any;
 password:any;
 confirm_password:any;
-  constructor(public userService: UserService, public router: Router) { 
+page_type:any;
+  constructor(public userService: UserService, public router: Router, private activatedRoute: ActivatedRoute) { 
   	this.reg_exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    this.page_type = activatedRoute.snapshot.paramMap.get('type');
+
   }
 
   ngOnInit() {
@@ -33,7 +36,7 @@ confirm_password:any;
     }
 
     this.userService.presentLoading();
-    this.userService.postData({email: this.email, type : 'forgot', apiUrl : config.API_URL},'reset_password_request').subscribe((result) => {
+    this.userService.postData({email: this.email, type : 'forgot', page_type: this.page_type, apiUrl : config.API_URL},'reset_password_request').subscribe((result) => {
       this.userService.stopLoading();
       this.is_submit = false;
       if(result.status == 1){
@@ -88,14 +91,19 @@ confirm_password:any;
     }
 
     this.userService.presentLoading();
-    this.userService.postData({userId: this.userId, password : this.password},'reset_password').subscribe((result) => {
+    this.userService.postData({userId: this.userId, password : this.password, page_type: this.page_type,},'reset_password').subscribe((result) => {
       this.userService.stopLoading();
       this.is_submit = false;
       if(result.status == 1){
         this.password = '';
         this.confirm_password = '';
         this.userService.presentToast('Password updated successfully!','success');
-        this.router.navigate(['/login']);
+        if(this.page_type == 'host'){
+          this.router.navigate(['/login/host']);
+        }
+        else{
+          this.router.navigate(['/login']);
+        }
       }
       else{
         this.userService.presentToast('Error while updating the password! Please try later.','danger');

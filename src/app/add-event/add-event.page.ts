@@ -25,11 +25,7 @@ title:any;
 venue_type:any;
 genre_type:any;
 price:any;
-location:any;
 description:any;
-is_hot:any;
-lat:any;
-lng:any;
 userSettings = {};
 hostId:any;
 imgBlob:any;
@@ -44,10 +40,17 @@ isEdit:any;
 single_event:any;
 prev_image_url:any;
 IMAGES_URL:any=config.IMAGES_URL;
+date:any;
+start_time:any;
+end_time:any;
+current_date:any;
   constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef, private activatedRoute: ActivatedRoute) { 
+    var current = new Date();
+    this.current_date = current.getFullYear()+'-'+(((current.getMonth()+1) < 10 ? '0'+(current.getMonth()+1) : (current.getMonth()+1)))+'-'+(current.getDate() < 10 ? '0'+current.getDate() : current.getDate());
+
   	this.get_venues_genres();
-  	this.userSettings['inputPlaceholderText'] = 'Location';
-    this.userSettings = Object.assign({},this.userSettings);
+  	// this.userSettings['inputPlaceholderText'] = 'Location';
+   //  this.userSettings = Object.assign({},this.userSettings);
     this.event_id = activatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -75,14 +78,16 @@ IMAGES_URL:any=config.IMAGES_URL;
       	this.genre_type = this.single_event.genre;
       	this.price = this.single_event.price;
       	this.description = this.single_event.venue_description;
-      	this.prev_image_url = this.single_event.image;
-      	this.is_hot = this.single_event.is_hot == 1 ? true : false;
-      	this.lat = this.single_event.location.lat;
-      	this.lng = this.single_event.location.lng;
-      	this.location = this.single_event.address;
+        this.prev_image_url = this.single_event.image;
+        this.date = this.single_event.date;
+        this.start_time = this.single_event.time;
+      	this.end_time = this.single_event.end_time;
+      	// this.lat = this.single_event.location.lat;
+      	// this.lng = this.single_event.location.lng;
+      	// this.location = this.single_event.address;
 
-      	this.userSettings['inputString'] = this.single_event.address;
-    	this.userSettings = Object.assign({},this.userSettings);
+      	// this.userSettings['inputString'] = this.single_event.address;
+    	// this.userSettings = Object.assign({},this.userSettings);
       }
       else{
       	this.userService.presentToast('Invalid Page.','danger');
@@ -97,7 +102,7 @@ IMAGES_URL:any=config.IMAGES_URL;
   get_venues_genres(){
     this.userService.postData({},'get_venues_genres').subscribe((result) => {
       this.all_genres = result.genres;
-      this.all_venues = result.venues;
+      this.all_venues = result.venues_list;
     },
     err => {
       this.all_genres = [];
@@ -105,16 +110,16 @@ IMAGES_URL:any=config.IMAGES_URL;
     });
   }
 
-  autoCompleteCallback(data) {
-    console.log(data.data.formatted_address)
-    this.lat = data.data.geometry.location.lat;
-    this.lng = data.data.geometry.location.lng;
-    this.location = data.data.formatted_address;
-  }
+  // autoCompleteCallback(data) {
+  //   console.log(data.data.formatted_address)
+  //   this.lat = data.data.geometry.location.lat;
+  //   this.lng = data.data.geometry.location.lng;
+  //   this.location = data.data.formatted_address;
+  // }
 
   add_event(){
     this.is_submit = true;
-    if(this.errors.indexOf(this.title) >= 0 || this.errors.indexOf(this.venue_type) >= 0 || this.errors.indexOf(this.genre_type) >= 0 || this.errors.indexOf(this.price) >= 0 || this.errors.indexOf(this.location) >= 0 || this.errors.indexOf(this.description) >= 0 ){
+    if(this.errors.indexOf(this.title) >= 0 || this.errors.indexOf(this.venue_type) >= 0 || this.errors.indexOf(this.genre_type) >= 0 || this.errors.indexOf(this.price) >= 0 || this.errors.indexOf(this.description) >= 0 || this.errors.indexOf(this.date) >= 0 || this.errors.indexOf(this.start_time) >= 0 || this.errors.indexOf(this.end_time) >= 0 ){
       return false;
     }
 
@@ -136,15 +141,23 @@ IMAGES_URL:any=config.IMAGES_URL;
     formData.append('title', this.title);
     formData.append('venue_type', this.venue_type);
     formData.append('price', this.price);
-    formData.append('address', this.location);
-    formData.append('lat', this.lat);
-    formData.append('lng', this.lng);
+    formData.append('date', this.date.split('T')[0]);
+    if(this.isEdit == '1'){
+      formData.append('start_time', this.start_time);
+      formData.append('end_time', this.end_time);
+    }
+    else{
+      formData.append('start_time', this.start_time.split('T')[1].substr(0,5));
+      formData.append('end_time', this.end_time.split('T')[1].substr(0,5));
+    }
+    // formData.append('address', this.location);
+    // formData.append('lat', this.lat);
+    // formData.append('lng', this.lng);
     formData.append('venue_description', this.description);
-    formData.append('is_hot', this.is_hot == true ? '1' : '0');
     formData.append('genre', JSON.stringify(this.genre_type));
     
     this.userService.presentLoading();
-    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event' : 'add_event';
+    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event' : 'add_event/'+this.hostId;
     this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
@@ -153,17 +166,16 @@ IMAGES_URL:any=config.IMAGES_URL;
 	    this.title = '';
 	    this.venue_type = '';
 	    this.price = '';
-	    this.location = '';
-	    this.lat = '';
-	    this.lng = '';
 	    this.description = '';
-	    this.is_hot == false;
-	    this.genre_type = '';
+      this.genre_type = '';
+      this.date = '';
+      this.start_time = '';
+	    this.end_time = '';
 	    this.is_image_selected = false;
 	    this.imgBlob = '';
 	    this.file_name = '';
-	    this.userSettings['inputString'] = '';
-    	this.userSettings = Object.assign({},this.userSettings);
+	    // this.userSettings['inputString'] = '';
+    	// this.userSettings = Object.assign({},this.userSettings);
     	var message = '';
     	if(this.isEdit == '1'){
     		message = 'Event updated successfully.';
@@ -176,6 +188,9 @@ IMAGES_URL:any=config.IMAGES_URL;
       }
       else if(result.status == 2){
         this.userService.presentToast('Event already exists with same name.','danger');
+      }
+      else if(result.status == 3){
+        this.userService.presentToast('You can add only 100 events.Please remove existing events to add new one.','danger');
       }
       else{
         this.userService.presentToast('Error while adding event! Please try later','danger');
@@ -195,6 +210,7 @@ IMAGES_URL:any=config.IMAGES_URL;
       var image_file = event.target.files[0];
       if(self.allowedMimes.indexOf(image_file.type) == -1){
         this.isInvalid = true;
+        this.userService.presentToast('Please select valid image','danger');
       }
       else{
         self.is_image_selected = true;

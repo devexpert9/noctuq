@@ -90,7 +90,7 @@ ion-content
 			img {
 				height:200px;
 				width:100%;
-				object-fit: cover;
+				object-fit: contain;
 			}
 			ion-card-header  {
 				position: absolute;
@@ -222,4 +222,23 @@ ion-content
 		height: 100%;
 		width: 100%;
 	}
+}
+.page-tabs{
+	float: left;
+	a{
+		background: #fff;
+		border: 1px solid #000;
+		color: #000;
+	}
+	a.active{
+		background: #000;
+		border: 1px solid #000;
+		color: #fff;
+	}
+}
+[date-div]{
+	position: absolute;
+    bottom: 15px;
+    right: 10px;
+    color: #fff;
 }

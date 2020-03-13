@@ -20,12 +20,12 @@
 			</div>
 			<h5> <span class="text-poa"> {{profile?.name}}  <!--ion-icon name="chatboxes" routerLink="/chat"></ion-icon--> </span> </h5>
 		</div>	
-		<div btnsRow  *ngIf="profile?.coming_request > 0">
+		<div btnsRow  *ngIf="profile?.coming_request > 0 && userId != toId">
 			<ion-button (click)="chat()" shape="round">
 				<ion-icon name="chatboxes"></ion-icon> Chat
 			</ion-button>
 		</div>
-		<div btnsRow>
+		<div btnsRow *ngIf="userId != toId">
 			<ion-button *ngIf="profile?.coming_request == 0" (click)="chat()" shape="round">
 				<ion-icon name="chatboxes"></ion-icon> Chat
 			</ion-button>

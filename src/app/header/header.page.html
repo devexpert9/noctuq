@@ -1,6 +1,6 @@
 <div class="webHeader">
   <div class="webContainer" style="z-index: 999;">
-    <a href="javascript:void(0)" routerLink="/home-list" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
+    <a href="javascript:void(0)" routerLink="{{isLoggedIn ? '/home-list' : '/host-events'}}" class="webLogo"><img src="assets/img/logo.png" alt=""></a>
     <div class="ritNavbar">
       <ul>
         <li *ngIf="isLoggedIn"><a href="javascript:void(0)" routerLink="/home-list">Home</a></li>

@@ -7,6 +7,9 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { config } from './config';
 import { UserService } from './services/user/user.service';
 import { filter } from 'rxjs/operators';
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -17,7 +20,9 @@ export class AppComponent {
   isLoggedIn:boolean = false;
   errors:any = ['',null,undefined];
   no_header_pages:any;
+  new_message:any;
   current_url:any;
+  userId:any;
   public appPages = [
     {
       title: 'Home',
@@ -62,12 +67,22 @@ export class AppComponent {
   ];
 
   constructor(
-    private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menu: MenuController, private router: Router,private fcm: FCM, public events:Events, public userService:UserService) {
+    private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menu: MenuController, private router: Router,private fcm: FCM, public events:Events, public userService:UserService, private socket: Socket) {
       this.initializeApp();
       events.subscribe('user_log_activity:true', data => {
         this.checkUserAuth();
       });
-      this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword','/login/host'];
+      this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword/user','/forgotpassword/host','/login/host'];
+
+      // socket call
+      this.getUpdates().subscribe(new_message => {
+        console.log('new_message')
+        console.log(new_message)
+        this.new_message = new_message;
+        if(this.new_message.userId == this.userId){
+          this.logout();
+        }
+      });
   }
 
   ngOnInit(){
@@ -115,6 +130,7 @@ export class AppComponent {
   checkUserAuth(){
     var token = localStorage.getItem('niteowl_auth_token');
     var userId = this.userService.decryptData(token,config.ENC_SALT);
+    this.userId = userId;
     if(this.errors.indexOf(userId) == -1 && userId != 0){
       this.isLoggedIn = true;
     }
@@ -125,6 +141,16 @@ export class AppComponent {
 
   closeMenu(){
     this.menu.close();
+  }
+
+  getUpdates() {
+    var self = this;
+    let observable = new Observable(observer => {
+      self.socket.on('rec_deactivate_user', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
   }
 
   logout(){

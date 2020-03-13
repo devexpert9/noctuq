@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActionSheetController, Platform, Events } from '@ionic/angular'; 
+import { ActionSheetController, Platform, Events, ModalController } from '@ionic/angular'; 
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/n
 import { File, FileEntry } from '@ionic-native/file/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ChangePasswordPage } from '../change-password/change-password.page';
 declare var window: any; 
 
 @Component({
@@ -29,7 +30,7 @@ file_name:any;
 image_url:any;
 is_mobile_app:any = config.IS_MOBILE_APP;
 allowedMimes:any=config.IMAGE_EXTENSIONS;
-  constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef, private events: Events) { }
+  constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef, private events: Events, public modalController:ModalController) { }
 
   ngOnInit() {
   }
@@ -124,6 +125,17 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
       this.userService.stopLoading();
       this.userService.presentToast('Unable to update profile, Please try after some time.','danger');
     });
+  }
+
+  async change_password(){
+    const modal = await this.modalController.create({
+      component: ChangePasswordPage,
+      componentProps: { 
+        user_type : 'host',
+        userId : this.userId
+      }
+    });
+    return await modal.present();
   }
 
   uploadImg(event){ 

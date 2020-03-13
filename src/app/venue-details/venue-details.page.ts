@@ -14,32 +14,39 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 
 @Component({
-  selector: 'app-clubs',
-  templateUrl: './clubs.page.html',
-  styleUrls: ['./clubs.page.scss'],
+  selector: 'app-venue-details',
+  templateUrl: './venue-details.page.html',
+  styleUrls: ['./venue-details.page.scss'],
 })
-export class ClubsPage implements OnInit {
+export class VenueDetailsPage implements OnInit {
 event_id:any;
 is_loaded:boolean = false;
 userId:any;
 event:any;
 is_rated:any;
 avg_rating:any;
+all_images:any=[];
 errors:any=['',null,undefined];
 IMAGES_URL:any=config.IMAGES_URL;
 options: LaunchNavigatorOptions = {};
 is_favorite:any;
 file_name:any;
 imgBlob:any;
-hostId:any;
 API_URL:any=config.API_URL;
 BASE_URL:any=config.BASE_URL;
 share_url:any;
 is_mobile_app:any = config.IS_MOBILE_APP;
 share_message:any;
+current_event:any;
+hostId:any;
+upcoming_events:any;
+slideOpts = {
+    initialSlide: 0,
+    speed: 400
+  };
   constructor(private socialSharing: SocialSharing, private activatedRoute: ActivatedRoute, public userService:UserService, private launchNavigator: LaunchNavigator, public modalController: ModalController, private videoCapturePlus: VideoCapturePlus, private camera: Camera, private file: File, private filePath: FilePath,private ref: ChangeDetectorRef, private transfer: FileTransfer, public actionSheetController: ActionSheetController, private router:Router) { 
     this.event_id = activatedRoute.snapshot.paramMap.get('id');
-    this.share_url = this.BASE_URL+'#/clubs/'+this.event_id;
+    this.share_url = this.BASE_URL+'#/venues/'+this.event_id;
     console.log(this.share_url)
   }
 
@@ -51,19 +58,22 @@ share_message:any;
   getEventDetails(){
     var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
-
+    
     var host_token = localStorage.getItem('niteowl_host_auth_token');
     this.hostId = this.userService.decryptData(host_token,config.ENC_SALT);
     this.userService.presentLoading();
-    this.userService.postData({event_id: this.event_id, userId: this.userId},'get_event_details').subscribe((result) => {
+    this.userService.postData({venue_id: this.event_id, userId: this.userId},'get_venue_details').subscribe((result) => {
       this.userService.stopLoading();
       this.is_loaded = true;
-      this.event = result.event;
+      this.event = result.venue;
       this.is_favorite = result.is_favorite;
       this.is_rated = result.is_rated;
       this.avg_rating = result.rating;
+      this.all_images = result.images;
+      this.current_event = result.current_event;
+      this.upcoming_events = result.upcoming_events;
       console.log(result)
-      this.share_message = 'Share this events with your nearest friends and be the part of '+this.event.venue_type+':'+this.event.title+' at '+this.event.address+'.  '+ this.share_url;
+      this.share_message = 'Share this venue with your nearest friends and be the part of '+this.event.name+' at '+this.event.address+'.  '+ this.share_url;
     },
     err => {
       this.is_loaded = true;
@@ -90,13 +100,6 @@ share_message:any;
       this.userService.stopLoading();
       this.userService.presentToast('Unable to fetch results, Please try again','danger');
     });
-  }
-
-  openMap(){
-    this.launchNavigator.navigate('Toronto, ON', this.options).then(
-    success => console.log('Launched navigator'),
-    error => console.log('Error launching navigator', error)
-    );
   }
   
   share(){
@@ -214,7 +217,7 @@ share_message:any;
     fileName: file.name,
     headers: {},
     params : {
-      userId : this.userId == 0 ? this.hostId : this.userId,
+      userId : this.userId,
       eventId : this.event_id,
       type : 'video',
       page_type : 'event',
@@ -241,7 +244,7 @@ share_message:any;
   add_feed(){
     const formData = new FormData();
     formData.append('file', this.imgBlob, this.file_name); 
-    formData.append('userId', this.userId == 0 ? this.hostId : this.userId);
+    formData.append('userId', this.userId);
     formData.append('eventId', this.event_id);
     formData.append('type', 'image');
     formData.append('page_type', 'event');
@@ -283,7 +286,7 @@ share_message:any;
   }
 
   comments(){
-    localStorage.setItem('eve_venue_page_type','event');
+    localStorage.setItem('eve_venue_page_type','venue');
     this.router.navigate(['/venue-comments/'+this.event_id]);
   }
 

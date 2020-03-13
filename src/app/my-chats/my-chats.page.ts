@@ -20,6 +20,7 @@ declare var window: any;
   styleUrls: ['./my-chats.page.scss'],
 })
 export class MyChatsPage implements OnInit {
+public win: any = window;
 userId:any;
 loading:any;
 is_loaded:boolean=false;

@@ -40,14 +40,19 @@ ion-title.ios.title-ios  {
 	}
 	a.list-ics {
 		font-size: 13px;
-		border: 1px solid #222;
+		border: 1px solid #ddd;
 		text-decoration: none;
 		padding:10px 15px 10px 15px;
-		background: #222;
-		color: #fff;
+		/*background: #222;*/
+		/*color: #fff;*/
 		font-weight: 500;
 		border-radius: 0 50px 50px 0;
 	} 
+	a.active{
+		background: #222;
+		color: #fff;
+		border: 1px solid #222;
+	}
 }
 ion-title[pls] {padding-left:0px;}
 [star-head] {
@@ -90,7 +95,7 @@ ion-content
 			img {
 				height:200px;
 				width:100%;
-				object-fit: cover;
+				object-fit: contain;
 			}
 			ion-card-header  {
 				position: absolute;
@@ -196,3 +201,15 @@ ion-content
 }
 
 }
+[date-div]{
+	position: absolute;
+    bottom: 15px;
+    right: 10px;
+    color: #fff;
+}
+[only-map]{
+	.map-ics{
+		border-radius: 1px !important;
+	}
+}
+

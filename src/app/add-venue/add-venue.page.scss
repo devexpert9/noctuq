@@ -130,13 +130,63 @@ ion-content[comments-bg]{
 		}
 	}
 }
-[chg-pass]{
-	background: transparent;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    padding: 5px 10px;
-	ion-icon{
-		top: 2px;
-    	position: relative;
+[login-form] {
+	[roundedForm] {
+		border: 1px solid #f3f3f3;
+		padding: 15px;
+		background: #f9f9f9;
+		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.04);
+		ion-item {
+			background: transparent;
+			--background: transparent;
+			margin-bottom: 10px;
+			ion-input {
+				text-align:right;
+			}
+		}
+		
 	}
+}
+.clear {     clear: both;}
+
+ion-content [login-form] {
+    margin: 25px auto 0;
+}
+[mark-hot] {
+	ion-checkbox {	
+			--border-color: #111;
+	}
+}
+label.slct-imgs {
+    width: 100%;
+    border-bottom: 1px solid #d6d6d6;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    color: #616161;
+	ion-icon {
+		position: relative;
+		top: 1px;
+		margin-right: 6px;
+	}
+} 
+@media only screen and (max-width:991px) {
+	[login-form] [roundedForm] {
+		border: none;
+		padding: 0px 15px;
+		background: transparent;
+		box-shadow: none;
+	}
+}
+.img-star{
+    width: 150px;
+    border: 1px solid #e6e6e6;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.close-circle{
+	position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 20px;
 }

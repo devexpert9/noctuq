@@ -30,7 +30,10 @@
 					Login
 				</ion-button> 
 			</div>
-			<p class="text-center"><a routerLink="/forgotpassword" href="javascript:void(0)"> Forgot Password? </a></p>
+			<p class="text-center">
+			<a *ngIf="page_type != 'host'" routerLink="/forgotpassword/user" href="javascript:void(0)"> Forgot Password? </a>
+			<a *ngIf="page_type == 'host'" routerLink="/forgotpassword/host" href="javascript:void(0)"> Forgot Password? </a>
+			</p>
 		</div>
 
 		<div social-icons class="ion-text-center" *ngIf="page_type != 'host'">

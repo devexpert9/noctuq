@@ -324,7 +324,10 @@ ion-checkbox
     min-height: calc(100vh - 160px);
     box-sizing: border-box;
   }
-  [list-events], .contentHeight{
+  [list-events]{
+    box-sizing: border-box;    
+  }
+  .contentHeight{
     min-height: calc(100vh - 160px);
     box-sizing: border-box;    
   }
@@ -566,6 +569,9 @@ app-footer[foot-str] {
 [btm-links][show-desk], .btn-stra-sm {
 	display:none;
 }
+[pad-all-20]{
+  padding: 0 20px;
+}
 
 }
 
@@ -612,4 +618,15 @@ footer[webFooter]  {
     position: relative;
     margin-top: 100px;
 }
+}
+
+.nv-file-over { border: dotted 1px red !important; }
+.well.my-drop-zone{
+  padding: 20px;
+    border: 1px solid #ccc;
+    width: 100%;
+    min-height: 150px;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 auto;
 }

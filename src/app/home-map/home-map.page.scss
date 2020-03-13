@@ -24,14 +24,19 @@
 	}
 	a.list-ics {
 		font-size: 13px;
-		border: 1px solid #222;
+		border: 1px solid #ddd;
 		text-decoration: none;
 		padding:10px 15px 10px 15px;
-		background: #222;
-		color: #fff;
+		/*background: #222;*/
+		/*color: #fff;*/
 		font-weight: 500;
 		border-radius: 0 50px 50px 0;
 	} 
+	a.active{
+		background: #222;
+		color: #fff;
+		border: 1px solid #222;
+	}
 }
 
 
@@ -65,15 +70,20 @@ a.map-ics  {
 }
 a.list-ics {
 	font-size: 13px;
-	border: 1px solid #fff;
+	border: 1px solid #ddd;
 	text-decoration: none;
 	padding: 10px 15px 10px 15px;
 	color: #222;
 	font-weight: 500;
 	border-radius: 0 50px 50px 0;
-	background: #222;
-	color: #fff;
+	/*background: #222;*/
+	/*color: #fff;*/
 } 
+a.active{
+		background: #222;
+		color: #fff;
+		border: 1px solid #222;
+	}
 }
 ion-title[pls] {padding-left:0px;}
 [star-head] {
@@ -134,4 +144,9 @@ agm-map {
 }
 }
 
+}
+[only-map]{
+	.map-ics{
+		border-radius: 1px !important;
+	}
 }

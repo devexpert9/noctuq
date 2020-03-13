@@ -5,6 +5,9 @@ ion-header{
 }
 
 ion-content[comments-bg] {
+	[wrap-text]{
+		white-space:normal;
+	}
 	 /*--background:var(--ion-color-primary)  url('../../assets/img/shadow.png')no-repeat bottom center/cover;*/
 	[list-settings] {
 		background: transparent;

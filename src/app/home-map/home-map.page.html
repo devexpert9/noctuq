@@ -45,10 +45,15 @@
     </div>
     <div list-events>
       <div class="mapListFilter">
-        <ion-buttons btn-sts>
-          <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-list/favorites" > List View </a>
-          <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="map-ics" routerLink="/home-list"> List View </a>
-          <a  href="javascript:void(0)" class="list-ics" > Map View </a>
+
+          <ion-buttons btn-sts only-map>
+            <a *ngIf="page_type != 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-list"> <ion-icon name="list"></ion-icon></a>
+            <a *ngIf="page_type == 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-list/favorites"> <ion-icon name="list"></ion-icon></a>
+          </ion-buttons>
+
+          <ion-buttons btn-sts>
+            <a (click)="changeView('events')" href="javascript:void(0)" class="map-ics {{view_type == 'events' ? 'active' : ''}}"> Events </a>
+            <a href="javascript:void(0)" (click)="changeView('venues')" class="list-ics {{view_type == 'venues' ? 'active' : ''}}"> Venue </a>
           </ion-buttons>
 
           <ion-searchbar  only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
@@ -58,15 +63,32 @@
     </div>
 </div>
 
+<ng-container *ngIf="view_type == 'events'">
+  <agm-map 
+  [latitude]="lat" 
+  [longitude]="lng" 
+  [zoom]="zoom" >
+     <agm-marker  *ngFor="let data of all_events " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
+     <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.title}}<br>Hosted at: {{data?.venue_type}}<br>Date - {{data?.date | date : 'MMM d'}} at {{data?.time}}</a></agm-info-window>
+   </agm-marker>
+  </agm-map>
+</ng-container>
 
-<agm-map 
-[latitude]="lat" 
-[longitude]="lng" 
-[zoom]="zoom" >
-   <agm-marker  *ngFor="let data of all_events " [latitude]="data.location.lat" [longitude]="data.location.lng">
-   <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.venue_type}}: {{data?.title}}</a></agm-info-window>
- </agm-marker>
-</agm-map>
+<ng-container *ngIf="view_type == 'venues'">
+  <agm-map 
+  [latitude]="lat_v" 
+  [longitude]="lng_v" 
+  [zoom]="zoom" >
+     <agm-marker  *ngFor="let data of all_venues_list " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
+     <agm-info-window #infoWindow><a class="map-window" routerLink="/venues/{{data._id}}">{{data?.name}}
+     <span *ngIf="errors.indexOf(data?.current_event) == -1">
+     <br>{{data?.current_event?.title}} - {{data?.current_event?.time}}
+     </span>
+     </a></agm-info-window>
+   </agm-marker>
+  </agm-map>
+</ng-container>
+
 <!-- webFooter -->
 <app-footer></app-footer>
 <!-- // end -->

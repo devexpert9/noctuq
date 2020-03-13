@@ -36,6 +36,7 @@ import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider,FacebookLogin
 import { FiltersPage } from './filters/filters.page';
 import { HeaderPage } from './header/header.page';
 import { RatingPage } from './rating/rating.page';
+import { ChangePasswordPage } from './change-password/change-password.page';
 
 import { socket_config, social_config } from './config';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
@@ -58,8 +59,8 @@ export function getAuthServiceConfigs() {
 }
 
 @NgModule({
-  declarations: [AppComponent, FiltersPage, HeaderPage, RatingPage],
-  entryComponents: [FiltersPage, HeaderPage, RatingPage], 
+  declarations: [AppComponent, FiltersPage, HeaderPage, RatingPage, ChangePasswordPage],
+  entryComponents: [FiltersPage, HeaderPage, RatingPage, ChangePasswordPage], 
   imports: [
     BrowserModule,
     CommonModule,

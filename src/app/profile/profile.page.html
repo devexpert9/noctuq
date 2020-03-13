@@ -69,6 +69,15 @@
 					<p *ngIf="!is_edit">{{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}}</p>
 					<p *ngIf="is_edit"><ion-textarea [(ngModel)]="profile.about" placeholder="Say something about you..."></ion-textarea></p>
 				</ion-item>
+				<ion-item no-padding >
+					<ion-label style="padding:5px 0 0">
+						<ion-icon name="lock"></ion-icon> Password
+					</ion-label>
+					<p>
+						<button (click)="change_password()" chg-pass type="button" ion-button color="ltblack"> <ion-icon name="create"></ion-icon> Change 
+						</button>
+					</p>
+				</ion-item>
 			</div>
 			<div class="totl-frns" (click)="goEdit()" *ngIf="!is_edit">
 				<ion-icon  name="create"></ion-icon> <span> Edit Profile </span>

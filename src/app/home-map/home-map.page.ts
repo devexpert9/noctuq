@@ -21,8 +21,11 @@ userId:any;
 page_type:any;
 is_mobile_app:any = config.IS_MOBILE_APP;
 all_events:any;
+all_venues_list:any;
 lat:number;
 lng:number;
+lat_v:number;
+lng_v:number;
 zoom:number=12;
 search_term:any;
 all_genres:any;
@@ -34,6 +37,7 @@ max_price:number;
 mile_radius:number=0;
 errors:any=['',null,undefined];
 price_limit:number = 5000;
+view_type:string='events';
   constructor(public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService, public modalController:ModalController) { 
   	this.page_type = activatedRoute.snapshot.paramMap.get('type');
     this.get_venues_genres();
@@ -44,6 +48,12 @@ price_limit:number = 5000;
   }
 
   ionViewDidEnter() {
+    if(localStorage.getItem('is_event_open') == '1'){
+      this.view_type = 'events';
+    }
+    if(localStorage.getItem('is_venue_open') == '1'){
+      this.view_type = 'venues';
+    }
     this.search_term = '';
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
@@ -86,7 +96,9 @@ price_limit:number = 5000;
 
   initWebMap(){
 
-    var api_endpoint = (this.page_type == 'favorites') ? 'my_favorites' : 'get_events';
+    var api_endpoint_events = (this.page_type == 'favorites') ? 'my_favorites' : 'get_events';
+    var api_endpoint_venues = (this.page_type == 'favorites') ? 'my_favorites' : 'get_venues_list';
+      // get all events
       this.userService.postData({
         userId: this.userId, 
         genres : this.genres, 
@@ -98,13 +110,32 @@ price_limit:number = 5000;
         current_lng : '',
         current_lat : '',
         miles : 10000
-      },api_endpoint).subscribe((result) => { 
+      },api_endpoint_events).subscribe((result) => { 
           if(result.total > 0){
             this.all_events = result.data;
-            this.lat = Number(result.data[0]['location']['lat']);
-            this.lng = Number(result.data[0]['location']['lng']);
+            this.lat = Number(result.data[0]['cords']['coordinates'][1]);
+            this.lng = Number(result.data[0]['cords']['coordinates'][0]);
           }
       });
+      // get all venues
+      this.userService.postData({
+        userId: this.userId, 
+        genres : this.genres, 
+        venues : this.venues, 
+        search_term : this.search_term,
+        min_price: this.min_price,
+        max_price: this.max_price,
+        mile_radius: this.mile_radius,
+        current_lng : '',
+        current_lat : '',
+        miles : 10000
+      },api_endpoint_venues).subscribe((result) => { 
+          if(result.total > 0){
+            this.all_venues_list = result.data;
+            this.lat_v = Number(result.data[0]['cords']['coordinates'][1]);
+            this.lng_v = Number(result.data[0]['cords']['coordinates'][0]);
+          }
+      }); 
   }
 
   async filterPage() {
@@ -147,6 +178,16 @@ price_limit:number = 5000;
        }
     });
     return await modal.present();
+  }
+
+  changeView(type){
+    this.view_type = type;
+    if(type == 'events'){
+      localStorage.setItem('is_event_open','1');
+    }
+    else{
+      localStorage.setItem('is_venue_open','1');
+    }
   }
 
   //  initMap() {

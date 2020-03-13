@@ -14,13 +14,14 @@
 	<div class="webContainer">
 	<div class="commts">
 		<div class="comnt-single">
-			<div class="comnt-head" *ngFor="let comm of comments">
-				<img *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
-				<img *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
+			<div class="comnt-head" *ngFor="let comm of comments; let i = index ">
+				<img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+				<img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
 				<div class="comt-body">
-					<span>{{comm.name}} <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
+					<span><a (click)="userProfile(comm.user_type,comm.userId)">{{comm.name}}</a> <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
 					<p>{{comm.comment}}</p>
 				</div>
+				<span title="Report" del-feed (click)="flag(comm?._id,i)"><ion-icon name="flag"></ion-icon></span>
 			</div>
 			<!-- <div class="comnt-single commnt-right">
 				<div class="comnt-head" routerLink="/public-profile">

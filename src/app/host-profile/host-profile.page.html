@@ -55,6 +55,16 @@
 						<ion-input type="text" placeholder="Phone Number" [(ngModel)]="profile.phone"></ion-input>
 					</p>
 				</ion-item>
+
+				<ion-item no-padding >
+					<ion-label style="padding:5px 0 0">
+						<ion-icon name="lock"></ion-icon> Password
+					</ion-label>
+					<p>
+						<button (click)="change_password()" chg-pass type="button" ion-button color="ltblack"> <ion-icon name="create"></ion-icon> Change 
+						</button>
+					</p>
+				</ion-item>
 <!-- 				<ion-item no-padding >
 					<ion-label style="padding:5px 0 0"><ion-icon name="happy"></ion-icon> Biography</ion-label>
 					<p *ngIf="!is_edit">{{errors.indexOf(profile?.about) == -1 ? profile?.about : 'Say something about you...'}}</p>
