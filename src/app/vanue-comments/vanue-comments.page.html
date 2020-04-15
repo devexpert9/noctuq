@@ -1,0 +1,72 @@
+
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="clubs/{{event_id}}"></ion-back-button>
+    </ion-buttons>
+  
+    <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg>
+<div header_height></div>
+	<div class="webContainer">
+	<div class="commts">
+		<div class="comnt-single">
+			<!-- <div class="comnt-head" *ngFor="let comm of comments; let i = index "> -->
+				<!-- <img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+				<img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
+				<div class="comt-body">
+					<span><a (click)="userProfile(comm.user_type,comm.userId)">{{comm.name}}</a> <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
+					<p>{{comm.comment}}</p>
+				</div>
+				<span title="Report" del-feed (click)="flag(comm?._id,i)"><ion-icon name="flag"></ion-icon></span> -->
+			<!-- </div> -->
+
+			<ion-list >
+			  <!-- Sliding item with text options on both sides -->
+			  <ion-item-sliding class="comnt-head" *ngFor="let comm of comments; let i = index ">
+
+			    <ion-item>
+			      <img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+					<img (click)="userProfile(comm.user_type,comm.userId)" *ngIf="errors.indexOf(comm?.image) == -1" src="{{comm?.is_social_image == '1' ? comm?.image : IMAGES_URL+'/profile/'+comm?.image}}"/>
+					<div class="comt-body">
+						<span><a (click)="userProfile(comm.user_type,comm.userId)">{{comm.name}}</a> <b><ion-icon name="time"></ion-icon> {{comm.created_at | timeAgo}}</b></span>
+						<p>{{comm.comment}}</p>
+					</div>
+					<!-- <span title="Report" del-feed (click)="flag(comm?._id,i)"><ion-icon name="flag"></ion-icon></span> -->
+			    </ion-item>
+
+			    <ion-item-options side="end">
+			      <ion-item-option color="ltblack" (click)="flag(comm?._id,i)"><ion-icon name="flag"></ion-icon> Flag</ion-item-option>
+			    </ion-item-options>
+			  </ion-item-sliding>
+			</ion-list>
+			<!-- </div> -->
+
+			<!-- <div class="comnt-single commnt-right">
+				<div class="comnt-head" routerLink="/public-profile">
+					<img src="assets/img/selfie7.jpg">
+					<div class="comt-body">
+						<span>Shelton Bishop <b><ion-icon name="time"></ion-icon> 2 days ago</b></span>
+						<p>Hi, <br> Event is suprb!</p>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
+
+</ion-content>
+<ion-footer vanueFooter>
+  <ion-toolbar class="foot-mgs"> 
+    <ion-item color="none" lines="none">
+	<!-- <span class="add-pl">
+		<ion-icon name="add" add-deis></ion-icon>
+	</span> -->
+	 <ion-input [(ngModel)]="comment" placeholder="Type comments here..." ></ion-input>
+	 <a (click)="addComments()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="paper-plane"></ion-icon> </a>
+	</ion-item>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,96 @@
+
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+  <ion-buttons slot="start">
+    <!-- <ion-icon name="ios-settings"></ion-icon> -->
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+    <ion-title pls>{{page_type == 'favorites' ? 'Favorites' : 'Home'}}</ion-title> 
+	
+<!-- 	<ion-buttons *ngIf="page_type == 'favorites'" slot="end" routerLink="/home-list/favorites">
+       <ion-icon name="home" star-head></ion-icon>
+	</ion-buttons>
+	<ion-buttons *ngIf="page_type != 'favorites'" slot="end" routerLink="/home-list">
+       <ion-icon name="star" star-head></ion-icon>
+	</ion-buttons> -->
+
+	<ion-buttons slot="end" routerLink="/profile" style="margin:0 15px 0 5px;">
+       <ion-icon name="ios-contact"></ion-icon>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-buttons slot="start" btn-sts>
+  <a href="javascript:void(0)" class="map-ics"> Map View </a>
+  <a *ngIf="page_type == 'favorites'" href="javascript:void(0)" class="list-ics" routerLink="/home-list/favorites"> List View </a>
+  <a *ngIf="page_type != 'favorites'" href="javascript:void(0)" class="list-ics" routerLink="/home-list"> List View </a>
+  </ion-buttons>
+<div header_height></div>
+<!-- <div map-home *ngIf="is_mobile_app == 'true'">
+	<div #map style="height:100%;"></div>
+</div> -->
+<!-- *ngIf="is_mobile_app == 'false'" -->
+
+<div class="webContainer">
+    <div login-url class="ion-no-padding">
+       <div class="set-serch">
+         <ion-item color="none" lines="none">
+          <!-- <ion-icon name="search"></ion-icon> -->
+         <!-- <ion-input (search)="search()" [(ngModel)]="search_term" placeholder="Search..." ></ion-input> -->
+         <ion-searchbar (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+         <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> </a>
+         <!-- <span no_of_filters>2</span> -->
+         </ion-item>
+      </div>
+    </div>
+    <div list-events>
+      <div class="mapListFilter">
+
+          <ion-buttons btn-sts only-map>
+            <a *ngIf="page_type != 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-list"> <ion-icon name="list"></ion-icon></a>
+            <a *ngIf="page_type == 'favorites'"  href="javascript:void(0)" class="map-ics" routerLink="/home-list/favorites"> <ion-icon name="list"></ion-icon></a>
+          </ion-buttons>
+
+          <ion-buttons btn-sts>
+            <a (click)="changeView('events')" href="javascript:void(0)" class="map-ics {{view_type == 'events' ? 'active' : ''}}"> Events </a>
+            <a href="javascript:void(0)" (click)="changeView('venues')" class="list-ics {{view_type == 'venues' ? 'active' : ''}}"> Venue </a>
+          </ion-buttons>
+
+          <ion-searchbar  only-web (search)="search()" [(ngModel)]="search_term" (ionClear)="clear_search()" placeholder="Search..." showCancelButton="never"></ion-searchbar>
+
+        <a (click)="filterPage()" href="javascript:void(0)" class="filtr-ics"> <ion-icon name="funnel"></ion-icon> &nbsp;Filter</a>
+      </div>
+    </div>
+</div>
+
+<ng-container *ngIf="view_type == 'events'">
+  <agm-map 
+  [latitude]="lat" 
+  [longitude]="lng" 
+  [zoom]="zoom" >
+     <agm-marker  *ngFor="let data of all_events " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
+     <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.title}}<br>Hosted at: {{data?.venue_type}}<br>Date - {{data?.date | date : 'MMM d'}} at {{data?.time}}</a></agm-info-window>
+   </agm-marker>
+  </agm-map>
+</ng-container>
+
+<ng-container *ngIf="view_type == 'venues'">
+  <agm-map 
+  [latitude]="lat_v" 
+  [longitude]="lng_v" 
+  [zoom]="zoom" >
+     <agm-marker  *ngFor="let data of all_venues_list " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
+     <agm-info-window #infoWindow><a class="map-window" routerLink="/venues/{{data._id}}">{{data?.name}}
+     <span *ngIf="errors.indexOf(data?.current_event) == -1">
+     <br>{{data?.current_event?.title}} - {{data?.current_event?.time}}
+     </span>
+     </a></agm-info-window>
+   </agm-marker>
+  </agm-map>
+</ng-container>
+
+<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+</ion-content>
+  

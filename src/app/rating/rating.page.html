@@ -1,0 +1,22 @@
+<ion-header filterHead>
+  <ion-toolbar color="ltblack">
+    <ion-title>
+	    Rate Event
+	</ion-title>
+	<ion-button (click)="closeModal()" slot="end" outline shape="round" fill="outline" size="small" color="white">
+	  <ion-icon name="close"></ion-icon>
+	</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div giveRating>
+		<ngx-stars [size]='2' (ratingOutput)="onRatingSet($event)" [maxStars]="5" [color]="'#f90'"></ngx-stars>
+		<div btn-bottom class="ion-text-center">
+		   <ion-button (click)="rateIt()" color="ltblack" shape="round">
+			  Submit
+		   </ion-button> 
+	    </div>
+	</div>
+</ion-content>
+ 

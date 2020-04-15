@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="ltblack" text-center>
+  <ion-buttons slot="start" float-left routerLink="/host-events">
+   <ion-back-button defaultHref="host-events"></ion-back-button>
+  </ion-buttons>
+    <ion-title pls>{{isEdit == '1' ? 'Edit' : 'Add'}} Event</ion-title>
+	<!-- <ion-buttons slot="end" routerLink="/profile">
+       <ion-icon name="ios-contact"></ion-icon>
+	</ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div login-form>
+     	<div roundedForm>
+	     	<ion-item>
+	     		<ion-label>Event Title</ion-label>
+	           <ion-input [(ngModel)]="title" placeholder="Event Title"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(title) >= 0 && is_submit == true">Please enter event title</span>
+
+	        <ion-item>
+			    <ion-label>Select Venue</ion-label>
+			    <ion-select [(ngModel)]="venue_type" placeholder="Select Venue">
+			      <ion-select-option *ngFor="let venue of all_venues" value="{{venue._id}}">{{venue.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(venue_type) >= 0 && is_submit == true">Please select venue type</span>
+
+		  	<ion-item>
+			    <ion-label>Genre</ion-label>
+			    <ion-select multiple [(ngModel)]="genre_type" placeholder="Select Genre">
+			      <ion-select-option *ngFor="let genre of all_genres" value="{{genre._id}}">{{genre.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(genre_type) >= 0 && is_submit == true">Please select genre</span>
+
+			<ion-item>
+			<ion-label>Event Price</ion-label>
+	           <ion-input [(ngModel)]="price" type="number" placeholder="Event Price"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter event price</span>
+
+	        <ion-item>
+			<ion-label>Date</ion-label>
+	           <ion-datetime [(ngModel)]="date" displayFormat="MMM D, YYYY" min="{{current_date}}" placeholder="Date"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(date) >= 0 && is_submit == true">Please select event date</span> 
+
+	        <ion-item starttime>
+			<ion-label>Start Time</ion-label>
+	           <ion-datetime [(ngModel)]="start_time" displayFormat="HH:mm" placeholder="Start Time"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(start_time) >= 0 && is_submit == true">Please select event start time</span>
+
+	        <ion-item endtime>
+			<ion-label>End Time</ion-label>
+	           <ion-datetime [(ngModel)]="end_time" displayFormat="HH:mm" placeholder="End Time"></ion-datetime>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(end_time) >= 0 && is_submit == true">Please select event end time</span>
+
+	        <ion-item class="clear">
+			  <!--ion-label>Description</ion-label-->
+			  <ion-textarea maxlength="500" [(ngModel)]="description" placeholder="Description">
+			  </ion-textarea>
+			</ion-item>	
+			<span error *ngIf="errors.indexOf(description) >= 0 && is_submit == true">Please enter event description</span>
+
+<!-- 			<ion-item mark-hot>
+			  <ion-label>Make it Hot</ion-label>
+			  <ion-checkbox color="primary" [(ngModel)]="is_hot"></ion-checkbox>
+			</ion-item>	 -->
+
+			<ion-row>
+			<ng-container *ngIf="is_mobile_app == 'true'"><ion-button (click)="selectImage()"><ion-icon  name="create"></ion-icon> Select Image</ion-button></ng-container>
+			<ng-container *ngIf="is_mobile_app == 'false'">
+			<label for="user-img" class="slct-imgs">
+				<ion-icon name="create"></ion-icon>Select Image
+			</label>
+			<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
+			</ng-container>
+			</ion-row>
+
+			<ion-row>
+			<ng-container *ngIf="is_image_selected">
+				<img class="img-star" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(image_url))" />
+				<img class="img-star" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(image_url)" />
+			</ng-container>
+
+			<ng-container *ngIf="!is_image_selected && isEdit == '1' && errors.indexOf(prev_image_url) == -1">
+				<img class="img-star" src="{{IMAGES_URL+'/events/thumbnails/'+prev_image_url}}" />
+			</ng-container>
+			</ion-row>
+	 
+			<div btn-bottom class="ion-text-center">
+			   <ion-button (click)="add_event()" color="ltblack" shape="round">
+				  {{isEdit == '1' ? 'Edit' : 'Add'}} Event
+			   </ion-button> 
+	        </div>	 
+   		</div>
+   </div>
+   <div class="heigt-57"></div>
+
+
+   <!-- webFooter -->
+<app-footer foot-str></app-footer>
+
+</ion-content>

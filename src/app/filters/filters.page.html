@@ -1,0 +1,72 @@
+<ion-header filterHead>
+  <ion-toolbar color="ltblack">
+    <ion-title   text-left>
+	       Filters
+	</ion-title>
+	<ion-button (click)="closeModal({reset : '1'})" slot="end" outline shape="round" fill="outline" size="small" color="white">
+	  Clear All
+	</ion-button>
+	<!-- <ion-buttons slot="start">
+        <ion-back-button defaultHref="/searchresults"></ion-back-button>
+	</ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content padding filters>
+
+	<div location price-range>
+		 <h4 heading>
+		     Mile Radius
+		 </h4>
+		 <ion-item lines="none" no-padding no-border>
+		 <ion-range color="ltblack" min="0" max="100" [(ngModel)]="mile_radius" (ionChange)="mileChanged($event)">
+			<ion-label pos-right slot="end">{{mile_radius}}</ion-label>
+		</ion-range>
+		</ion-item>
+	</div> 
+
+	<div location price-range>
+		 <h4 heading>
+		     Cover Price
+		 </h4>
+		 <ion-item lines="none" no-padding no-border>
+		 <ion-range color="ltblack" dualKnobs="true"  min="0" max="{{price_limit}}" step="3" [(ngModel)]="price_values" (ionChange)="priceChanged($event)">
+			<ion-label pos-left slot="start">{{min_price}}</ion-label>
+		    <ion-label pos-right slot="end">{{max_price}}</ion-label>
+		</ion-range>
+		</ion-item>
+	</div>
+   
+   <ion-row check-filter *ngIf="all_genres != ''">
+        <ion-col size="12">
+	    <h4 heading>
+	      Genre
+	    </h4>
+	    </ion-col>
+	    <ion-col size="6" *ngFor="let genre of all_genres">
+	     <ion-item no-padding lines="none"><ion-checkbox (click)="genreChanged($event,genre._id)" [checked]="genres.indexOf(genre._id) >= 0 ? true : false" color="ltblack"></ion-checkbox>  <h2>{{genre.name}}</h2> </ion-item>
+	    </ion-col>
+   </ion-row>
+
+   <ion-row check-filter *ngIf="all_venues != ''">
+        <ion-col size="12">
+	    <h4 heading>
+	     Type of Venue
+	    </h4>
+	    </ion-col>
+	    <ion-col size="6" *ngFor="let venue of all_venues">
+	     <ion-item no-padding lines="none"><ion-checkbox (click)="venueChanged($event,venue._id)" [checked]="venues.indexOf(venue._id) >= 0 ? true : false" color="ltblack"></ion-checkbox>  <h2>{{venue.name}}</h2> </ion-item>
+	    </ion-col>
+   </ion-row>
+
+</ion-content>
+
+<ion-footer>
+	<ion-row  no-padding>
+	   <ion-col size="6" no-padding  no-margin>
+		  <ion-button (click)="closeModal()" shape="square" expand="full" text-capitalize color="ltblack">Cancel</ion-button>
+	   </ion-col>
+	   <ion-col size="6" no-padding no-margin>
+	   	  <ion-button (click)="applyFilters()" expand="full" shape="square" color="grey" text-capitalize>Apply <ion-icon name="arrow-forward"></ion-icon></ion-button>
+	   </ion-col>
+	</ion-row>
+</ion-footer>	

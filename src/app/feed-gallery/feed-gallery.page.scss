@@ -1,0 +1,53 @@
+ion-content[bg-black] {
+ --background:#000;
+}
+masonry {
+    padding:0.5%;
+}
+ng-masonry-grid-item p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding:var(--ion-value-10);
+    color: var(--ion-color-white);
+    margin: var(--ion-value-0);
+    text-transform:capitalize;
+}
+.brick { width:48.5%; margin:0.5%; margin-bottom:var(--ion-value-0);} 
+[scrll-icon] {
+    background: transparent;
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+	ion-icon  {
+		background: rgba(255, 255, 255, 0.41);
+		width: var(--ion-value-35);
+		height: var(--ion-value-35);
+		border-radius: 50%;
+		color: var(--ion-color-white);
+	}
+}
+.grid ng-masonry-grid-item {
+    width: 49% !important;
+}
+ng-masonry-grid.grid.effect-4 {margin-top:10px !important;}
+[del-feed]{
+    background: red;
+    position: absolute;
+    color: #fff;
+    top: 6px;
+    right: 6px;
+    border-radius: 50%;
+    padding: 3px 3px;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 15px;
+}
+[flag]{
+    right: 35px;
+}

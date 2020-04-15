@@ -1,0 +1,19 @@
+<ion-header *ngIf="is_loaded">
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+	<ion-title>{{content?.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg *ngIf="is_loaded" webAboutPage>
+<div header_height></div>
+	<div class="webContainer" pad-all-20>
+		<div [innerHTML]="content?.description" AboutContn></div>
+	</div>
+<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+</ion-content>
+ 

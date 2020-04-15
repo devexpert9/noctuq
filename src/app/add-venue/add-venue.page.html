@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="ltblack" text-center>
+  <ion-buttons slot="start" float-left routerLink="/host-events">
+   <ion-back-button defaultHref="host-events"></ion-back-button>
+  </ion-buttons>
+    <ion-title pls>{{isEdit == '1' ? 'Edit' : 'Add'}} Venue</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div login-form>
+     	<div roundedForm>
+	     	<ion-item>
+	     		<ion-label>Venue Name</ion-label>
+	           <ion-input [(ngModel)]="name" placeholder="Venue Name"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(name) >= 0 && is_submit == true">Please enter venue name</span>
+
+	        <ion-item>
+			    <ion-label>Venue Type</ion-label>
+			    <ion-select multiple [(ngModel)]="venue_type" placeholder="Select Venue Type">
+			      <ion-select-option *ngFor="let venue of all_venues" value="{{venue._id}}">{{venue.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(venue_type) >= 0 && is_submit == true">Please select venue type</span>
+
+		  	<ion-item>
+			    <ion-label>Genre</ion-label>
+			    <ion-select multiple [(ngModel)]="genre_type" placeholder="Select Genre">
+			      <ion-select-option *ngFor="let genre of all_genres" value="{{genre._id}}">{{genre.name}}</ion-select-option>
+			    </ion-select>
+		  	</ion-item>
+		  	<span error *ngIf="errors.indexOf(genre_type) >= 0 && is_submit == true">Please select genre</span>
+
+			<ion-item>
+			<ion-label>Cover Price</ion-label>
+	           <ion-input [(ngModel)]="price" type="number" placeholder="Price"></ion-input>
+	        </ion-item>
+	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter cover price</span>
+			<div class="locat-box">
+			<ngxgeo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ngxgeo-autocomplete>
+	        <span error *ngIf="errors.indexOf(location) >= 0 && is_submit == true">Please enter venue location</span>
+			</div>
+	        <ion-item class="clear">
+			  <!--ion-label>Description</ion-label-->
+			  <ion-textarea [(ngModel)]="description" placeholder="Description">
+			  </ion-textarea>
+			</ion-item>	
+			<span error *ngIf="errors.indexOf(description) >= 0 && is_submit == true">Please enter event description</span>
+
+			<ion-item class="clear">
+			  <ion-textarea [(ngModel)]="keywords" placeholder="Keywords">
+			  </ion-textarea>
+			</ion-item>	
+
+			<ion-row>
+			<ng-container *ngIf="is_mobile_app == 'true'"><ion-button (click)="selectImage()"><ion-icon  name="create"></ion-icon> Select Images</ion-button></ng-container>
+			<ng-container *ngIf="is_mobile_app == 'false'">
+				<div ng2FileDrop [uploader]="uploader" (onFileDrop)="images()" class="well my-drop-zone ion-hide-sm-down" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)">
+				    <ion-icon name="cloud-upload"></ion-icon><br>
+				  Drag & drop images here</div>
+			<label for="user-img" class="slct-imgs">
+				<ion-icon name="create"></ion-icon>Select Images
+			</label>
+			<input (onFileSelected)="images()" type="file" ng2FileSelect [uploader]="uploader" multiple  id="user-img" name="user-img" style="display:none"/>
+			</ng-container>
+			</ion-row>
+
+			<ion-row>
+			<ng-container *ngFor="let img of all_images; let index = index ">
+				<ion-col col-4>
+					<ng-container *ngIf="errors.indexOf(img._id) >= 0">
+						<img class="img-star" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(img.url))" />
+						<img class="img-star" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(img.url)" />
+					</ng-container>
+					<ng-container *ngIf="errors.indexOf(img._id) == -1">
+					<img class="img-star" src="{{IMAGES_URL+'/venues/thumbnails/'+img?.file_name}}" />
+					</ng-container>
+						<ion-icon (click)="delete_image(index,img)" class="close-circle" name="close-circle" color="danger"></ion-icon>
+				</ion-col>
+			</ng-container>
+
+			</ion-row>
+	 
+			<div btn-bottom class="ion-text-center">
+			   <ion-button (click)="add_venue()" color="ltblack" shape="round">
+				  {{isEdit == '1' ? 'Edit' : 'Add'}} Venue
+			   </ion-button> 
+	        </div>	 
+   		</div>
+   </div>
+   <div class="heigt-57"></div>
+
+
+   <!-- webFooter -->
+<app-footer foot-str></app-footer>
+
+</ion-content>

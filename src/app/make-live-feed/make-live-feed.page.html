@@ -1,0 +1,35 @@
+
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="clubs/{{event_id}}"></ion-back-button>
+    </ion-buttons>
+	<ion-title>Make Live Feed <span class="active-icn"></span></ion-title>
+	<ion-buttons slot="end" routerLink="/settings">
+     <ion-icon name="settings"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content live-feed>
+<div header_height></div>
+	<div class="webContainer">
+		<div class="img-feed">
+			<img src="assets/img/selfie6.jpg">
+		</div>
+	</div>
+
+	<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+
+</ion-content>
+<ion-footer> 
+  <div scrll-icon>
+	<div class="img-set-l">
+		<span (click)="makeVideo()" class="video-icon"><small> Video </small></span>
+		<span (click)="takePhoto()" class="photo-icon"><small> Photo </small></span>
+		<span class="close-phot"><ion-icon name="close"></ion-icon> </span>
+	</div>
+  </div>
+</ion-footer>

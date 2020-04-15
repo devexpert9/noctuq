@@ -1,0 +1,32 @@
+
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-back-button defaultHref="clubs/{{id}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Map</ion-title>
+	<ion-buttons slot="end" routerLink="/settings">
+		<ion-icon name="ios-settings"></ion-icon>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div header_height></div>
+<!-- <div map-home *ngIf="is_mobile_app == 'true'">
+	<div #map style="height:100%;"></div>
+</div> -->
+<!-- *ngIf="is_mobile_app == 'false'" -->
+<agm-map 
+[latitude]="lat" 
+[longitude]="lng" 
+[zoom]="zoom" >
+  <agm-marker 
+  [latitude]="lat" 
+  [longitude]="lng"></agm-marker>
+</agm-map>
+
+<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+</ion-content>

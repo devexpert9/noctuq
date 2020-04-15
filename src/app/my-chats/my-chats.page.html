@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+	<ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content comments-bg top-0 *ngIf="is_loaded">
+	<div header_height></div>
+	<div class="webContainer">
+		<div class="contentHeight">
+		<ion-row>
+		<ion-col size-lg="4" size-md="5">
+		<div transctin-list>
+			<ion-list>
+				<ng-container *ngFor="let user of all_users; let index = index ">
+					<ion-item lines="none" (click)="openChat(user.fromId,index)" [ngClass]="{'active' : chat_user_id == user.fromId}">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(user.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(user.user_image) == -1" src="{{user.is_user_social_image == '1' ? user.user_image : IMAGES_URL+'/profile/'+user.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{user.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{user.created_at | timeAgo}} </span> </h2>
+						<p><span class="first">{{user.message_type == 'text' ? user.message : 'Image'}}</span><span *ngIf="user.count > 0" class="badge-count">{{user.count}}</span></p>
+					  </ion-label>
+					</ion-item>
+				</ng-container>
+			</ion-list>
+		</div>
+		</ion-col>
+		<ion-col size-lg="8" size-md="7"  hide-mooble-screen>
+			<div class="commts commentright" *ngIf="isShow" comments-bg>
+				<div id="chat_div">
+				<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" *ngFor="let chat of chats ">
+					<div class="comnt-head">
+						<ng-container *ngIf="userId != chat.fromId">
+							<img pro-img *ngIf="errors.indexOf(chat_image) >= 0" src="assets/img/user-icon.jpg"/> 
+							<img pro-img *ngIf="errors.indexOf(chat_image) == -1" src="{{chat_is_social_image == '1' ? chat_image : IMAGES_URL+'/profile/'+chat_image}}"/> 
+						</ng-container>
+						<ng-container *ngIf="userId == chat.fromId">
+							<img pro-img *ngIf="errors.indexOf(mySession?.image) >= 0" src="assets/img/user-icon.jpg"/> 
+							<img pro-img *ngIf="errors.indexOf(mySession?.image) == -1" src="{{mySession?.is_social_image == '1' ? mySession?.image : IMAGES_URL+'/profile/'+mySession?.image}}"/> 
+						</ng-container>
+						<div class="comt-body">
+							<p *ngIf="chat.type == 'text'">{{chat.message}}</p>
+							<img (click)="openImage(chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image == '1'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(chat.message))">
+
+							<img (click)="openImage(chat.message)" attach-img *ngIf="chat.type == 'image' && chat?.temp_image == '2'" [src]="sanitizer.bypassSecurityTrustResourceUrl(chat.message)">
+
+							<img (click)="openImage(IMAGES_URL+'/chats/'+chat.message)" attach-img *ngIf="chat.type == 'image' && (chat?.temp_image != '1' && chat?.temp_image != '2')" src="{{IMAGES_URL+'/chats/'+chat.message}}">
+							<span><b><ion-icon name="time"></ion-icon> {{chat.created_at | timeAgo}}</b></span>
+						</div>
+					</div>
+				</div>
+				</div>
+
+				<ion-toolbar class="foot-mgs"> 
+				<form name="chat-form" (submit)="sendMessage()">
+				    <ion-item color="none" lines="none">
+					<span *ngIf="is_mobile_app == 'true'" class="add-pl" (click)="selectImage()">
+						<ion-icon name="add" add-deis></ion-icon>
+					</span>
+					<ng-container *ngIf="is_mobile_app == 'false'">
+					<label for="user-img" ><span  class="add-pl" ><ion-icon name="add"></ion-icon></span></label>
+					<input (change)="uploadImg($event)"  type="file" id="user-img" name="user-img" style="display:none"/>
+					</ng-container>
+					 <ion-input name="chat_message" [(ngModel)]="chat_message" placeholder="Type Message here..." ></ion-input>
+
+					 <ion-button type="submit" slot="end" color="ltblack" class="filtr-ics">
+					  <ion-icon name="paper-plane"></ion-icon>
+					 </ion-button>
+					</ion-item>
+				</form>
+				</ion-toolbar>
+
+			</div>
+			<div *ngIf="!isShow" style="margin-top: 26px">
+				<div style="text-align: center;background: #ccc;padding: 15px;min-height: 80px;display: flex;align-items: center;justify-content: center;" class="alert alert-danger" role="alert">
+				Select user to chat !!
+			</div>
+			</div>
+		</ion-col>
+		</ion-row>
+	</div>
+	</div>
+	
+	<app-footer></app-footer> 
+</ion-content>
+  

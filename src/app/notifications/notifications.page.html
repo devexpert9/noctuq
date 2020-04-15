@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+	<ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content comments-bg top-0>
+	<div header_height></div>
+	<div class="webContainer">
+		<div transctin-list class="contentHeight">
+			<ion-list>
+				<ng-container *ngFor="let notis of all_notis; let index = index ">
+					<ion-item (click)="messages()" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '1'">
+					  <ion-avatar slot="start" class="message-img">
+						<img src="assets/img/messages.png">
+					  </ion-avatar>
+					  <ion-label>
+						<h2>New messages
+						</h2>
+						<p>You have {{notis?.data_params?.count}} {{notis?.data_params?.count == 1 ? 'unread message' : 'unread messages'}}<em>.</em> </p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '2'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>You have new friend request.</p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '3'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>Your friend request has been accepted.</p>
+					  </ion-label>
+					</ion-item>
+
+					<ion-item (click)="profile();readNotis(notis._id,index)" lines="none" [ngClass]="{'active' : notis.isRead == '0'}" *ngIf="notis.type == '4'">
+					  <ion-avatar slot="start">
+						<img *ngIf="errors.indexOf(notis.user_image) >= 0" src="assets/img/user-icon.jpg"/> 
+					  	<img *ngIf="errors.indexOf(notis.user_image) == -1" src="{{notis.is_user_social_image == '1' ? notis.user_image : IMAGES_URL+'/profile/'+notis.user_image}}"/> 
+					  </ion-avatar>
+					  <ion-label>
+						<h2>{{notis.user_name}} <span class="right-time"> <ion-icon name="time"></ion-icon> {{notis.created_at | timeAgo}} </span></h2>
+						<p>Your friend request has been declined.</p>
+					  </ion-label>
+					</ion-item>
+
+				</ng-container>
+				<ion-infinite-scroll *ngIf="is_more_records" threshold="100px" (ionInfinite)="getNotifications($event,'1')">
+	            	<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+				</ion-infinite-scroll>
+			</ion-list>
+			<div style="text-align: center;background: #ccc;padding: 15px;" *ngIf="all_notis == '' && is_loaded == true" class="alert alert-danger" role="alert">
+				No notifications found!
+			</div>
+		</div>
+	</div>
+	
+	<app-footer></app-footer> 
+</ion-content>
+  

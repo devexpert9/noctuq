@@ -1,0 +1,35 @@
+<app-header *ngIf="no_header_pages.indexOf(current_url) == -1 && current_url?.indexOf('/verify/') == -1"></app-header>
+<ion-app>
+    <ion-menu contentId="main-content" type="overlay" *ngIf="isLoggedIn">
+      <ion-header>
+        <ion-toolbar  color="ltblack" text-center>
+        <ion-buttons slot="end">
+            <ion-icon (click)="closeMenu()" name="close"></ion-icon>
+          </ion-buttons>
+        <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <img [src]="p.icon"/>
+              <ion-label [innerHTML]="p.title">
+                <!-- {{p.title}} -->
+              </ion-label>
+            </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" (click)="logout()">
+              <ion-item >
+                <img [src]="'assets/img/logout.png'"/>
+                <ion-label>
+                  Logout
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-app>

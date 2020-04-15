@@ -1,0 +1,169 @@
+<ion-header>
+	<ion-toolbar  color="ltblack" text-center>
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="{{(userId != 0 && errors.indexOf(userId) == -1) ? 'home-list' : 'host-events'}}"></ion-back-button>
+			<!-- <ion-menu-button></ion-menu-button> -->
+		</ion-buttons>
+
+		<ion-title>Event</ion-title>
+		<ion-buttons slot="end" routerLink="/settings" *ngIf="userId != 0 && errors.indexOf(userId) == -1">
+			<ion-icon name="ios-settings"></ion-icon>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content event-dtsl *ngIf="is_loaded">
+<div header_height></div>
+	<div class="webContainer">
+		<div class="webListDetail">
+		<ion-card dls-a>
+			<div mainImg>
+				<span right-icns *ngIf="(userId != 0 && errors.indexOf(userId) == -1) || (hostId != 0 && errors.indexOf(hostId) == -1)">
+					<ion-icon *ngIf="is_mobile_app == 'true'" name="videocam" (click)="selectFeed()" ></ion-icon>
+					<!-- routerLink="/make-live-feed/{{event?._id}}" -->
+					<ion-icon name="chatboxes" (click)="comments()"></ion-icon>
+					<!-- <ion-icon name="paper-plane" (click)="share()"></ion-icon> -->
+					<!-- <ion-icon name="pin" routerLink="/map/{{event?._id}}"></ion-icon> -->
+
+				</span>
+				<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png" class="img-main" /> 
+				<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}" class="img-main"/> 
+				<span class="price-top"> ${{event?.price}} </span>
+				<span class="date-div"> {{event?.date | date : 'MMM d'}} </span>
+				<span *ngIf="event?.hostId == hostId" eve-create-host routerLink="/edit-event/{{event?._id}}"> <ion-icon name="create"></ion-icon> </span>
+				<div mainHdng>
+
+					<div botm-star>
+						<ngx-stars *ngIf="avg_rating?.length == 0" (click)="canRate()" [size]='1' [readonly]="true" [initialStars]="0" [maxStars]="5" [color]="'#ecc711'"></ngx-stars>
+
+						<ngx-stars *ngIf="avg_rating?.length > 0" (click)="canRate()" [size]='1' [readonly]="true" [initialStars]="avg_rating[0]['average']" [maxStars]="5" [color]="'#ecc711'"></ngx-stars>
+					</div> 
+					<h1>{{event?.title}} - {{event?.time}}</h1>
+					<h3 str-rigt>Hosted at: {{event?.venue_type}} 	<ion-icon *ngIf="userId != 0 && errors.indexOf(userId) == -1" (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
+				</div>
+	<!--ion-card-header>
+	  <ion-card-title>{{event?.venue_type}}: </ion-card-title>
+	  <ion-card-subtitle str-rigt>{{event?.title}} 
+	  	<ion-icon (click)="favorite()" name="{{is_favorite == '0' ? 'star-outline' : 'star'}}"></ion-icon>
+	  </ion-card-subtitle>
+			<ion-row botm-star>
+				<ion-col size="6">
+					<span class="rate-tl"> Rate </span>
+					<ul class="icon-fir">
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+						<li> <ion-icon name="flame"></ion-icon> </li>
+					</ul>
+				</ion-col>
+				<ion-col size="6" right-icns>
+					<ion-icon name="videocam" routerLink="/make-live-feed"></ion-icon>
+					<ion-icon name="chatboxes" routerLink="/vanue-comments"></ion-icon>
+				</ion-col>
+			</ion-row>
+		</ion-card-header-->
+	</div>
+	<div loc-div><ion-icon name="pin"></ion-icon>{{event?.address}}</div>
+	<ion-card-content [innerHTML]="event?.venue_description">
+	</ion-card-content>
+	<!-- <div class="list-st-cnt">
+		<a class="linc-x"  routerLink="/feed-gallery/{{event?._id}}">
+			<ion-icon src="assets/img/live.svg"></ion-icon>
+		</a>
+	</div> -->	
+</ion-card>
+</div>
+</div>
+
+ <ion-row btm-links show-desk>
+	<ion-col size="12" align-self-center>
+		<ul class="list-st-cnt">
+			
+			<li *ngIf="is_mobile_app == 'false'">
+				<!-- <ion-fab vertical="top" horizontal="end" edge slot="fixed" style="width: inherit;">
+				    <ion-fab-button size="small" color="primary3">
+				      <ion-icon name="md-share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list>
+				      	<ul fab_ul>
+							<li> <share-button button="facebook" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="twitter" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="google" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="pinterest" url="{{share_url}}"></share-button></li>
+						</ul>
+				    </ion-fab-list>
+				</ion-fab> -->
+				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab color="ltblack">
+				    <ion-fab-button color="ltblack">
+				      <ion-icon name="share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list side="end">
+				      <share-button button="facebook" url="{{share_url}}"><ion-icon name="logo-facebook"></ion-icon></share-button>
+				      <share-button button="twitter" url="{{share_url}}"><ion-icon name="logo-twitter"></ion-icon></share-button>
+				      <share-button button="whatsApp" url="{{share_url}}"><ion-icon name="logo-whatsapp"></ion-icon></share-button>
+				      <share-button button="email" url="{{share_url}}"><ion-icon name="mail"></ion-icon></share-button>
+				    </ion-fab-list>
+				  </ion-fab>
+			</li>
+			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
+			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/feed-gallery/{{event?._id}}"> 
+				<span class="">
+					<img src="assets/img/live.jpg">
+					Live 
+				</span>
+			</li>
+			
+		</ul>
+	</ion-col>
+</ion-row>
+
+<!-- webFooter -->
+<app-footer foot-str></app-footer>
+<!-- // end -->
+</ion-content>
+
+<ion-footer *ngIf="is_loaded" big-hide>
+  <ion-row btm-links>
+	<ion-col size="12" align-self-center>
+		<ul class="list-st-cnt">
+			
+			<li *ngIf="is_mobile_app == 'false'">
+				<!-- <ion-fab vertical="top" horizontal="end" edge slot="fixed" style="width: inherit;">
+				    <ion-fab-button size="small" color="primary3">
+				      <ion-icon name="md-share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list>
+				      	<ul fab_ul>
+							<li> <share-button button="facebook" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="twitter" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="google" url="{{share_url}}"></share-button></li>
+							<li> <share-button button="pinterest" url="{{share_url}}"></share-button></li>
+						</ul>
+				    </ion-fab-list>
+				</ion-fab> -->
+				<ion-fab vertical="bottom" horizontal="start" slot="fixed" st-new-fab>
+				    <ion-fab-button color="ltblack">
+				      <ion-icon name="share"></ion-icon>
+				    </ion-fab-button>
+				    <ion-fab-list side="end">
+				      <share-button button="facebook" url="{{share_url}}"><ion-icon name="logo-facebook"></ion-icon></share-button>
+				      <share-button button="twitter" url="{{share_url}}"><ion-icon name="logo-twitter"></ion-icon></share-button>
+				      <share-button button="whatsApp" url="{{share_url}}"><ion-icon name="logo-whatsapp"></ion-icon></share-button>
+				      <share-button button="email" url="{{share_url}}"><ion-icon name="mail"></ion-icon></share-button>
+				    </ion-fab-list>
+				</ion-fab>
+			</li>
+			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
+			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/feed-gallery/{{event?._id}}"> 
+				<span class="">
+					<img src="assets/img/live.jpg">
+					Live 
+				</span>
+			</li>
+			
+		</ul>
+	</ion-col>
+</ion-row>
+</ion-footer>

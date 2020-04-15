@@ -1,0 +1,86 @@
+
+<ion-header>
+  <ion-toolbar  color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+	<ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg *ngIf="is_loaded">
+<div header_height></div>
+	<div class="webContainer">
+		<div class="webSettings contentHeight">
+			<ion-list list-settings class="ion-padding">
+			<!-- <ion-item lines="none">
+			<ion-buttons slot="start">
+			  <img src="assets/img/about.png"/>
+			</ion-buttons>
+	          <ion-label routerLink="/about">About <b> Noctuq </b></ion-label>
+	          <span slot="end" routerLink="/about"><ion-icon name="ios-arrow-forward"></ion-icon></span>
+	        </ion-item>
+			<ion-item lines="none">
+			<ion-buttons slot="start">
+			  <img src="assets/img/person.png"/>
+			</ion-buttons>
+	          <ion-label routerLink="/terms-privacy">Terms/Privacy Policy</ion-label>
+	          <span slot="end" routerLink="/terms-privacy"><ion-icon name="ios-arrow-forward"></ion-icon></span>
+	        </ion-item>
+			<ion-item lines="none">
+			<ion-buttons slot="start">
+			  <img src="assets/img/report.png"/>
+			</ion-buttons>		
+	          <ion-label routerLink="/report-problem">Report A Problem</ion-label>
+	          <span slot="end" routerLink="/report-problem"><ion-icon name="ios-arrow-forward"></ion-icon></span>
+	        </ion-item> -->
+			<ion-item lines="none">
+				<ion-buttons slot="start">
+			  <img src="assets/img/notification.png"/>
+			</ion-buttons>
+	          <ion-label wrap-text>Send Push Notifications</ion-label>
+	          <span slot="end"><ion-toggle [(ngModel)]="can_push_notifications" (ionChange)="update()" color="green" checked></ion-toggle></span>
+	        </ion-item>
+			<ion-item lines="none" >
+			<ion-buttons slot="start">
+			  <img src="assets/img/send-emai.png"/>
+			</ion-buttons>
+	          <ion-label wrap-text>Send Email Notifications</ion-label>
+	          <span slot="end"><ion-toggle [(ngModel)]="can_send_emails" (ionChange)="update()" color="green" checked></ion-toggle></span>
+	        </ion-item>
+			<ion-item lines="none">
+			<ion-buttons slot="start">
+			  <img src="assets/img/hot-display.png"/>
+			</ion-buttons>
+	          <ion-label wrap-text>Hot Venues display at top</ion-label>
+	          <span slot="end"><ion-toggle [(ngModel)]="can_hot_menu_at_top" (ionChange)="update()" color="green" checked></ion-toggle></span>
+	        </ion-item>
+			<ion-item lines="none" >
+			<ion-buttons slot="start">
+			  <img src="assets/img/building.png"/>
+			</ion-buttons>
+	          <ion-label wrap-text>Enable City/Region access to find nearest events</ion-label>
+	          <span slot="end"><ion-toggle [(ngModel)]="allow_city_region" (ionChange)="update()" color="green" checked></ion-toggle></span>
+	        </ion-item>
+	<!-- 		<ion-item lines="none"  ranges-sa>
+	          <ion-label>  <h2 head-sub>Mile Radius</h2>
+				<ion-range value="50" color="green">
+					<span slot="start" class="min-value"> 5 mil </span>
+					<span slot="end" class="max-value"> 50 mil </span>
+				</ion-range>  </ion-label>
+			</ion-item>
+			<ion-item lines="none" ranges-sa>  <ion-label>
+	          <h2 head-sub>Cover Price</h2>
+				<ion-range value="50" color="green">
+					<span slot="start" class="min-value"> $10 </span>
+					<span slot="end" class="max-value"> $100 </span>
+				</ion-range>  </ion-label>
+			</ion-item> -->
+		</ion-list>
+	</div>
+</div>
+
+<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+</ion-content>

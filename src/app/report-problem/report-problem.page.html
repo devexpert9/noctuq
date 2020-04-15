@@ -1,0 +1,38 @@
+<ion-header *ngIf="is_loaded">
+  <ion-toolbar color="ltblack" text-center>
+	<ion-buttons slot="start">
+      <!-- <ion-back-button defaultHref="home-list"></ion-back-button> -->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+	<ion-title>{{content?.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content comments-bg *ngIf="is_loaded" webAboutPage>
+<div header_height></div>
+	<div class="webContainer">
+	    <div report-top>
+			<div class="logo-cntrs">
+				<img height="" src="assets/img/reports.jpg">
+			</div>
+				<div class="cont-alsa ion-text-center">
+				<div [innerHTML]="content?.description"></div>
+			 </div>
+		 </div>
+		 <div briefly-explain>
+			<ion-item class="text-atea">
+				<ion-textarea [(ngModel)]="message" placeholder="Briefly explain what happend..." rows="5"></ion-textarea>
+			</ion-item>
+			<div btn-bottom class="ion-text-center" >
+				<ion-button (click)="sendEmail()" color="white" expand="full" shape="round">
+					Submit
+				</ion-button> 
+			</div>
+		</div>
+	</div>
+
+<!-- webFooter -->
+<app-footer></app-footer>
+<!-- // end -->
+
+</ion-content>
