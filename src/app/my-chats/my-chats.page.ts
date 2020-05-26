@@ -12,6 +12,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { Events } from '@ionic/angular';
 declare var window: any;
 
 @Component({
@@ -42,7 +43,7 @@ mySession:any;
 allowedMimes:any=config.IMAGE_EXTENSIONS;
 chat_is_social_image:any;
 chat_image:any;
-  constructor(public userService: UserService, private socket: Socket,public router : Router, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
+  constructor(public events:Events,public userService: UserService, private socket: Socket,public router : Router, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
 	  	this.getUpdates().subscribe(new_message => {
 	        console.log('new_message')
 	        console.log(new_message)
@@ -90,6 +91,7 @@ chat_image:any;
   getChatUsers(type = null){
   	this.userService.presentLoading();
     this.userService.postData({userId: this.userId},'get_chat_users').subscribe((result) => { 
+     
       this.is_loaded = true;
       this.userService.stopLoading();
       console.log(this.all_users)
@@ -178,6 +180,7 @@ chat_image:any;
     	this.chat_user_id = toId;
     	this.userService.presentLoading();
     	this.userService.postData({fromId: this.userId, toId: toId},'get_chat').subscribe((result) => { 
+        this.events.publish('read_msgs','');
         this.chats = result;
         this.scrollToBottom();
         this.isShow = true;
@@ -333,6 +336,29 @@ chat_image:any;
   openImage(path){
     this.photoViewer.show(path);
   }
+
+
+  delete_inbox(id,i){
+
+        this.userService.presentLoading();
+        this.userService.postData({toId: this.userId, fromId:id},'clear_all_msgs').subscribe((result) => { 
+        this.userService.stopLoading();
+        var res;
+        res= result;
+          
+            if(res.status==1){
+              this.all_users.splice(i,1);
+              this.events.publish('read_msgs','');
+
+            }else{
+
+
+            }
+
+        });
+    
+  }
+
 
 }
 

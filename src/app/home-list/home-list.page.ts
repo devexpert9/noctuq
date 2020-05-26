@@ -194,6 +194,7 @@ view_type:string='events';
   }
 
   getVenues(event={},type=''){
+    var api_endpoint = (this.page_type == 'favorites') ? 'my_favorites_venue' : 'get_venues_list';
     if(type == '0'){
       this.userService.presentLoading();
     }
@@ -219,7 +220,7 @@ view_type:string='events';
         current_lng : '',
         current_lat : '',
         miles : 10000
-      },'get_venues_list').subscribe((result) => { 
+      },api_endpoint).subscribe((result) => { 
           self.is_loaded_v = true;
           var loaded_records = self.start_v+self.records_per_page;
           if(loaded_records >= result.total){

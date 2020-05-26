@@ -63,15 +63,18 @@
 		  	<div AppContainer homeLists>
 		  		<ng-container *ngIf="view_type == 'events'">
 					<ion-card img-srta routerLink="/clubs/{{event._id}}" *ngFor="let event of all_events">
+					    <ion-badge color="danger" class="hot_badge" *ngIf="event.is_hot==1">Hot</ion-badge>
 						<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png"/> 
 						<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}"/> 
+						
 						<ion-card-header>
+							
 							<ion-card-title>{{event?.title}} - {{event?.time}} </ion-card-title>
 							<div description>
 								<p>Hosted at : {{event?.venue_type}}</p>
 							  <!-- <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p> -->
 							</div>
-							<div fav-div *ngIf="page_type == 'favorites'" >
+							<div fav-div *ngIf="page_type == 'favorites'" style="margin-bottom:10px ;">
 								<ion-icon name="heart"></ion-icon>
 							</div>
 						</ion-card-header>
@@ -94,6 +97,9 @@
 							{{event?.current_event?.title}} - {{event?.current_event?.time}}
 						</p>
 						  <!-- <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p> -->
+						</div>
+						<div fav-div *ngIf="page_type == 'favorites'" >
+							<ion-icon name="heart"></ion-icon>
 						</div>
 					</ion-card-header>
 				</ion-card>

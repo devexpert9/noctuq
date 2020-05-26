@@ -3,7 +3,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router } from '@angular/router';
-
+import { Events } from '@ionic/angular';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.page.html',
@@ -22,7 +22,7 @@ all_notis:any;
 errors:any = ['', null, undefined];
 is_mobile_app:any = config.IS_MOBILE_APP;
 scroll_event:any;
-  constructor(public userService: UserService, private router: Router) { 
+  constructor(public userService: UserService, private router: Router, public events:Events) { 
   	this.records_per_page = 10;
   }
 
@@ -91,9 +91,11 @@ scroll_event:any;
   	if(this.all_notis[index]['isRead'] == '0'){
 	  	this.all_notis[index]['isRead'] = '1';
 	  	this.userService.postData({id: id},'read_notifications').subscribe((result) => { 
-	  		console.log('read...')
+        console.log('read...');
+        this.events.publish('read_noti','');
 	  	});
-  	}
+    }
+    
   }
 
   messages(){
@@ -102,6 +104,47 @@ scroll_event:any;
 
   profile(){
     this.router.navigate(['/friends'])
+  }
+
+  clear_all(){
+    this.userService.presentLoading();
+    this.userService.postData({userId: this.userId},'clear_all_notifications').subscribe((result) => { 
+      this.userService.stopLoading();
+      var res;
+      res= result;
+      
+     if(res.status==1){
+       this.all_notis=[];
+       this.events.publish('read_noti','');
+
+     }else{
+
+
+     }
+
+    });
+    
+  }
+
+  delete_single_noti(id, i){
+
+    this.userService.presentLoading();
+    this.userService.postData({noti_id: id},'clearSingleNoti').subscribe((result) => { 
+      this.userService.stopLoading();
+      var res;
+      res= result;
+      
+     if(res.status==1){
+       this.all_notis.splice(i,1);
+       this.events.publish('read_noti','');
+
+     }else{
+
+
+     }
+
+    });
+
   }
 
 }

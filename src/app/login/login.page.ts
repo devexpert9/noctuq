@@ -97,10 +97,12 @@ page_type:any;
     localStorage.clear();
     var userId = this.userService.encryptData(result.data._id,config.ENC_SALT);
     if(this.page_type == 'host'){
+      localStorage.setItem('userType','host');
       localStorage.setItem('niteowl_host_auth_token',userId);
       localStorage.setItem('niteowl_host_sessions',JSON.stringify(result.data));
     }
     else{
+      localStorage.setItem('userType','user');
       localStorage.setItem('niteowl_auth_token',userId);
       localStorage.setItem('niteowl_sessions',JSON.stringify(result.data));
     }

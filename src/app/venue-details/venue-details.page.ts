@@ -85,7 +85,7 @@ slideOpts = {
   favorite(){
     var is_favorite = (this.is_favorite == '0') ? '1' : '0';
     this.userService.presentLoading();
-    this.userService.postData({event_id: this.event_id, userId: this.userId, is_favourite: is_favorite},'add_favorite').subscribe((result) => {
+    this.userService.postData({event_id: this.event_id, userId: this.userId, is_favourite: is_favorite,type:'venue'},'add_favorite').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
         this.is_favorite = is_favorite;

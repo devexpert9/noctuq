@@ -4,7 +4,7 @@ import { Platform } from "@ionic/angular";
 import { Router, ActivatedRoute } from '@angular/router';
 import { config } from '../config';
 import { UserService } from '../services/user/user.service';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
@@ -21,9 +21,20 @@ is_mobile_app:any = config.IS_MOBILE_APP;
 zoom:number=12;
 lat:number;
 lng:number;
+allow_city_region:any;
+user_lat:any;
+user_lng:any;
+errors:any=['',undefined,null,0]
+  constructor(private geolocation: Geolocation,public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
+    this.id = activatedRoute.snapshot.paramMap.get('id');
+    this.locationDetect();
+    var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+    this.allow_city_region = niteowl_sessions.allow_city_region;
 
-  constructor(public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
-  	this.id = activatedRoute.snapshot.paramMap.get('id');
+    this.getLocationSetting();
+
+
+
   }
 
   ngOnInit() {
@@ -44,10 +55,23 @@ lng:number;
 
   initWebMap(){
     this.userService.postData({event_id: this.id, userId: this.userId},'get_event_details').subscribe((result) => {
-        var eve = result.event;
-        this.lat = Number(eve.location.lat);
-        this.lng = Number(eve.location.lng);
+     
+        var eve ;
+       eve = result.event;
+       console.log();
+        this.lat = Number(eve.cords.coordinates[1]);
+        this.lng = Number(eve.cords.coordinates[0]);
     });
+  }
+
+  locationDetect(){
+            let watch = this.geolocation.watchPosition();
+        watch.subscribe((data) => {
+        // data can be a set of coordinates, or an error (if an error occurred).
+        // data.coords.latitude
+        // data.coords.longitude
+        });
+
   }
 
   // initMap() {
@@ -76,5 +100,16 @@ lng:number;
   // 	  });
   //   })
   // }
+
+  getLocationSetting(){
+ 
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      this.user_lat=data.coords.latitude;
+      this.user_lng=data.coords.longitude;
+  
+    });
+
+  }
 
 }

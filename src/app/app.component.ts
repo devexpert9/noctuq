@@ -23,51 +23,65 @@ export class AppComponent {
   new_message:any;
   current_url:any;
   userId:any;
+  messages:any=0;
+  notifications:any=0;
+  res_came:boolean=false;
   public appPages = [
     {
       title: 'Home',
       url: '/home-list',
-      icon: 'assets/img/home.png'
+      icon: 'assets/img/home.png',
+      type:0
     },
     {
       title: 'Favorites',
       url: '/home-list/favorites',
-      icon: 'assets/img/heart.png'
+      icon: 'assets/img/heart.png',
+      type:0
     },
     {
       title: 'Messages',
       url: '/messages',
-      icon: 'assets/img/messages.png'
+      icon: 'assets/img/messages.png',
+      badge:this.messages,
+      type:1
     },
     {
       title: 'Notifications',
       url: '/notifications',
-      icon: 'assets/img/notification-solid.png'
+      icon: 'assets/img/notification-solid.png',
+      badge:this.notifications,
+      type:2
     },
     {
       title: 'About <b> Noctuq </b>',
       url: '/about',
-      icon: 'assets/img/about.png'
+      icon: 'assets/img/about.png',
+      type:0
     },
     {
       title: 'Terms/Privacy Policy',
       url: '/terms-privacy',
-      icon: 'assets/img/person.png'
+      icon: 'assets/img/person.png',
+      type:0
     },
     {
       title: 'Report A Problem',
       url: '/report-problem',
-      icon: 'assets/img/problem.png'
+      icon: 'assets/img/problem.png',
+      type:0
     },
     {
       title: 'Settings',
       url: '/settings',
-      icon: 'assets/img/settings-icon.png'
+      icon: 'assets/img/settings-icon.png',
+      type:0
     }
   ];
 
   constructor(
-    private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menu: MenuController, private router: Router,private fcm: FCM, public events:Events, public userService:UserService, private socket: Socket) {
+    private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menu: MenuController, private router: Router,private fcm: FCM, public events:Events, public userService:UserService, private socket: Socket)
+     {
       this.initializeApp();
       events.subscribe('user_log_activity:true', data => {
         this.checkUserAuth();
@@ -83,6 +97,23 @@ export class AppComponent {
           this.logout();
         }
       });
+      
+
+      this.get_Messages();
+      this.get_Notifications();
+      this.getMessages().subscribe(new_message => {
+        this.get_Messages();
+      })
+
+     
+      events.subscribe('read_noti', data => {
+        this.get_Notifications();
+      });
+
+      events.subscribe('read_msgs', data => {
+        this.get_Messages();
+      });
+
   }
 
   ngOnInit(){
@@ -154,6 +185,7 @@ export class AppComponent {
   }
 
   logout(){
+    localStorage.removeItem('userType');
     localStorage.removeItem('niteowl_auth_token');
     localStorage.removeItem('niteowl_sessions');
     this.closeMenu();
@@ -163,4 +195,73 @@ export class AppComponent {
       self.router.navigate(['/login']);
     },500);
   }
+
+  getMessages() {
+
+    var self = this;
+    let observable = new Observable(observer => {
+      self.socket.on('rec_message', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+
+
+  get_Messages() {
+       //get messages//
+       var token = localStorage.getItem('niteowl_auth_token');
+       var userId = this.userService.decryptData(token,config.ENC_SALT);
+      
+         this.userService.postData({userId:userId},'get_unread_messages').subscribe((result) => {
+           var res;
+           res= result;
+           if(result.status == 1){
+           this.messages= result.data ;
+           this.res_came=true;
+           console.log('werty');
+           console.log(this.messages);
+           
+           }else{
+           this.messages= null;
+           this.res_came=true;
+
+
+           }
+          
+         },
+         err => {
+    
+         });
+  }
+
+
+  get_Notifications() {
+    //get messages//
+    var token = localStorage.getItem('niteowl_auth_token');
+    var userId = this.userService.decryptData(token,config.ENC_SALT);
+   
+      this.userService.postData({userId:userId},'get_unread_notifications').subscribe((result) => {
+        var res;
+        res= result;
+        if(result.status == 1){
+        this.notifications= result.data ;
+        this.res_came=true;
+        console.log('werty');
+        console.log(this.messages);
+        
+        }else{
+          this.notifications= null ;
+          this.res_came=true;
+
+        }
+       
+      },
+      err => {
+ 
+      });
+}
+
+
+
 }

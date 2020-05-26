@@ -30,6 +30,8 @@ search_term:any;
 page_type:string='events';
   constructor(public userService: UserService, public alertController: AlertController) { 
     this.records_per_page = 9;
+
+  
   }
 
   ngOnInit() {
@@ -180,7 +182,8 @@ page_type:string='events';
     },100);
   }
 
-  async deleteEvent(eventId, index) {
+  async deleteEvent(eventId, index,t,d) {
+
     const alert = await this.alertController.create({
       header: 'Are you sure you want to delete this event?',
       message: '',
@@ -196,11 +199,15 @@ page_type:string='events';
           text: 'Yes',
           handler: () => {
             this.userService.presentLoading();
-            this.userService.postData({id:eventId},'delete_event').subscribe((result) => {
+            this.userService.postData({id:eventId, date:d, time:t},'delete_event').subscribe((result) => {
               this.userService.stopLoading();
               if(result.status == 1){
                 this.userService.presentToast('Event deleted successfully.','success');
                 this.all_events.splice(index,1);
+              }
+              else if(result.status == 5){
+                this.userService.presentToast('Can not delete upcoming events.','danger');
+                
               }
               else{
                 this.userService.presentToast('Error while deleting event! Please try later','danger');
@@ -259,6 +266,22 @@ page_type:string='events';
   changePage(type){
     this.page_type = type;
   }
+
+   tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
+  }
+  
+ 
+
+
 
 }
 

@@ -66,6 +66,9 @@ max_year_dob:any;
       else if(result.status == 2){
         this.userService.presentToast('Account already exists with this email','danger');
       }
+      else if(result.status == 3){
+        this.userService.presentToast('You can no longer use that email, Contact Noctuq Support for more information.','danger');
+      }
       else{
         this.userService.presentToast('Error while signing up! Please try later','danger');
       }

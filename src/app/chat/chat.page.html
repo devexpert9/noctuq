@@ -16,7 +16,11 @@
   <div class="webContainer">
 	<!--div class="chat-box-s"-->
 	<div class="commts">
-		<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" *ngFor="let chat of chats ">
+
+
+		<ion-item-sliding *ngFor="let chat of chats ;let i=index" style="--z-index: 9999;">
+			<ion-item>
+		<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'">
 			<div class="comnt-head">
 				<ng-container *ngIf="userId != chat.fromId">
 					<img pro-img *ngIf="errors.indexOf(chat_image) >= 0" src="assets/img/user-icon.jpg"/> 
@@ -37,6 +41,16 @@
 				</div>
 			</div>
 		</div>
+	</ion-item>
+
+		<ion-item-options side="end" >
+			<ion-item-option (click)="delete_msg(chat._id, i)" color="danger">Clear</ion-item-option>
+			</ion-item-options>
+
+		</ion-item-sliding>
+
+
+
 	</div>
 </div>
 

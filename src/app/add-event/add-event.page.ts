@@ -44,10 +44,12 @@ date:any;
 start_time:any;
 end_time:any;
 current_date:any;
+end_date:any;
   constructor(public userService: UserService, private router: Router,private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer, public actionSheetController: ActionSheetController, private platform: Platform,private ref: ChangeDetectorRef, private activatedRoute: ActivatedRoute) { 
     var current = new Date();
     this.current_date = current.getFullYear()+'-'+(((current.getMonth()+1) < 10 ? '0'+(current.getMonth()+1) : (current.getMonth()+1)))+'-'+(current.getDate() < 10 ? '0'+current.getDate() : current.getDate());
-
+    var token = localStorage.getItem('niteowl_host_auth_token');
+    this.hostId = this.userService.decryptData(token,config.ENC_SALT);
   	this.get_venues_genres();
   	// this.userSettings['inputPlaceholderText'] = 'Location';
    //  this.userSettings = Object.assign({},this.userSettings);
@@ -100,7 +102,7 @@ current_date:any;
   }
 
   get_venues_genres(){
-    this.userService.postData({},'get_venues_genres').subscribe((result) => {
+    this.userService.postData({uId: this.hostId},'get_venues_forHost').subscribe((result) => {
       this.all_genres = result.genres;
       this.all_venues = result.venues_list;
     },
@@ -117,7 +119,7 @@ current_date:any;
   //   this.location = data.data.formatted_address;
   // }
 
-  add_event(){
+  add_event(){ 
     this.is_submit = true;
     if(this.errors.indexOf(this.title) >= 0 || this.errors.indexOf(this.venue_type) >= 0 || this.errors.indexOf(this.genre_type) >= 0 || this.errors.indexOf(this.price) >= 0 || this.errors.indexOf(this.description) >= 0 || this.errors.indexOf(this.date) >= 0 || this.errors.indexOf(this.start_time) >= 0 || this.errors.indexOf(this.end_time) >= 0 ){
       return false;
@@ -142,6 +144,7 @@ current_date:any;
     formData.append('venue_type', this.venue_type);
     formData.append('price', this.price);
     formData.append('date', this.date.split('T')[0]);
+    formData.append('end_date', this.end_date.split('T')[0]);
     if(this.isEdit == '1'){
       formData.append('start_time', this.start_time);
       formData.append('end_time', this.end_time);
@@ -157,7 +160,7 @@ current_date:any;
     formData.append('genre', JSON.stringify(this.genre_type));
     
     this.userService.presentLoading();
-    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event' : 'add_event/'+this.hostId;
+    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event' : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0];
     this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
@@ -192,9 +195,13 @@ current_date:any;
       else if(result.status == 3){
         this.userService.presentToast('You can add only 100 events.Please remove existing events to add new one.','danger');
       }
+      else if(result.status == 5){
+        this.userService.presentToast('You can not add event on past date and time','danger');
+      }
       else{
         this.userService.presentToast('Error while adding event! Please try later','danger');
       }
+    
     },
     err => {
       this.userService.stopLoading();

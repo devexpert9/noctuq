@@ -247,7 +247,7 @@ deleted_files:any=[];
   		this.all_images = this.all_images.concat(this.product_images);
   	}
   	else{
-		this.userService.presentToast('You can only upload upto 10 images.','danger');
+		this.userService.presentToast('You can only upload up to 10 images.','danger');
 	}
   	this.uploader.queue = [];
   	console.log(this.all_images)

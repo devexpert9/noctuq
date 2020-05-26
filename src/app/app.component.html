@@ -15,9 +15,13 @@
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
               <img [src]="p.icon"/>
+             
               <ion-label [innerHTML]="p.title">
+              
                 <!-- {{p.title}} -->
               </ion-label>
+              <ion-badge color="warning" *ngIf="errors.indexOf(p.badge)==-1 && p.type==1">{{messages}}</ion-badge>
+              <ion-badge color="warning" *ngIf="errors.indexOf(p.badge)==-1 &&  p.type==2">{{notifications}}</ion-badge>
             </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false" (click)="logout()">

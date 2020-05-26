@@ -11,6 +11,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { Events } from '@ionic/angular';
 declare var window: any;
 @Component({
   selector: 'app-chat',
@@ -34,7 +35,7 @@ IMAGES_URL:any=config.IMAGES_URL;
 is_mobile_app:any = config.IS_MOBILE_APP;
 allowedMimes:any=config.IMAGE_EXTENSIONS;
 
-  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, private socket: Socket, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
+  constructor(public events:Events,public userService: UserService, private activatedRoute: ActivatedRoute, private socket: Socket, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
   	this.toId = activatedRoute.snapshot.paramMap.get('id');
     this.getUpdates().subscribe(new_message => {
         console.log('new_message')
@@ -63,6 +64,8 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
   getChat(){
   	this.userService.presentLoading();
     this.userService.postData({toId : this.toId, fromId : this.userId},'get_chat').subscribe((result) => {
+      console.log(result);
+      this.events.publish('read_msgs','');
       this.userService.stopLoading();
       this.chats = result;
       this.scrollToBottom();
@@ -233,6 +236,27 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
 
   openImage(path){
     this.photoViewer.show(path);
+  }
+
+  delete_msg(_id,i){
+    this.userService.presentLoading();
+    this.userService.postData({toId: this.userId,msgId:_id },'clearSingleMsg').subscribe((result) => { 
+    this.userService.stopLoading();
+    var res;
+    res= result;
+      
+        if(res.status==1){
+          this.chats.splice(i,1);
+          this.events.publish('read_msgs','');
+
+        }else{
+
+
+        }
+
+    });
+
+
   }
 
 }

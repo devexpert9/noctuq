@@ -42,10 +42,18 @@
 	        <span error *ngIf="errors.indexOf(price) >= 0 && is_submit == true">Please enter event price</span>
 
 	        <ion-item>
-			<ion-label>Date</ion-label>
-	           <ion-datetime [(ngModel)]="date" displayFormat="MMM D, YYYY" min="{{current_date}}" placeholder="Date"></ion-datetime>
+			<ion-label>Start Date</ion-label>
+	           <ion-datetime [(ngModel)]="date" displayFormat="MMM D, YYYY" min="{{current_date}}" placeholder="start Date"></ion-datetime>
 	        </ion-item>
-	        <span error *ngIf="errors.indexOf(date) >= 0 && is_submit == true">Please select event date</span> 
+			<span error *ngIf="errors.indexOf(date) >= 0 && is_submit == true">Please select event start date</span> 
+			
+			<ion-item>
+			<ion-label>End Date</ion-label>
+				   <ion-datetime [(ngModel)]="end_date" displayFormat="MMM D, YYYY" min="{{current_date}}" placeholder="End Date"></ion-datetime>
+			</ion-item>
+			<span error *ngIf="errors.indexOf(end_date) >= 0 && is_submit == true">Please select event end date</span> 
+
+
 
 	        <ion-item starttime>
 			<ion-label>Start Time</ion-label>

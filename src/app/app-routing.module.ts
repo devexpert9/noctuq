@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './services/guard-user/auth-guard.service';
 import { AuthGuardHostService } from './services/guard-host/auth-guard.service';
+var login_type =    localStorage.getItem('userType');;
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home-list',
+    redirectTo: login_type == 'user' ? 'home-list' : 'host-events',
     pathMatch: 'full'
   },
   { path: 'login-host', loadChildren: './login-host/login-host.module#LoginHostPageModule' },
