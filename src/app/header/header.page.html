@@ -17,9 +17,9 @@
             <li><a href="javascript:void(0)" routerLink="/profile"  slot="end"><ion-icon name="person"></ion-icon> Profile</a></li>
             <li><a href="javascript:void(0)" slot="end" routerLink="/home-list/favorites"><ion-icon name="star"></ion-icon> Favorites</a></li>
 
-            <li><a href="javascript:void(0)" slot="end" routerLink="/messages"><ion-icon name="chatboxes"></ion-icon> Messages</a></li>
+            <li><a href="javascript:void(0)" slot="end" routerLink="/messages" (click)="get_Messages()"><ion-icon name="chatboxes"></ion-icon> Messages   <ion-badge color="danger" *ngIf="errors.indexOf(messages)==-1">{{messages}}</ion-badge></a></li>
 
-            <li><a href="javascript:void(0)" slot="end" routerLink="/notifications"><ion-icon name="notifications"></ion-icon> Notifications</a></li>
+            <li><a href="javascript:void(0)" slot="end" routerLink="/notifications" (click)="get_Notifications()"><ion-icon name="notifications"></ion-icon> Notifications   <ion-badge color="danger" *ngIf="errors.indexOf(notifications)==-1">{{notifications}}</ion-badge></a></li>
 
             <li><a href="javascript:void(0)" routerLink="/settings"><ion-icon name="settings"></ion-icon> Settings</a></li>
             <li><a (click)="logout('user')" href="javascript:void(0)"><ion-icon name="log-out"></ion-icon> Logout</a></li>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { config } from '../config';
 import { UserService } from '../services/user/user.service';
 import { Events } from '@ionic/angular';
-
+import { EventService } from '../services/event/event.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.page.html',
@@ -16,18 +16,44 @@ errors:any = ['',null,undefined];
 user_sessions:any;
 host_sessions:any;
 IMAGES_URL:any=config.IMAGES_URL;
-  constructor(private router: Router, public userService: UserService, private events: Events) { 
+messages:any;
+notifications:any;
+res_came:boolean=false;
+
+  constructor(public events1: EventService, private router: Router, public userService: UserService, public events: Events) { 
   	this.user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
   	this.checkUserAuth();
   	events.subscribe('user_log_activity:true', data => {
-	   this.checkUserAuth();
-	});
+      var token = localStorage.getItem('niteowl_auth_token');
+      var userId = this.userService.decryptData(token,config.ENC_SALT);
+     this.checkUserAuth();
+     this.get_Messages();
+     this.get_Notifications();
+  });
+  
+  this.events1.getObservable().subscribe((data) => {
+    this.get_Messages();
+    this.get_Notifications();
+
+  })
+
+  this.get_Messages();
+  this.get_Notifications();
+  
   }
 
+ 
+
+
   ngOnInit() {
+    this.events.subscribe('read_msgs', data => {
+      this.get_Messages();
+      console.log('yeaaahhhhh')
+    });
   }
 
   logout(type){
+    localStorage.removeItem('userType');
     if(type == 'user'){
       localStorage.removeItem('niteowl_auth_token');
       localStorage.removeItem('niteowl_sessions');
@@ -68,5 +94,60 @@ IMAGES_URL:any=config.IMAGES_URL;
   ionViewWillUnload(){
     this.events.unsubscribe('user_log_activity:true');
   }
+
+  get_Messages() {
+    //get messages//
+    var token = localStorage.getItem('niteowl_auth_token');
+    var userId = this.userService.decryptData(token,config.ENC_SALT);
+   
+      this.userService.postData({userId:userId},'get_unread_messages').subscribe((result) => {
+        this.messages = 50;
+        var res;
+        res= result;
+        if(res.status == 1){
+        this.messages = res.data ;
+        this.res_came=true;
+        console.log('werty');
+        console.log(this.messages);
+        
+        }else{
+        this.messages= null;
+        this.res_came=true;
+
+
+        }
+       
+      },
+      err => {
+ 
+      });
+}
+
+
+get_Notifications() {
+ //get messages//
+ var token = localStorage.getItem('niteowl_auth_token');
+ var userId = this.userService.decryptData(token,config.ENC_SALT);
+
+   this.userService.postData({userId:userId},'get_unread_notifications').subscribe((result) => {
+     var res;
+     res= result;
+     if(result.status == 1){
+     this.notifications= result.data ;
+     this.res_came=true;
+     console.log('werty');
+     console.log(this.messages);
+     
+     }else{
+       this.notifications= null ;
+       this.res_came=true;
+
+     }
+    
+   },
+   err => {
+
+   });
+}
 
 }

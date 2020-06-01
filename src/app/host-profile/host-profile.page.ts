@@ -230,6 +230,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
   }
 
   logout(){
+    localStorage.removeItem('userType');
   	localStorage.removeItem('niteowl_host_auth_token');
     localStorage.removeItem('niteowl_host_sessions');
     this.router.navigate(['/login/host']);

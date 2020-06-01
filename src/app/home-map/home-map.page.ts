@@ -6,7 +6,9 @@ import { config } from '../config';
 import { UserService } from '../services/user/user.service';
 import { ModalController } from '@ionic/angular';
 import { FiltersPage } from '../filters/filters.page';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+declare var require:any;
+var geolocationn = require('geolocation')
 @Component({
   selector: 'app-home-map',
   templateUrl: './home-map.page.html',
@@ -35,19 +37,28 @@ genres:any=[];
 min_price:number=0;
 max_price:number;
 mile_radius:number=0;
-errors:any=['',null,undefined];
+errors:any=['',undefined,null,0]
 price_limit:number = 5000;
 view_type:string='events';
-  constructor(public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService, public modalController:ModalController) { 
+allow_city_region:any;
+user_lat:any;
+user_lng:any;
+url:any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+  constructor(private geolocation: Geolocation, public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService, public modalController:ModalController) { 
   	this.page_type = activatedRoute.snapshot.paramMap.get('type');
     this.get_venues_genres();
-    console.log(this.page_type)
   }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
+    var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+    this.allow_city_region = niteowl_sessions.allow_city_region;
+    console.log(this.allow_city_region)
+    this.getLocationSetting();
+
+
     if(localStorage.getItem('is_event_open') == '1'){
       this.view_type = 'events';
     }
@@ -58,21 +69,14 @@ view_type:string='events';
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
 
-    // if(this.is_mobile_app == 'true'){
-    //   this.plt.ready().then(() => {
-    //     this.initMap();
-    //   });
-    // }
-    // else{
-      this.initWebMap();
-    // }
+    this.initWebMap();
   }
 
   get_venues_genres(){
     this.userService.postData({},'get_venues_genres').subscribe((result) => {
       this.all_genres = result.genres;
       this.all_venues = result.venues;
-      console.log(result)
+      
     },
     err => {
       this.all_genres = [];
@@ -96,46 +100,77 @@ view_type:string='events';
 
   initWebMap(){
 
-    var api_endpoint_events = (this.page_type == 'favorites') ? 'my_favorites' : 'get_events';
-    var api_endpoint_venues = (this.page_type == 'favorites') ? 'my_favorites' : 'get_venues_list';
-      // get all events
-      this.userService.postData({
-        userId: this.userId, 
-        genres : this.genres, 
-        venues : this.venues, 
-        search_term : this.search_term,
-        min_price: this.min_price,
-        max_price: this.max_price,
-        mile_radius: this.mile_radius,
-        current_lng : '',
-        current_lat : '',
-        miles : 10000
-      },api_endpoint_events).subscribe((result) => { 
-          if(result.total > 0){
-            this.all_events = result.data;
-            this.lat = Number(result.data[0]['cords']['coordinates'][1]);
-            this.lng = Number(result.data[0]['cords']['coordinates'][0]);
-          }
-      });
-      // get all venues
-      this.userService.postData({
-        userId: this.userId, 
-        genres : this.genres, 
-        venues : this.venues, 
-        search_term : this.search_term,
-        min_price: this.min_price,
-        max_price: this.max_price,
-        mile_radius: this.mile_radius,
-        current_lng : '',
-        current_lat : '',
-        miles : 10000
-      },api_endpoint_venues).subscribe((result) => { 
-          if(result.total > 0){
-            this.all_venues_list = result.data;
-            this.lat_v = Number(result.data[0]['cords']['coordinates'][1]);
-            this.lng_v = Number(result.data[0]['cords']['coordinates'][0]);
-          }
-      }); 
+    var self = this;
+    setTimeout(() => {
+      
+      if(self.is_mobile_app == 'true'){
+        self.geolocation.getCurrentPosition().then((resp) => {
+          console.log('mobile app')
+          console.log(resp)
+          var current_lng = resp.coords.longitude;
+          var current_lat = resp.coords.latitude;
+          callVenuesList(current_lng,current_lat);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }
+      else{
+        // navigator.geolocation.getCurrentPosition( pos => {
+          console.log('web app')
+          // var current_lng = pos.coords.longitude;
+          // var current_lat = pos.coords.latitude;
+          var current_lng = '';
+          var current_lat = '';
+          callVenuesList(current_lng,current_lat);
+        // });
+      }
+    },500);
+    
+
+    function callVenuesList(current_lng,current_lat){
+    
+      var api_endpoint_events = (self.page_type == 'favorites') ? 'my_favorites' : 'get_events';
+      var api_endpoint_venues = (self.page_type == 'favorites') ? 'my_favorites' : 'get_venues_list';
+        // get all events
+        self.userService.postData({
+          userId: self.userId, 
+          genres : self.genres, 
+          venues : self.venues, 
+          search_term : self.search_term,
+          min_price: self.min_price,
+          max_price: self.max_price,
+          mile_radius: self.mile_radius,
+          current_lng : current_lng,
+          current_lat :current_lat,
+          miles : 10000
+        },api_endpoint_events).subscribe((result) => { 
+            if(result.total > 0){
+              self.all_events = result.data;
+              self.lat = Number(result.data[0]['cords']['coordinates'][1]);
+              self.lng = Number(result.data[0]['cords']['coordinates'][0]);
+            }
+        });
+        // get all venues
+        self.userService.postData({
+          userId: self.userId, 
+          genres : self.genres, 
+          venues : self.venues, 
+          search_term : self.search_term,
+          min_price: self.min_price,
+          max_price: self.max_price,
+          mile_radius: self.mile_radius,
+          current_lng : current_lng,
+          current_lat : current_lat,
+          miles : 10000
+        },api_endpoint_venues).subscribe((result) => { 
+            if(result.total > 0){
+              self.all_venues_list = result.data;
+              self.lat_v = Number(result.data[0]['cords']['coordinates'][1]);
+              self.lng_v = Number(result.data[0]['cords']['coordinates'][0]);
+            }
+        });
+
+    }
   }
 
   async filterPage() {
@@ -155,8 +190,7 @@ view_type:string='events';
       }
     });
     modal.onDidDismiss().then((detail) => {
-      console.log('detail')
-      console.log(detail)
+ 
        if(this.errors.indexOf(detail.data) == -1) {
           if(detail.data.reset == '1'){
             this.genres = [];
@@ -189,6 +223,44 @@ view_type:string='events';
       localStorage.setItem('is_venue_open','1');
     }
   }
+
+ getLocationSetting(){
+  console.log(this.is_mobile_app)
+    if(this.errors.indexOf(this.allow_city_region)==-1){
+      console.log('this.is_mobile_app',this.is_mobile_app)
+     
+      if(this.is_mobile_app == 'true'){
+        var dis= this;
+        console.log('enterrrr0')
+        this.geolocation.getCurrentPosition().then((data) => {
+          console.log('enter1')
+          dis.user_lat = data.coords.latitude;
+          dis.user_lng = data.coords.longitude;
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+  
+      }else{
+        console.log('enter3')
+      
+        geolocationn.getCurrentPosition(function (err, position) {
+          dis.user_lat=position.coords.latitude;
+          dis.user_lng=position.coords.longitude;
+    
+        })
+  
+      }
+
+    }else{
+      this.user_lat = '';
+      this.user_lng = '';
+
+    }
+
+
+
+  }
+
 
   //  initMap() {
   //  	var self = this;

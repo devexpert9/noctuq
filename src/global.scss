@@ -24,3 +24,16 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.spinner-bubbles.sc-ion-loading-md, .spinner-circles.sc-ion-loading-md, .spinner-crescent.sc-ion-loading-md, .spinner-dots.sc-ion-loading-md, .spinner-lines.sc-ion-loading-md, .spinner-lines-small.sc-ion-loading-md {
+    color:#222 !important;
+    width:50px!important;
+    height:50px!important;
+    background:none;
+    }
+
+.loading-wrapper.sc-ion-loading-md{
+        background:none !important;
+        box-shadow:none !important;
+    }
+    

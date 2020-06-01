@@ -71,6 +71,15 @@
      <agm-marker  *ngFor="let data of all_events " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
      <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.title}}<br>Hosted at: {{data?.venue_type}}<br>Date - {{data?.date | date : 'MMM d'}} at {{data?.time}}</a></agm-info-window>
    </agm-marker>
+
+  <agm-marker 
+  [latitude]="user_lat" 
+  [longitude]="user_lng"
+  [iconUrl]="url"
+  >
+  </agm-marker>
+
+
   </agm-map>
 </ng-container>
 
@@ -86,6 +95,15 @@
      </span>
      </a></agm-info-window>
    </agm-marker>
+
+   <agm-marker 
+   [latitude]="user_lat" 
+   [longitude]="user_lng"
+   [iconUrl]="url"
+   >
+   </agm-marker>
+
+
   </agm-map>
 </ng-container>
 

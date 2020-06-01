@@ -20,8 +20,8 @@
               
                 <!-- {{p.title}} -->
               </ion-label>
-              <ion-badge color="warning" *ngIf="errors.indexOf(p.badge)==-1 && p.type==1">{{messages}}</ion-badge>
-              <ion-badge color="warning" *ngIf="errors.indexOf(p.badge)==-1 &&  p.type==2">{{notifications}}</ion-badge>
+              <ion-badge color="danger" *ngIf="errors.indexOf(p.badge)==-1 && p.type==1">{{messages}}</ion-badge>
+              <ion-badge color="danger" *ngIf="errors.indexOf(p.badge)==-1 &&  p.type==2">{{notifications}}</ion-badge>
             </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false" (click)="logout()">

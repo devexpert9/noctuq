@@ -49,7 +49,7 @@ can_hot_menu_at_top:number;
 allow_city_region:number;
 is_mobile_app:any = config.IS_MOBILE_APP;
 view_type:string='events';
-  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController, private geolocation: Geolocation) { 
+  constructor(public router:Router, public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController, private geolocation: Geolocation) { 
     this.records_per_page = 9;
     this.max_price = this.price_limit;
     this.page_type = activatedRoute.snapshot.paramMap.get('type');
@@ -58,6 +58,13 @@ view_type:string='events';
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    var login_type = localStorage.getItem('userType')
+    if(this.errors.indexOf(login_type) == -1 && login_type =='host'){
+      this.router.navigate(['/host-events']);
+    }
   }
 
   ionViewDidEnter(){
@@ -87,7 +94,7 @@ view_type:string='events';
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
     this.can_hot_menu_at_top = niteowl_sessions.can_hot_menu_at_top;
-    this.allow_city_region = niteowl_sessions.allow_city_region;
+    this.allow_city_region = this.errors.indexOf(niteowl_sessions.allow_city_region)==-1 ? niteowl_sessions.allow_city_region : 0;
 
     console.log('niteowl_sessions')
     console.log(niteowl_sessions)
@@ -194,62 +201,93 @@ view_type:string='events';
   }
 
   getVenues(event={},type=''){
-    var api_endpoint = (this.page_type == 'favorites') ? 'my_favorites_venue' : 'get_venues_list';
-    if(type == '0'){
-      this.userService.presentLoading();
-    }
-    else{
-      this.scroll_event_v = event;
-      if(type == '1'){
-        this.start_v = this.start_v + this.records_per_page;
-      }
-    }
     var self = this;
     setTimeout(() => {
-      self.userService.postData({
-        userId: self.userId, 
-        records_per_page: self.records_per_page, 
-        start: self.start_v, 
-        search_term : self.search_term_v,
-        genres : self.genres_v,
-        venues : self.venues_v,
-        min_price: self.min_price_v,
-        max_price: self.max_price_v,
-        mile_radius: self.mile_radius_v,
-        allow_city_region: self.allow_city_region,
-        current_lng : '',
-        current_lat : '',
-        miles : 10000
-      },api_endpoint).subscribe((result) => { 
-          self.is_loaded_v = true;
-          var loaded_records = self.start_v+self.records_per_page;
-          if(loaded_records >= result.total){
-           self.is_more_records_v = false;
-          }
-          self.all_venues_list = self.all_venues_list.concat(result.data);
-          if(type == '0'){
-            self.userService.stopLoading();
-          }
-          else{
-            if(type == '1'){
+      
+      if(self.is_mobile_app == 'true'){
+        self.geolocation.getCurrentPosition().then((resp) => {
+          console.log('mobile app')
+          var current_lng = resp.coords.longitude;
+          var current_lat = resp.coords.latitude;
+          callVenuesList(current_lng,current_lat);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }
+      else{
+        // navigator.geolocation.getCurrentPosition( pos => {
+          console.log('web app')
+          // var current_lng = pos.coords.longitude;
+          // var current_lat = pos.coords.latitude;
+          var current_lng = '';
+          var current_lat = '';
+          callVenuesList(current_lng,current_lat);
+        // });
+      }
+    },500);
+
+    function callVenuesList(current_lng,current_lat){
+
+      var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites_venue' : 'get_venues_list';
+      if(type == '0'){
+        self.userService.presentLoading();
+      }
+      else{
+        self.scroll_event_v = event;
+        if(type == '1'){
+          self.start_v = self.start_v + self.records_per_page;
+        }
+      }
+     
+      setTimeout(() => {
+        self.userService.postData({
+          userId: self.userId, 
+          records_per_page: self.records_per_page, 
+          start: self.start_v, 
+          search_term : self.search_term_v,
+          genres : self.genres_v,
+          venues : self.venues_v,
+          min_price: self.min_price_v,
+          max_price: self.max_price_v,
+          mile_radius: self.mile_radius_v,
+          allow_city_region: self.allow_city_region,
+          current_lng : current_lng,
+          current_lat : current_lat,
+          miles : 10000
+        },api_endpoint).subscribe((result) => { 
+            self.is_loaded_v = true;
+            var loaded_records = self.start_v+self.records_per_page;
+            if(loaded_records >= result.total){
+             self.is_more_records_v = false;
+            }
+            self.all_venues_list = self.all_venues_list.concat(result.data);
+            if(type == '0'){
+              self.userService.stopLoading();
+            }
+            else{
+              if(type == '1'){
+                self.scroll_event_v.target.complete();
+              }
+            }
+          },
+          err => {
+            self.is_more_records_v = false;
+            self.is_loaded_v = true;
+            // self.all_events = [];
+            if(type == '0'){
+              self.userService.stopLoading();
+            }
+            else{
               self.scroll_event_v.target.complete();
             }
-          }
-        },
-        err => {
-          self.is_more_records_v = false;
-          self.is_loaded_v = true;
-          // self.all_events = [];
-          if(type == '0'){
-            self.userService.stopLoading();
-          }
-          else{
-            self.scroll_event_v.target.complete();
-          }
-          self.userService.presentToast('Unable to fetch results, Please try again','danger');
-      });
-    }, 500);
+            self.userService.presentToast('Unable to fetch results, Please try again','danger');
+        });
+      }, 500);
+    }
+   
   }
+
+  
 
   get_venues_genres(){
     this.userService.postData({},'get_venues_genres').subscribe((result) => {
@@ -403,6 +441,18 @@ view_type:string='events';
     else{
       localStorage.setItem('is_venue_open','1');
     }
+  }
+
+  tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
   }
 
 }

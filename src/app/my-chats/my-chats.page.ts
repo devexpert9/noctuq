@@ -43,22 +43,27 @@ mySession:any;
 allowedMimes:any=config.IMAGE_EXTENSIONS;
 chat_is_social_image:any;
 chat_image:any;
+noChats:any;
   constructor(public events:Events,public userService: UserService, private socket: Socket,public router : Router, private camera: Camera, private file: File, private filePath: FilePath, public sanitizer:DomSanitizer,private platform: Platform,private ref: ChangeDetectorRef, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) { 
 	  	this.getUpdates().subscribe(new_message => {
 	        console.log('new_message')
 	        console.log(new_message)
 	        this.new_message = new_message;
 	        if(this.new_message.toId == this.userId){
+            this.noChats = false;
 	        	if(this.all_from_users.indexOf(this.new_message.fromId) == -1){
+
 	        		this.new_message['count'] = 1;
 	        		this.new_message['message_type'] = this.new_message.type;
 	        		this.all_users.splice(0,0,this.new_message);
-	        		this.all_from_users.splice(0,0,this.new_message.fromId);
+              this.all_from_users.splice(0,0,this.new_message.fromId);
+             
 	        	}
 	        	else{
 	        		if(this.chat_user_id == this.new_message.fromId){
 	        			this.chats.push(this.new_message);
-                		this.scrollToBottom();
+                    this.scrollToBottom();
+                   
 	        		}
 	        		else{
 	        			var index = this.all_from_users.indexOf(this.new_message.fromId);
@@ -75,6 +80,7 @@ chat_image:any;
   }
 
   ionViewDidEnter(){
+    this.noChats = '';
   	this.all_users = [];
   	this.all_from_users = [];
   	this.chat_product_name = '';
@@ -89,6 +95,7 @@ chat_image:any;
   }
 
   getChatUsers(type = null){
+    this.noChats = false;
   	this.userService.presentLoading();
     this.userService.postData({userId: this.userId},'get_chat_users').subscribe((result) => { 
      
@@ -134,6 +141,9 @@ chat_image:any;
       		this.openChat(open_chat_box_id,index);
       	}
       	console.log(this.all_users)
+      }else{
+      this.noChats = true;
+
       }
     },
     err => {
@@ -144,12 +154,13 @@ chat_image:any;
     });
   }
 
-  add_chat(message){
-    this.userService.postData({fromId: this.userId, toId: this.chat_user_id, message : message, type : 'text', from_name : this.mySession.name},'add_chat').subscribe((result) => { 
+  add_chat(message, fake_id){
+    this.userService.postData({fromId: this.userId, toId: this.chat_user_id, message : message, type : 'text', from_name : this.mySession.name, fake_id: fake_id},'add_chat').subscribe((result) => { 
     	if(result.status == 1){
     		this.socket.connect();
-    		this.socket.emit('send_message', {_id : result.data, fromId : this.userId, message : message, toId : this.chat_user_id, type : 'text', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
-    	}
+    		this.socket.emit('send_message', {fake_id: fake_id, _id : result.data, fromId : this.userId, message : message, toId : this.chat_user_id, type : 'text', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
+        this.socket.emit('send_notification', {});
+      }
       	if(this.can_get_users == true){
       		this.can_get_users = false;
       		this.getChatUsers('1');
@@ -196,8 +207,9 @@ chat_image:any;
 
   sendMessage(){
   	if(this.errors.indexOf(this.chat_message) == -1){
-  		this.add_chat(this.chat_message);
-  		this.chats.push({fromId : this.userId, message : this.chat_message, toId : this.chat_user_id, type : 'text', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image});
+      var fake_id = Math.random();
+  		this.add_chat(this.chat_message, fake_id);
+  		this.chats.push({fake_id: fake_id, fromId : this.userId, message : this.chat_message, toId : this.chat_user_id, type : 'text', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image});
   		this.chat_message = '';
   		this.scrollToBottom();
   	}
@@ -248,9 +260,9 @@ chat_image:any;
       else{
         var imgBlob = image_file;
         var image_url = window.URL.createObjectURL(image_file);
-
-        self.add_chat_image(imgBlob,'');
-        self.chats.push({fromId : self.userId, message : image_url, toId : self.chat_user_id, type : 'image', temp_image : '2', created_at : new Date()});
+        var fake_id = Math.random();
+        self.add_chat_image(imgBlob,'', fake_id );
+        self.chats.push({fake_id:fake_id, fromId : self.userId, message : image_url, toId : self.chat_user_id, type : 'image', temp_image : '2', created_at : new Date()});
         self.scrollToBottom();
         self.ref.detectChanges();
       }
@@ -302,15 +314,16 @@ chat_image:any;
         const imgBlob = new Blob([reader.result], {
             type: file.type
         });
-        this.add_chat_image(imgBlob,file.name);
-        this.chats.push({fromId : this.userId, message : imgEntry, toId : this.chat_user_id, type : 'image', temp_image : '1', created_at : new Date()});
+        var fake_id = Math.random();
+        this.add_chat_image(imgBlob,file.name, fake_id);
+        this.chats.push({fake_id:fake_id, fromId : this.userId, message : imgEntry, toId : this.chat_user_id, type : 'image', temp_image : '1', created_at : new Date()});
         this.scrollToBottom();
         this.ref.detectChanges();
     };
     reader.readAsArrayBuffer(file);
   }
 
-  add_chat_image(imgBlob,file_name){
+  add_chat_image(imgBlob,file_name, fake_id){
     const formData = new FormData();
     if(this.is_mobile_app == 'true'){
       formData.append('file', imgBlob, file_name); 
@@ -322,10 +335,12 @@ chat_image:any;
     formData.append('toId', this.chat_user_id);
     formData.append('type', 'image');
     formData.append('from_name', this.mySession.name);
+    formData.append('fake_id', fake_id);
     this.userService.postData(formData,'add_chat_image').subscribe((result) => { 
       if(result.status == 1){
         this.socket.connect();
-        this.socket.emit('send_message', {fromId : this.userId, message : result.file_name, toId : this.chat_user_id, type : 'image', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
+        this.socket.emit('send_message', {fake_id:fake_id, fromId : this.userId, message : result.file_name, toId : this.chat_user_id, type : 'image', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
+        this.socket.emit('send_notification', {});
       }
     },
     err => {
@@ -347,9 +362,14 @@ chat_image:any;
         res= result;
           
             if(res.status==1){
+              this.isShow =false;
               this.all_users.splice(i,1);
+              this.all_from_users.splice(i,1);
               this.events.publish('read_msgs','');
-
+              if(this.all_users.length==0){
+                this.noChats = this.all_users.length == 0 ? true: false;
+              }
+            
             }else{
 
 
@@ -357,6 +377,25 @@ chat_image:any;
 
         });
     
+  }
+
+  delete_msg(fake_id, _id,i){
+    this.userService.presentLoading();
+    this.userService.postData({toId: this.userId,msgId:_id, fake_id: fake_id },'clearSingleMsg').subscribe((result) => { 
+    this.userService.stopLoading();
+    var res;
+    res= result;
+      
+        if(res.status==1){
+          this.chats.splice(i,1);
+          this.events.publish('read_msgs','');
+          this.noChats = this.all_users.length == 0 ? true: false;
+
+        }
+
+    });
+
+
   }
 
 

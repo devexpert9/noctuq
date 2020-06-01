@@ -52,7 +52,7 @@
 					<h1>{{event?.name}}</h1>
 					<h3 str-rigt> 
 					<span *ngIf="errors.indexOf(current_event) == -1">		
-						{{current_event?.title}} - {{current_event?.time}}
+						{{current_event?.title}} - {{tConvert(current_event?.time)}}
 					</span> 	
 					<ion-icon *ngIf="userId != 0 && errors.indexOf(userId) == -1" (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
 				</div>
@@ -110,8 +110,7 @@
 	    <span price-div>${{eve?.price}}</span>
 	  </ion-card-header>
 
-	  <ion-card-content>
-	    {{eve?.date | date : 'MMM d'}} on {{eve?.time}}
+	  <ion-card-content>{{eve?.date | date : 'MMM d'}} {{eve?.date == eve?.end_date ? '' : '-'+ (eve?.end_date | date : 'MMM d')}} on  {{tConvert(eve?.time)}}
 	  </ion-card-content>
 	</ion-card>
 </ion-row>

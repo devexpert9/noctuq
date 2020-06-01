@@ -42,6 +42,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
         console.log(new_message)
         this.new_message = new_message;
         if(this.new_message.toId == this.userId){
+          console.log(this.new_message);
           this.chats.push(this.new_message);
           this.scrollToBottom();
         }
@@ -78,18 +79,21 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
 
   send(){
   	if(this.errors.indexOf(this.chat_message) == -1){
-  		this.add_chat(this.chat_message);
-  		this.chats.push({fromId : this.userId, toId: this.toId, message : this.chat_message, type : 'text', created_at : new Date()});
+      var fake_id = Math.random();
+  		this.add_chat(this.chat_message, fake_id);
+  		this.chats.push({fromId : this.userId, toId: this.toId, message : this.chat_message, type : 'text', created_at : new Date(), fake_id : fake_id});
   		this.chat_message = '';
-  		this.scrollToBottom();
+      this.scrollToBottom();
+      console.log(this.chats)
   	}
   }
 
-  add_chat(message){
-    this.userService.postData({fromId: this.userId, toId: this.toId, message : message, type : 'text', from_name : this.mySession.name},'add_chat').subscribe((result) => { 
+  add_chat(message, fake_id){
+    this.userService.postData({fromId: this.userId, toId: this.toId, message : message, type : 'text', from_name : this.mySession.name, fake_id: fake_id},'add_chat').subscribe((result) => { 
     	if(result.status == 1){
     		this.socket.connect();
-    		this.socket.emit('send_message', {_id : result.data, fromId : this.userId, message : message, toId : this.toId, type : 'text', created_at : new Date() , user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image});
+        this.socket.emit('send_message', {fake_id: fake_id, _id : result.data, fromId : this.userId, message : message, toId : this.toId, type : 'text', created_at : new Date() , user_name : this.mySession.name, user_image : this.mySession.image, is_social_image : this.mySession.is_social_image});
+        this.socket.emit('send_notification', {});
     	}
     },
     err => {
@@ -97,7 +101,8 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     });
   }
 
-  add_chat_image(imgBlob,file_name){
+  add_chat_image(imgBlob,file_name, fake_id){
+   
     const formData = new FormData();
     if(this.is_mobile_app == 'true'){
       formData.append('file', imgBlob, file_name); 
@@ -109,10 +114,12 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     formData.append('toId', this.toId);
     formData.append('type', 'image');
     formData.append('from_name', this.mySession.name);
+    formData.append('fake_id', fake_id);
     this.userService.postData(formData,'add_chat_image').subscribe((result) => { 
       if(result.status == 1){
         this.socket.connect();
-        this.socket.emit('send_message', {fromId : this.userId, message : result.file_name, toId : this.toId, type : 'image', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
+        this.socket.emit('send_message', {fake_id: fake_id, fromId : this.userId, message : result.file_name, toId : this.toId, type : 'image', created_at : new Date(), user_name : this.mySession.name, user_image : this.mySession.name, is_social_image : this.mySession.is_social_image });
+        this.socket.emit('send_notification', {});
       }
     },
     err => {
@@ -155,9 +162,9 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
       else{
         var imgBlob = image_file;
         var image_url = window.URL.createObjectURL(image_file);
-
-        self.add_chat_image(imgBlob,'');
-        self.chats.push({fromId : self.userId, message : image_url, toId : self.toId, type : 'image', temp_image : '2', created_at : new Date()});
+        var fake_id = Math.random();
+        self.add_chat_image(imgBlob,'', fake_id);
+        self.chats.push({fromId : self.userId, message : image_url, toId : self.toId, type : 'image', temp_image : '2', created_at : new Date(), fake_id: fake_id});
         self.scrollToBottom();
         self.ref.detectChanges();
       }
@@ -209,7 +216,8 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
         const imgBlob = new Blob([reader.result], {
             type: file.type
         });
-        this.add_chat_image(imgBlob,file.name);
+        var fake_id = Math.random();
+        this.add_chat_image(imgBlob,file.name, fake_id);
         this.chats.push({fromId : this.userId, message : imgEntry, toId : this.toId, type : 'image', temp_image : '1', created_at : new Date()});
         this.scrollToBottom();
         this.ref.detectChanges();
@@ -238,9 +246,9 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
     this.photoViewer.show(path);
   }
 
-  delete_msg(_id,i){
+  delete_msg(fake_id, _id,i){
     this.userService.presentLoading();
-    this.userService.postData({toId: this.userId,msgId:_id },'clearSingleMsg').subscribe((result) => { 
+    this.userService.postData({toId: this.userId,msgId:_id, fake_id: fake_id },'clearSingleMsg').subscribe((result) => { 
     this.userService.stopLoading();
     var res;
     res= result;

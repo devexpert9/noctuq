@@ -6,20 +6,23 @@ import { UserService } from '../user/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardHostService implements CanActivate{
+export class GuardLoginService implements CanActivate{
 errors : any = ['',null,undefined,'undefined','null'];
   constructor(private router: Router, public userService: UserService) { }
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    var token = localStorage.getItem('niteowl_host_auth_token');
-    var userId = this.userService.decryptData(token,config.ENC_SALT);
-    if(userId != 0 && this.errors.indexOf(userId) == -1){
-      console.log('1')
-      return true;
+
+    var login_type = localStorage.getItem('userType')
+    var redirection = login_type == 'user' ? '/home-list' : '/host-events';
+
+    if(this.errors.indexOf(login_type) == -1){
+      console.log('9')
+      this.router.navigate([redirection]);
+      return false;
     }
     else{
-      console.log('2')
-      this.router.navigate(['/login/host']);
-      return false;
+   
+      return true;
     }
   }
 }
+

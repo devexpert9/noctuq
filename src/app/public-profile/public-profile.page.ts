@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Socket } from 'ng-socket-io';
 @Component({
   selector: 'app-public-profile',
   templateUrl: './public-profile.page.html',
@@ -17,7 +17,7 @@ IMAGES_URL:any=config.IMAGES_URL;
 is_loaded:Boolean=false;
 mySession:any;
 is_mobile_app:any = config.IS_MOBILE_APP;
-  constructor(public userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor( private socket: Socket, public userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { 
   	this.is_loaded = false;
   	this.toId = activatedRoute.snapshot.paramMap.get('id');
   }
@@ -26,6 +26,7 @@ is_mobile_app:any = config.IS_MOBILE_APP;
   }
 
   ionViewDidEnter(){
+    this.socket.connect();
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     this.mySession = JSON.parse(localStorage.getItem('niteowl_sessions'));
@@ -56,9 +57,11 @@ is_mobile_app:any = config.IS_MOBILE_APP;
     this.userService.postData({toId : this.toId, userId : this.userId, from_name : this.mySession.name},'add_friend').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
+      
+    		this.socket.emit('send_notification', {});
         this.profile.sent_request = 1;
         this.userService.presentToast('Friend request sent.','success');
-      }
+      } 
       else if(result.status == 2){
         this.userService.presentToast('You have already sent friend request','success');
       }
@@ -77,6 +80,8 @@ is_mobile_app:any = config.IS_MOBILE_APP;
     this.userService.postData({toId : this.toId, userId : this.userId, status : type, from_name : this.mySession.name},'accept_reject_friend_request').subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
+
+        this.socket.emit('send_notification', {});
         this.profile.coming_request = 0;
         if(type == 1){
           this.profile.is_friend = 1;

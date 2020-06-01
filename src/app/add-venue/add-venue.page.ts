@@ -170,50 +170,57 @@ deleted_files:any=[];
     formData.append('deleted_imgs', JSON.stringify(this.deleted_imgs));
     formData.append('deleted_files', JSON.stringify(this.deleted_files));
     
-    this.userService.presentLoading();
+   
     var API_ENDPOINT = this.isEdit == '1' ? 'edit_venue' : 'add_venue';
-    this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
-      this.userService.stopLoading();
-      if(result.status == 1){
-        this.is_submit = false;
+    if(this.all_images.length>10){
+      this.userService.presentToast('You can only upload up to 10 images.','danger');
+    }else{
+      this.userService.presentLoading();
+      this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
+        this.userService.stopLoading();
+        if(result.status == 1){
+          this.is_submit = false;
+  
+        this.name = '';
+        this.venue_type = '';
+        this.price = '';
+        this.location = '';
+        this.lat = '';
+        this.lng = '';
+        this.description = '';
+        this.genre_type = [];
+        this.imgBlob = '';
+        this.file_name = '';
+        this.keywords = '';
+        this.userSettings['inputString'] = '';
+        this.userSettings = Object.assign({},this.userSettings);
+        this.deleted_imgs = [];
+        this.deleted_files = [];
+        var message = '';
+        if(this.isEdit == '1'){
+          message = 'Venue updated successfully.';
+        }
+        else{
+          message = 'Venue added successfully.We will approve to publish it soon.';
+        }
+          this.userService.presentToast( message,'success');
+          localStorage.setItem('is_venue_open','1');
+          this.router.navigate(['/host-events']);
+        }
+        else if(result.status == 2){
+          this.userService.presentToast('Venue already exists with same name.','danger');
+        }
+        else{
+          this.userService.presentToast('Error while adding event! Please try later','danger');
+        }
+      },
+      err => {
+        this.userService.stopLoading();
+        this.userService.presentToast('Unable to send request, Please try again','danger');
+      });
 
-	    this.name = '';
-	    this.venue_type = '';
-	    this.price = '';
-	    this.location = '';
-	    this.lat = '';
-	    this.lng = '';
-	    this.description = '';
-	    this.genre_type = [];
-	    this.imgBlob = '';
-	    this.file_name = '';
-	    this.keywords = '';
-	    this.userSettings['inputString'] = '';
-    	this.userSettings = Object.assign({},this.userSettings);
-      this.deleted_imgs = [];
-      this.deleted_files = [];
-    	var message = '';
-    	if(this.isEdit == '1'){
-    		message = 'Venue updated successfully.';
-    	}
-    	else{
-    		message = 'Venue added successfully.We will approve to publish it soon.';
-    	}
-        this.userService.presentToast( message,'success');
-        localStorage.setItem('is_venue_open','1');
-        this.router.navigate(['/host-events']);
-      }
-      else if(result.status == 2){
-        this.userService.presentToast('Venue already exists with same name.','danger');
-      }
-      else{
-        this.userService.presentToast('Error while adding event! Please try later','danger');
-      }
-    },
-    err => {
-      this.userService.stopLoading();
-      this.userService.presentToast('Unable to send request, Please try again','danger');
-    });
+    }
+
   }
 
   images(){

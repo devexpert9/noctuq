@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { config } from '../config';
 import { UserService } from '../services/user/user.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+declare var require:any;
+var geolocation = require('geolocation')
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
@@ -18,6 +20,7 @@ export class MapPage implements OnInit {
 userId:any;
 id:any;
 is_mobile_app:any = config.IS_MOBILE_APP;
+url:any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 zoom:number=12;
 lat:number;
 lng:number;
@@ -25,22 +28,19 @@ allow_city_region:any;
 user_lat:any;
 user_lng:any;
 errors:any=['',undefined,null,0]
-  constructor(private geolocation: Geolocation,public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
+  constructor(private geolocation: Geolocation, public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
     this.id = activatedRoute.snapshot.paramMap.get('id');
     this.locationDetect();
-    var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
-    this.allow_city_region = niteowl_sessions.allow_city_region;
-
-    this.getLocationSetting();
-
-
-
   }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
+
+    var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
+    this.allow_city_region = niteowl_sessions.allow_city_region;
+    this.getLocationSetting();
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     // if(this.is_mobile_app == 'true'){
@@ -65,12 +65,12 @@ errors:any=['',undefined,null,0]
   }
 
   locationDetect(){
-            let watch = this.geolocation.watchPosition();
-        watch.subscribe((data) => {
-        // data can be a set of coordinates, or an error (if an error occurred).
-        // data.coords.latitude
-        // data.coords.longitude
-        });
+    var dis= this;
+    geolocation.getCurrentPosition(function (err, position) {
+      dis.user_lat=position.coords.latitude;
+      dis.user_lng=position.coords.longitude;
+
+    })
 
   }
 
@@ -102,13 +102,36 @@ errors:any=['',undefined,null,0]
   // }
 
   getLocationSetting(){
- 
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) => {
-      this.user_lat=data.coords.latitude;
-      this.user_lng=data.coords.longitude;
+
+    if(this.errors.indexOf(this.allow_city_region)==-1 && this.allow_city_region==1){
+      if(this.is_mobile_app=='true'){
+        var dis= this;
+        this.geolocation.getCurrentPosition().then((data) => {
+          console.log('enter1')
+          dis.user_lat = data.coords.latitude;
+          dis.user_lng = data.coords.longitude;
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
   
-    });
+      }else{
+  
+        var dis= this;
+        geolocation.getCurrentPosition(function (err, position) {
+          dis.user_lat=position.coords.latitude;
+          dis.user_lng=position.coords.longitude;
+    
+        })
+  
+      }
+
+    }else{
+      this.user_lat = '';
+      this.user_lng = '';
+
+    }
+
+
 
   }
 

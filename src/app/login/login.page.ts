@@ -86,7 +86,7 @@ page_type:any;
       else{
         this.userService.presentToast('Invalid credentials!','danger');
       }
-    },
+    }, 
     err => {
       this.userService.stopLoading();
       this.userService.presentToast('Unable to fetch results, Please try again','danger');

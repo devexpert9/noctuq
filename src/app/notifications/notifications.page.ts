@@ -4,6 +4,9 @@ import { UserService } from '../services/user/user.service';
 import { config } from '../config';
 import { Router } from '@angular/router';
 import { Events } from '@ionic/angular';
+import { Socket } from 'ng-socket-io';
+ 
+import { EventService } from '../services/event/event.service';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.page.html',
@@ -22,7 +25,7 @@ all_notis:any;
 errors:any = ['', null, undefined];
 is_mobile_app:any = config.IS_MOBILE_APP;
 scroll_event:any;
-  constructor(public userService: UserService, private router: Router, public events:Events) { 
+  constructor(public events1: EventService, private socket: Socket, public userService: UserService, private router: Router, public events:Events) { 
   	this.records_per_page = 10;
   }
 
@@ -88,11 +91,14 @@ scroll_event:any;
   }
 
   readNotis(id,index){
+   
   	if(this.all_notis[index]['isRead'] == '0'){
 	  	this.all_notis[index]['isRead'] = '1';
 	  	this.userService.postData({id: id},'read_notifications').subscribe((result) => { 
+        this.events1.publishSomeData({});
         console.log('read...');
         this.events.publish('read_noti','');
+
 	  	});
     }
     

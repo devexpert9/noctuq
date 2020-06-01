@@ -49,7 +49,22 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
       this.userService.stopLoading();
       if(this.errors.indexOf(result) == -1){
         this.is_loaded = true;
-        localStorage.setItem('niteowl_sessions',JSON.stringify(result));
+        var local =   localStorage.getItem('niteowl_sessions');
+        var localParsed = JSON.parse(local);
+        console.log(localParsed);
+      
+        localParsed._id = result._id
+        localParsed.name = result.name
+        localParsed.image = result.image
+        localParsed.email = result.email
+        localParsed.is_social_image = result.is_social_image
+        localParsed.about = result.about
+        localParsed.friends = result.friends
+        localParsed.sent_request = result.sent_request
+        localParsed.coming_request = result.coming_request
+        localParsed.is_friend = result.is_friend
+
+        localStorage.setItem('niteowl_sessions',JSON.stringify(localParsed));
         this.profile = result;
         this.profile.phone = this.errors.indexOf(this.profile.phone) == -1 ? this.profile.phone : '';
         this.profile.about = this.errors.indexOf(this.profile.about) == -1 ? this.profile.about : '';

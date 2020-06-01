@@ -50,7 +50,10 @@
 		<ion-col size-lg="8" size-md="7"  hide-mooble-screen>
 			<div class="commts commentright" *ngIf="isShow" comments-bg>
 				<div id="chat_div">
-				<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" *ngFor="let chat of chats ">
+
+	<ion-item-sliding *ngFor="let chat of chats ; let index = index ">
+			<ion-item>
+	     	<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" >
 					<div class="comnt-head">
 						<ng-container *ngIf="userId != chat.fromId">
 							<img pro-img *ngIf="errors.indexOf(chat_image) >= 0" src="assets/img/user-icon.jpg"/> 
@@ -71,6 +74,14 @@
 						</div>
 					</div>
 				</div>
+			</ion-item>
+			         <ion-item-options side="end" >
+						<ion-item-option (click)="delete_msg(chat.fake_id, chat._id, index)" color="danger">Delete</ion-item-option>
+					  </ion-item-options>
+
+			</ion-item-sliding>
+
+
 				</div>
 
 				<ion-toolbar class="foot-mgs"> 
@@ -100,9 +111,11 @@
 			</div>
 		</ion-col>
 		</ion-row>
+
+		
 	</div>
 	</div>
-	
+	<h3 *ngIf="noChats" style="margin-left: 103px">No chats found</h3>
 	<app-footer></app-footer> 
 </ion-content>
   

@@ -9,7 +9,7 @@ import { UserService } from './services/user/user.service';
 import { filter } from 'rxjs/operators';
 import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
-
+import { EventService } from './services/event/event.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -79,19 +79,19 @@ export class AppComponent {
     }
   ];
 
-  constructor(
+  constructor(public events1: EventService,
     private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menu: MenuController, private router: Router,private fcm: FCM, public events:Events, public userService:UserService, private socket: Socket)
      {
       this.initializeApp();
       events.subscribe('user_log_activity:true', data => {
         this.checkUserAuth();
+        this.get_Messages();
+        this.get_Notifications();
       });
       this.no_header_pages = ['/login','/login-host','/signup','/forgotpassword/user','/forgotpassword/host','/login/host'];
 
       // socket call
       this.getUpdates().subscribe(new_message => {
-        console.log('new_message')
-        console.log(new_message)
         this.new_message = new_message;
         if(this.new_message.userId == this.userId){
           this.logout();
@@ -101,24 +101,40 @@ export class AppComponent {
 
       this.get_Messages();
       this.get_Notifications();
+
       this.getMessages().subscribe(new_message => {
+        this.events1.publishSomeData({});
         this.get_Messages();
+      })
+
+      this.getNotiUpdates().subscribe(new_message => {
+        this.events1.publishSomeData({});
+        this.get_Notifications();
       })
 
      
       events.subscribe('read_noti', data => {
         this.get_Notifications();
+      
       });
 
       events.subscribe('read_msgs', data => {
         this.get_Messages();
+        this.get_Notifications();
+        this.events1.publishSomeData({});
+        this.events.publish('test','');
+        console.log('sendinggggggg')
+        this.events1.publishSomeData({});
       });
+
+      this.events1.publishSomeData({});
 
   }
 
   ngOnInit(){
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.current_url = event.url;
+      console.log(' this.current_url', this.current_url)
     });
   }
 
@@ -184,6 +200,16 @@ export class AppComponent {
     return observable;
   }
 
+  getNotiUpdates() {
+    var self = this;
+    let observable = new Observable(observer => {
+      self.socket.on('rec_notification', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+
   logout(){
     localStorage.removeItem('userType');
     localStorage.removeItem('niteowl_auth_token');
@@ -219,8 +245,7 @@ export class AppComponent {
            if(result.status == 1){
            this.messages= result.data ;
            this.res_came=true;
-           console.log('werty');
-           console.log(this.messages);
+           
            
            }else{
            this.messages= null;
@@ -247,8 +272,7 @@ export class AppComponent {
         if(result.status == 1){
         this.notifications= result.data ;
         this.res_came=true;
-        console.log('werty');
-        console.log(this.messages);
+      
         
         }else{
           this.notifications= null ;

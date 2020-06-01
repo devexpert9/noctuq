@@ -28,7 +28,7 @@
 				<img *ngIf="errors.indexOf(event?.image) >= 0" src="assets/img/no-image-available.png" class="img-main" /> 
 				<img *ngIf="errors.indexOf(event?.image) == -1" src="{{IMAGES_URL+'/events/thumbnails/'+event?.image}}" class="img-main"/> 
 				<span class="price-top"> ${{event?.price}} </span>
-				<span class="date-div"> {{event?.date | date : 'MMM d'}} </span>
+				<span class="date-div"> {{event?.date | date : 'MMM d'}} {{event?.date == event?.end_date ? '' : '-'+ ( event?.end_date | date : 'MMM d')}} </span>
 				<span *ngIf="event?.hostId == hostId" eve-create-host routerLink="/edit-event/{{event?._id}}"> <ion-icon name="create"></ion-icon> </span>
 				<div mainHdng>
 
@@ -37,7 +37,7 @@
 
 						<ngx-stars *ngIf="avg_rating?.length > 0" (click)="canRate()" [size]='1' [readonly]="true" [initialStars]="avg_rating[0]['average']" [maxStars]="5" [color]="'#ecc711'"></ngx-stars>
 					</div> 
-					<h1>{{event?.title}} - {{event?.time}}</h1>
+					<h1>{{event?.title}} - {{tConvert(event?.time)}}</h1>
 					<h3 str-rigt>Hosted at: {{event?.venue_type}} 	<ion-icon *ngIf="userId != 0 && errors.indexOf(userId) == -1" (click)="favorite()" name="{{is_favorite == '0' ? 'heart-empty' : 'heart'}}"></ion-icon></h3>
 				</div>
 	<!--ion-card-header>

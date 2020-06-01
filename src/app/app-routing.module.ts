@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './services/guard-user/auth-guard.service';
 import { AuthGuardHostService } from './services/guard-host/auth-guard.service';
-var login_type =    localStorage.getItem('userType');;
+import { GuardLoginService } from './services/guardLogin/guard-login.service';
+ var login_type = localStorage.getItem('userType')
+ var redirection = login_type == 'user' ? 'home-list' : 'host-events';
+console.log(redirection);
 const routes: Routes = [
   {
     path: '',
-    redirectTo: login_type == 'user' ? 'home-list' : 'host-events',
+    redirectTo :redirection,
     pathMatch: 'full'
   },
-  { path: 'login-host', loadChildren: './login-host/login-host.module#LoginHostPageModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'login/:type', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'host-events', loadChildren: './host-events/host-events.module#HostEventsPageModule', canActivate: [AuthGuardHostService] },
+  { path: 'login-host', loadChildren: './login-host/login-host.module#LoginHostPageModule' , canActivate: [GuardLoginService] },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' , canActivate: [GuardLoginService]},
+  { path: 'login/:type', loadChildren: './login/login.module#LoginPageModule' , canActivate: [GuardLoginService] },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'forgotpassword/:type', loadChildren: './forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
   { path: 'home-list', loadChildren: './home-list/home-list.module#HomeListPageModule', canActivate: [AuthGuardService] },
@@ -34,7 +38,6 @@ const routes: Routes = [
   { path: 'make-live-feed/:id', loadChildren: './make-live-feed/make-live-feed.module#MakeLiveFeedPageModule', canActivate: [AuthGuardService] },
   { path: 'verify/:id', loadChildren: './verify-account/verify-account.module#VerifyAccountPageModule' },
   { path: 'rating', loadChildren: './rating/rating.module#RatingPageModule' },
-  { path: 'host-events', loadChildren: './host-events/host-events.module#HostEventsPageModule', canActivate: [AuthGuardHostService] },
   { path: 'add-event', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
   { path: 'edit-event/:id', loadChildren: './add-event/add-event.module#AddEventPageModule', canActivate: [AuthGuardHostService] },
   { path: 'host-profile', loadChildren: './host-profile/host-profile.module#HostProfilePageModule', canActivate: [AuthGuardHostService] },

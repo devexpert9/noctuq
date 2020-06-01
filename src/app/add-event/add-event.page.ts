@@ -82,6 +82,7 @@ end_date:any;
       	this.description = this.single_event.venue_description;
         this.prev_image_url = this.single_event.image;
         this.date = this.single_event.date;
+        this.end_date = this.single_event.end_date;
         this.start_time = this.single_event.time;
       	this.end_time = this.single_event.end_time;
       	// this.lat = this.single_event.location.lat;
@@ -160,7 +161,7 @@ end_date:any;
     formData.append('genre', JSON.stringify(this.genre_type));
     
     this.userService.presentLoading();
-    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event' : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0];
+    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0] : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0];
     this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
@@ -197,6 +198,12 @@ end_date:any;
       }
       else if(result.status == 5){
         this.userService.presentToast('You can not add event on past date and time','danger');
+      }
+      else if(result.status == 7){
+        this.userService.presentToast('End date should be greater than start date','danger');
+      }
+      else if(result.status == 6){
+        this.userService.presentToast('End time should be greater than start time','danger');
       }
       else{
         this.userService.presentToast('Error while adding event! Please try later','danger');
