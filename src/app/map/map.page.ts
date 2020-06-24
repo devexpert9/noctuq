@@ -27,6 +27,7 @@ lng:number;
 allow_city_region:any;
 user_lat:any;
 user_lng:any;
+user_location:any = config.IMAGES_URL+'/userloc.png'
 errors:any=['',undefined,null,0]
   constructor(private geolocation: Geolocation, public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
     this.id = activatedRoute.snapshot.paramMap.get('id');

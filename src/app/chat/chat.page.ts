@@ -66,7 +66,7 @@ allowedMimes:any=config.IMAGE_EXTENSIONS;
   	this.userService.presentLoading();
     this.userService.postData({toId : this.toId, fromId : this.userId},'get_chat').subscribe((result) => {
       console.log(result);
-      this.events.publish('read_msgs','');
+      this.getUpdates()
       this.userService.stopLoading();
       this.chats = result;
       this.scrollToBottom();

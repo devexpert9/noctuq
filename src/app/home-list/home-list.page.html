@@ -94,7 +94,7 @@
 						<ion-card-title>{{event?.name}} </ion-card-title>
 						<div description>
 						<p *ngIf="errors.indexOf(event?.current_event) == -1">
-							{{event?.current_event?.title}} - {{event?.current_event?.time}}
+							{{event?.current_event?.title}} - {{tConvert(event?.current_event?.time)}}
 						</p>
 						  <!-- <p [innerHTML]="event?.venue_description?.length > 70 ? event?.venue_description.substr(0,70)+'...' : event?.venue_description"></p> -->
 						</div>

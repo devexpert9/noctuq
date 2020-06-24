@@ -49,11 +49,12 @@
 		</ion-col>
 		<ion-col size-lg="8" size-md="7"  hide-mooble-screen>
 			<div class="commts commentright" *ngIf="isShow" comments-bg>
-				<div id="chat_div">
+
+<div id="chat_div">
 
 	<ion-item-sliding *ngFor="let chat of chats ; let index = index ">
 			<ion-item>
-	     	<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" >
+	     	<div [ngClass]="userId == chat.fromId ? 'comnt-single commnt-right' : 'comnt-single'" style="margin-top: 10px;" >
 					<div class="comnt-head">
 						<ng-container *ngIf="userId != chat.fromId">
 							<img pro-img *ngIf="errors.indexOf(chat_image) >= 0" src="assets/img/user-icon.jpg"/> 
@@ -84,7 +85,7 @@
 
 				</div>
 
-				<ion-toolbar class="foot-mgs"> 
+				<ion-toolbar class="foot-mgs">  
 				<form name="chat-form" (submit)="sendMessage()">
 				    <ion-item color="none" lines="none">
 					<span *ngIf="is_mobile_app == 'true'" class="add-pl" (click)="selectImage()">

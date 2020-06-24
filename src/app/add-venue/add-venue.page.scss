@@ -177,16 +177,22 @@ label.slct-imgs {
 		box-shadow: none;
 	}
 }
-.img-star{
-    width: 150px;
-    border: 1px solid #e6e6e6;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 20px;
-}
-.close-circle{
-	position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 20px;
+
+[venue-img]
+{
+    display: inline-block;
+	position: relative;
+	.img-star{
+		width: 150px;
+		border: 1px solid #e6e6e6;
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 20px;
+	}
+	.close-circle{
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		font-size: 20px;
+	}
 }

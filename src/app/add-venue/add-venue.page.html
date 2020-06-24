@@ -68,7 +68,8 @@
 
 			<ion-row>
 			<ng-container *ngFor="let img of all_images; let index = index ">
-				<ion-col col-4>
+				<ion-col col-4 text-center>
+				<div venue-img>	
 					<ng-container *ngIf="errors.indexOf(img._id) >= 0">
 						<img class="img-star" *ngIf="is_mobile_app == 'true'" [src]="sanitizer.bypassSecurityTrustResourceUrl(win.Ionic.WebView.convertFileSrc(img.url))" />
 						<img class="img-star" *ngIf="is_mobile_app == 'false'" [src]="sanitizer.bypassSecurityTrustResourceUrl(img.url)" />
@@ -76,7 +77,8 @@
 					<ng-container *ngIf="errors.indexOf(img._id) == -1">
 					<img class="img-star" src="{{IMAGES_URL+'/venues/thumbnails/'+img?.file_name}}" />
 					</ng-container>
-						<ion-icon (click)="delete_image(index,img)" class="close-circle" name="close-circle" color="danger"></ion-icon>
+						<ion-icon (click)="delete_image(index,img)" class="close-circle" name="close-circle" color="danger" ></ion-icon>
+					</div>	
 				</ion-col>
 			</ng-container>
 

@@ -72,12 +72,16 @@
      <agm-info-window #infoWindow><a class="map-window" routerLink="/clubs/{{data._id}}">{{data?.title}}<br>Hosted at: {{data?.venue_type}}<br>Date - {{data?.date | date : 'MMM d'}} at {{data?.time}}</a></agm-info-window>
    </agm-marker>
 
-  <agm-marker 
+   <agm-marker [latitude]="user_lat" [longitude]="user_lng"  [iconUrl]="user_location">
+    <agm-info-window #infoWindow>You are here</agm-info-window>
+  </agm-marker>
+
+  <!-- <agm-marker 
   [latitude]="user_lat" 
   [longitude]="user_lng"
-  [iconUrl]="url"
+  [iconUrl]="user_location"
   >
-  </agm-marker>
+  </agm-marker> -->
 
 
   </agm-map>
@@ -88,7 +92,8 @@
   [latitude]="lat_v" 
   [longitude]="lng_v" 
   [zoom]="zoom" >
-     <agm-marker  *ngFor="let data of all_venues_list " [latitude]="data?.cords?.coordinates[1]" [longitude]="data?.cords?.coordinates[0]">
+
+   <agm-marker  *ngFor="let data of all_venues_list " [latitude]="data?.cords?.coordinates[1]"    [longitude]="data?.cords?.coordinates[0]">
      <agm-info-window #infoWindow><a class="map-window" routerLink="/venues/{{data._id}}">{{data?.name}}
      <span *ngIf="errors.indexOf(data?.current_event) == -1">
      <br>{{data?.current_event?.title}} - {{data?.current_event?.time}}
@@ -96,12 +101,9 @@
      </a></agm-info-window>
    </agm-marker>
 
-   <agm-marker 
-   [latitude]="user_lat" 
-   [longitude]="user_lng"
-   [iconUrl]="url"
-   >
-   </agm-marker>
+   <agm-marker [latitude]="user_lat" [longitude]="user_lng"  [iconUrl]="user_location">
+    <agm-info-window #infoWindow>You are here</agm-info-window>
+  </agm-marker>
 
 
   </agm-map>

@@ -43,6 +43,7 @@ view_type:string='events';
 allow_city_region:any;
 user_lat:any;
 user_lng:any;
+user_location:any = config.IMAGES_URL+'/userloc.png'
 url:any = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
   constructor(private geolocation: Geolocation, public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService, public modalController:ModalController) { 
   	this.page_type = activatedRoute.snapshot.paramMap.get('type');
