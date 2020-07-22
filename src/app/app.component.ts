@@ -54,6 +54,12 @@ export class AppComponent {
       type:2
     },
     {
+      title: 'Profile',
+      url: '/profile',
+      icon: 'assets/img/person-icon.jpeg',
+      type:0
+    },
+    {
       title: 'About <b> Noctuq </b>',
       url: '/about',
       icon: 'assets/img/about.png',

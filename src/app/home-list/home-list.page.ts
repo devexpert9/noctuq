@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { config } from '../config';
-import { ModalController, IonInfiniteScroll } from '@ionic/angular'; 
+import { ModalController, IonInfiniteScroll, Events } from '@ionic/angular'; 
 import { Router, ActivatedRoute } from '@angular/router';
 import { FiltersPage } from '../filters/filters.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
+import { EventService } from '../services/event/event.service';
 
 @Component({
   selector: 'app-home-list',
@@ -49,16 +51,118 @@ can_hot_menu_at_top:number;
 allow_city_region:number;
 is_mobile_app:any = config.IS_MOBILE_APP;
 view_type:string='events';
-  constructor(public router:Router, public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController, private geolocation: Geolocation) { 
+messages:any=0;
+notifications:any=0;
+  constructor(public events1: EventService,private socket: Socket,public events:Events, public router:Router, public userService: UserService, private activatedRoute: ActivatedRoute, public modalController: ModalController, private geolocation: Geolocation) { 
     this.records_per_page = 9;
     this.max_price = this.price_limit;
     this.page_type = activatedRoute.snapshot.paramMap.get('type');
     console.log(this.page_type)
     this.get_venues_genres();
+    events.subscribe('user_log_activity:true', data => {
+        this.get_Messages();
+        this.get_Notifications();
+      });
+
+    this.get_Messages();
+      this.get_Notifications();
+
+      this.getMessages().subscribe(new_message => {
+        this.events1.publishSomeData({});
+        this.get_Messages();
+      })
+
+      this.getNotiUpdates().subscribe(new_message => {
+        this.events1.publishSomeData({});
+        this.get_Notifications();
+      })
+
+     
+      events.subscribe('read_noti', data => {
+        this.get_Notifications();
+      });
+
+      events.subscribe('read_msgs', data => {
+        this.get_Messages();
+        this.get_Notifications();
+        this.events1.publishSomeData({});
+        this.events.publish('test','');
+      });
   }
 
   ngOnInit() {
   }
+
+  getNotiUpdates() {
+    var self = this;
+    let observable = new Observable(observer => {
+      self.socket.on('rec_notification', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+
+  getMessages() {
+
+    var self = this;
+    let observable = new Observable(observer => {
+      self.socket.on('rec_message', (data) => {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+
+
+  get_Messages() {
+       //get messages//
+       var token = localStorage.getItem('niteowl_auth_token');
+       var userId = this.userService.decryptData(token,config.ENC_SALT);
+      
+         this.userService.postData({userId:userId},'get_unread_messages').subscribe((result) => {
+           var res;
+           res= result;
+           if(result.status == 1){
+           this.messages= result.data ;
+           
+           
+           }else{
+           this.messages= null;
+
+
+           }
+          
+         },
+         err => {
+    
+         });
+  }
+
+
+  get_Notifications() {
+    //get messages//
+    var token = localStorage.getItem('niteowl_auth_token');
+    var userId = this.userService.decryptData(token,config.ENC_SALT);
+   
+      this.userService.postData({userId:userId},'get_unread_notifications').subscribe((result) => {
+        var res;
+        res= result;
+        if(result.status == 1){
+        this.notifications= result.data ;
+      
+        
+        }else{
+          this.notifications= null ;
+
+        }
+       
+      },
+      err => {
+ 
+      });
+}
+
 
   ionViewWillEnter(){
     var login_type = localStorage.getItem('userType')
@@ -68,11 +172,11 @@ view_type:string='events';
   }
 
   ionViewDidEnter(){
-    if(localStorage.getItem('is_event_open') == '1'){
-      this.view_type = 'events';
-    }
     if(localStorage.getItem('is_venue_open') == '1'){
       this.view_type = 'venues';
+    }
+    else{
+      this.view_type = 'events';
     }
 
     // reset events filters
@@ -136,6 +240,7 @@ view_type:string='events';
           var current_lat = resp.coords.latitude;
           callFn(event,type,current_lng,current_lat);
         }).catch((error) => {
+          callFn(event,type,'','');
           console.log('Error getting location', error);
         });
       }
@@ -209,8 +314,9 @@ view_type:string='events';
           console.log('mobile app')
           var current_lng = resp.coords.longitude;
           var current_lat = resp.coords.latitude;
-          callVenuesList(current_lng,current_lat);
+          callVenuesList(event,type,current_lng,current_lat);
         }).catch((error) => {
+          callVenuesList(event,type,'','');
           console.log('Error getting location', error);
         });
       }
@@ -221,12 +327,12 @@ view_type:string='events';
           // var current_lat = pos.coords.latitude;
           var current_lng = '';
           var current_lat = '';
-          callVenuesList(current_lng,current_lat);
+          callVenuesList(event,type,current_lng,current_lat);
         // });
       }
     },500);
 
-    function callVenuesList(current_lng,current_lat){
+    function callVenuesList(event,type,current_lng,current_lat){
 
       var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites_venue' : 'get_venues_list';
       if(type == '0'){
@@ -437,9 +543,11 @@ view_type:string='events';
     this.view_type = type;
     if(type == 'events'){
       localStorage.setItem('is_event_open','1');
+      localStorage.removeItem('is_venue_open');
     }
     else{
       localStorage.setItem('is_venue_open','1');
+      localStorage.removeItem('is_event_open');
     }
   }
 

@@ -146,6 +146,7 @@ end_date:any;
     formData.append('price', this.price);
     formData.append('date', this.date.split('T')[0]);
     formData.append('end_date', this.end_date.split('T')[0]);
+
     if(this.isEdit == '1'){
       formData.append('start_time', this.start_time);
       formData.append('end_time', this.end_time);
@@ -154,6 +155,7 @@ end_date:any;
       formData.append('start_time', this.start_time.split('T')[1].substr(0,5));
       formData.append('end_time', this.end_time.split('T')[1].substr(0,5));
     }
+
     // formData.append('address', this.location);
     // formData.append('lat', this.lat);
     // formData.append('lng', this.lng);
@@ -161,7 +163,7 @@ end_date:any;
     formData.append('genre', JSON.stringify(this.genre_type));
     
     this.userService.presentLoading();
-    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0] : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0];
+    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0]+'/'+this.venue_type+'/'+this.event_id : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0]+'/'+this.venue_type;
     this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){
@@ -204,6 +206,9 @@ end_date:any;
       }
       else if(result.status == 6){
         this.userService.presentToast('End time should be greater than start time','danger');
+      }
+      else if(result.status == 9){
+        this.userService.presentToast('Event already exists in selected dates','danger');
       }
       else{
         this.userService.presentToast('Error while adding event! Please try later','danger');

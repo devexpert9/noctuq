@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { config } from '../config';
 import { UserService } from '../services/user/user.service';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { EventService } from '../services/event/event.service';
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ messages:any;
 notifications:any;
 res_came:boolean=false;
 
-  constructor(public events1: EventService, private router: Router, public userService: UserService, public events: Events) { 
+  constructor(public events1: EventService, private router: Router, public userService: UserService, public events: Events,public alertController: AlertController) { 
   	this.user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
   	this.checkUserAuth();
   	events.subscribe('user_log_activity:true', data => {
@@ -77,6 +77,11 @@ res_came:boolean=false;
     if(this.errors.indexOf(userId) == -1 && userId != 0){
       this.user_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
       this.isLoggedIn = true;
+      if(this.user_sessions.is_first_time == 0){
+        this.user_sessions.is_first_time = 1;
+        localStorage.setItem('niteowl_sessions',JSON.stringify(this.user_sessions));
+        this.allowLocation(userId);
+      }
     }
     else{
       this.isLoggedIn = false;
@@ -91,6 +96,34 @@ res_came:boolean=false;
     }
   }
 
+  async allowLocation(userId){
+    const alert = await this.alertController.create({
+      header: 'Allow location access to get nearby events and venues?',
+      message: '',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.userService.postData({userId:userId, is_first_time:1, allow_city_region : 0},'allow_location').subscribe((result) => {
+                console.log(result)
+            });
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.userService.postData({userId:userId, is_first_time:1, allow_city_region : 1},'allow_location').subscribe((result) => {
+                console.log(result)
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   ionViewWillUnload(){
     this.events.unsubscribe('user_log_activity:true');
   }
@@ -101,7 +134,7 @@ res_came:boolean=false;
     var userId = this.userService.decryptData(token,config.ENC_SALT);
    
       this.userService.postData({userId:userId},'get_unread_messages').subscribe((result) => {
-        this.messages = 50;
+        // this.messages = 50;
         var res;
         res= result;
         if(res.status == 1){

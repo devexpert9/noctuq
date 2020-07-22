@@ -162,3 +162,20 @@ agm-map {
 		border-radius: 1px !important;
 	}
 }
+[mrgnright]{
+		margin-right: 10px;
+		[msgbadge]{
+			border-radius: 50%;
+		    padding: 2px 4px;
+		    position: absolute;
+		    top: -10px;
+		    right: -11px;
+		}
+		[notibadge]{
+			border-radius: 50%;
+		    padding: 2px 4px;
+		    position: absolute;
+		    top: -10px;
+		    right: 2px;
+		}
+	}

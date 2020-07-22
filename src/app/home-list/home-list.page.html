@@ -20,9 +20,19 @@
        <ion-icon name="star" star-head></ion-icon>
 	</ion-buttons> -->
 
-	<ion-buttons slot="end" routerLink="/profile">
+	<!-- <ion-buttons slot="end" routerLink="/profile">
        <ion-icon name="ios-contact"></ion-icon>
+	</ion-buttons> -->
+ 
+	<ion-buttons slot="end" routerLink="/messages" mrgnright>
+       <ion-icon name="mail"></ion-icon>
+       <ion-badge msgbadge color="danger" *ngIf="errors.indexOf(messages)==-1 && messages > 0">{{messages}}</ion-badge>
 	</ion-buttons>
+	<ion-buttons slot="end" routerLink="/notifications" mrgnright>
+       <ion-icon name="notifications"></ion-icon>
+       <ion-badge *ngIf="errors.indexOf(notifications)==-1 && notifications > 0" notibadge color="danger">{{notifications}}</ion-badge>
+	</ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <ion-content login-host #content>

@@ -154,7 +154,7 @@ share_message:any;
     var self = this;
     const options: VideoCapturePlusOptions = {
      limit: 1,
-     highquality: true, 
+     highquality: false, 
        duration: 10
   }
 

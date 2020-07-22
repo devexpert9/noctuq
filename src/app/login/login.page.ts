@@ -96,6 +96,8 @@ page_type:any;
   setSessions(result){
     localStorage.clear();
     var userId = this.userService.encryptData(result.data._id,config.ENC_SALT);
+    localStorage.removeItem('is_venue_open');
+    localStorage.removeItem('is_event_open');
     if(this.page_type == 'host'){
       localStorage.setItem('userType','host');
       localStorage.setItem('niteowl_host_auth_token',userId);

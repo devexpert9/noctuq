@@ -40,7 +40,9 @@ page_type:string='events';
   ionViewDidEnter(){
     if(localStorage.getItem('is_venue_open') == '1'){
       this.page_type = 'venues';
-      localStorage.removeItem('is_venue_open');
+    }
+    else{
+      this.page_type = 'events';
     }
     this.scrollToTop();
   	var token = localStorage.getItem('niteowl_host_auth_token');
@@ -265,6 +267,14 @@ page_type:string='events';
 
   changePage(type){
     this.page_type = type;
+    if(type == 'events'){
+      localStorage.setItem('is_event_open','1');
+      localStorage.removeItem('is_venue_open');
+    }
+    else{
+      localStorage.setItem('is_venue_open','1');
+      localStorage.removeItem('is_event_open');
+    }
   }
 
    tConvert (time) {

@@ -157,7 +157,7 @@ slideOpts = {
     var self = this;
     const options: VideoCapturePlusOptions = {
      limit: 1,
-     highquality: true, 
+     highquality: false, 
        duration: 10
   }
 
@@ -220,7 +220,7 @@ slideOpts = {
       userId : this.userId,
       eventId : this.event_id,
       type : 'video',
-      page_type : 'event',
+      page_type : 'venue',
       user_type : this.userId == 0 ? 'host' : 'user'
     }
   }
@@ -247,7 +247,7 @@ slideOpts = {
     formData.append('userId', this.userId);
     formData.append('eventId', this.event_id);
     formData.append('type', 'image');
-    formData.append('page_type', 'event');
+    formData.append('page_type', 'venue');
     formData.append('user_type', this.userId == 0 ? 'host' : 'user');
     this.userService.presentLoading();
     this.userService.postData(formData,'add_feed').subscribe((result) => {

@@ -12,6 +12,7 @@
         <a href="javascript:void(0)">
          <img *ngIf="errors.indexOf(user_sessions?.image) >= 0" src="assets/img/user-icon.jpg"/> 
      <img *ngIf="errors.indexOf(user_sessions?.image) == -1" src="{{user_sessions?.is_social_image == '1' ? user_sessions?.image : IMAGES_URL+'/profile/'+user_sessions?.image}}"/> 
+     <span *ngIf="messages > 0 || notifications > 0" reddot></span>
          {{user_sessions?.name}} <ion-icon name="arrow-dropdown"></ion-icon></a>
           <ul>
             <li><a href="javascript:void(0)" routerLink="/profile"  slot="end"><ion-icon name="person"></ion-icon> Profile</a></li>

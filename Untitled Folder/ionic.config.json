@@ -1,7 +1,0 @@
-{
-  "name": "noctuq",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
