@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'friends', loadChildren: './friends/friends.module#FriendsPageModule', canActivate: [AuthGuardService] },
   { path: 'live-feed/:id', loadChildren: './live-feed/live-feed.module#LiveFeedPageModule', canActivate: [AuthGuardService] },
-  { path: 'map/:id', loadChildren: './map/map.module#MapPageModule' },
+  { path: 'map/:id/:type', loadChildren: './map/map.module#MapPageModule' },
   { path: 'public-profile/:id', loadChildren: './public-profile/public-profile.module#PublicProfilePageModule', canActivate: [AuthGuardService] },
   { path: 'chat/:id', loadChildren: './chat/chat.module#ChatPageModule', canActivate: [AuthGuardService] },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule', canActivate: [AuthGuardService] },

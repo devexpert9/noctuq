@@ -52,7 +52,7 @@ can_update:Boolean = false;
     err => {
       this.is_loaded = true;
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -80,7 +80,7 @@ can_update:Boolean = false;
 	      console.log(result)
 	    },
 	    err => {
-	      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+	      this.userService.presentToast('Unable to fetch results. Please try again','danger');
 	    });
   	}
   }

@@ -29,40 +29,55 @@ user_lat:any;
 user_lng:any;
 user_location:any = config.IMAGES_URL+'/userloc.png'
 errors:any=['',undefined,null,0]
+userType:any;
+type:any;
   constructor(private geolocation: Geolocation, public plt: Platform, private router: Router, public activatedRoute: ActivatedRoute, public userService: UserService) { 
     this.id = activatedRoute.snapshot.paramMap.get('id');
+    this.type = activatedRoute.snapshot.paramMap.get('type');
     this.locationDetect();
+    this.initWebMap1();
+
   }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
-
+    this.userType = localStorage.getItem('userType');
     var niteowl_sessions = JSON.parse(localStorage.getItem('niteowl_sessions'));
     this.allow_city_region = niteowl_sessions.allow_city_region;
+    console.log('this.allow_city_region',this.allow_city_region)
     this.getLocationSetting();
+   
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
-    // if(this.is_mobile_app == 'true'){
-    //   this.plt.ready().then(() => {
-    //     this.initMap();
-    //   });
-    // }
-    // else{
-      this.initWebMap();
-    // }
+  
   }
 
-  initWebMap(){
-    this.userService.postData({event_id: this.id, userId: this.userId},'get_event_details').subscribe((result) => {
-     
+   initWebMap1(){
+
+    if(this.type==1){
+      this.userService.postData({event_id: this.id, userId: this.userId},'get_event_details').subscribe((result) => {
+      
         var eve ;
-       eve = result.event;
-       console.log();
+        eve = result.event;
         this.lat = Number(eve.cords.coordinates[1]);
         this.lng = Number(eve.cords.coordinates[0]);
     });
+    }else{
+
+      this.userService.postData({venue_id: this.id, userId: this.userId},'get_venue_details').subscribe((result) => {
+      
+        var eve ;
+       eve = result.venue;
+       console.log('get_venue_details', eve);
+        this.lat = Number(eve.cords.coordinates[1]);
+        this.lng = Number(eve.cords.coordinates[0]);
+    });
+
+    }
+
+
   }
 
   locationDetect(){
@@ -74,38 +89,11 @@ errors:any=['',undefined,null,0]
     })
 
   }
-
-  // initMap() {
-  //  	var self = this;
-  //  	this.userService.presentLoading();
-  //   this.map = GoogleMaps.create(this.element.nativeElement);
-
-  //   this.map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
-  //     self.userService.postData({event_id: this.id, userId: this.userId},'get_event_details').subscribe((result) => {
-  //     	  	var eve = result.event;
-  //     	  	self.coordinates = new LatLng(Number(eve.location.lat), Number(eve.location.lng));
-		// 	      let position = {
-		// 	        target: self.coordinates,
-		// 	        zoom: self.zoom
-		// 	      };
-		// 	      self.map.animateCamera(position);
-  //     	  		self.markerOptions = {
-		// 	        position: self.coordinates,
-		// 	        title: eve.venue_type+':'+eve.title,
-  //             		id: eve._id
-		//       	};
-		// 	    self.map.addMarker(self.markerOptions).then((marker: Marker) => {
-		// 	      marker.showInfoWindow();
-		// 	    });
-  //     	  	self.userService.stopLoading(); 
-  // 	  });
-  //   })
-  // }
-
+ 
   getLocationSetting(){
 
     if(this.errors.indexOf(this.allow_city_region)==-1 && this.allow_city_region==1){
-      if(this.is_mobile_app=='true'){
+      if(this.is_mobile_app=='true' || this.is_mobile_app==true){
         var dis= this;
         this.geolocation.getCurrentPosition().then((data) => {
           console.log('enter1')

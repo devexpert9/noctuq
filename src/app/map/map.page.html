@@ -5,7 +5,7 @@
       <ion-back-button defaultHref="clubs/{{id}}"></ion-back-button>
     </ion-buttons>
     <ion-title>Map</ion-title>
-	<ion-buttons slot="end" routerLink="/settings">
+	<ion-buttons slot="end" routerLink="/settings" *ngIf="userType != 'host' && errors.indexOf(userType)==-1">
 		<ion-icon name="ios-settings"></ion-icon>
 	</ion-buttons>
   </ion-toolbar>
@@ -15,15 +15,15 @@
 <div header_height></div>
 
 <agm-map 
-[latitude]="30.7333" 
-[longitude]="76.7794" 
+[latitude]="lat" 
+[longitude]="lng" 
 [zoom]="zoom">
   <agm-marker 
-  [latitude]="30.7333" 
-  [longitude]="76.7794">
+  [latitude]="lat" 
+  [longitude]="lng">
 </agm-marker>
 
-<agm-marker [latitude]="user_lat" [longitude]="user_lng"  [iconUrl]="user_location">
+<agm-marker [latitude]="user_lat" [longitude]="user_lng"  [iconUrl]="user_location" *ngIf="userType != 'host' && errors.indexOf(userType)==-1 && allow_city_region==1">
   <agm-info-window #infoWindow>You are here</agm-info-window>
 </agm-marker>
 

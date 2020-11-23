@@ -89,7 +89,7 @@ page_type:any;
     }, 
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -175,14 +175,22 @@ page_type:any;
         else{
           this.userService.presentToast('Error while logging in with facebook, please try later.','danger');
         }
-      })
+      }).catch(e => 
+        {console.log(e);
+        this.userService.presentToast('Error while logging in with facebook, please try later.','danger')}
+      )
       ).catch(e => 
-        this.userService.presentToast('Error while logging in with facebook, please try later.','danger')
+        {console.log(e);
+        this.userService.presentToast('Error while logging in with facebook, please try later.','danger')}
       );
   }
 
   googleLogin(){
-    this.googlePlus.login({}).then(result => {
+    this.googlePlus.login({
+
+
+    }).then(result => {
+      console.log('result',result)
       if(this.errors.indexOf(result) == -1){
           let dict ={
             name: result.displayName,
@@ -199,11 +207,15 @@ page_type:any;
           this.socialLogin(dict);    
         }
         else{
+          console.log('err1');
           this.userService.presentToast('Error while logging in with google, please try later.','danger');
         }
       })
-    .catch(err => 
-      this.userService.presentToast('Error while logging in with google, please try later.','danger')
+    .catch(err => {
+        console.log('err',err);
+        console.log('err2');
+        this.userService.presentToast('Error while logging in with google, please try later.','danger')
+    }
     );
   }
 
@@ -233,7 +245,7 @@ page_type:any;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

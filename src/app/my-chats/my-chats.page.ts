@@ -142,15 +142,34 @@ noChats:any;
       	}
       	console.log(this.all_users)
       }else{
-      this.noChats = true;
+      
+      var open_chat_box = localStorage.getItem('open_chat_box');
+      if(open_chat_box == '1'){
+        var open_chat_box_id = localStorage.getItem('open_chat_box_id');
+        localStorage.removeItem('open_chat_box');
+        localStorage.removeItem('open_chat_box_id');
+        var index;
 
+        if(this.all_from_users.indexOf(open_chat_box_id) == -1){
+          this.all_users.splice(0,0,{message_type : 'text', message:'Lets start the chat...', fromId : this.userId, toId : open_chat_box_id, created_at : new Date(), user_name : localStorage.getItem('chat_name'), user_image : localStorage.getItem('chat_image'), is_social_image : localStorage.getItem('chat_is_social_image')});
+          this.all_from_users.splice(0,0,open_chat_box_id);
+          index = 0;
+        } 
+        else{
+          index = this.all_from_users.indexOf(open_chat_box_id);
+        }
+
+        this.openChat(open_chat_box_id,index);
+      }else{
+        this.noChats = true;
+      }
       }
     },
     err => {
       this.is_loaded = true;
       this.all_users = [];
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

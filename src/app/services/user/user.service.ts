@@ -45,6 +45,11 @@ loading:any;
     await this.loading.present();
   }
 
+  async presentLoading1() {
+    this.loading = await this.loadingController.create({duration: 10000});
+    await this.loading.present();
+  }
+
   async stopLoading() {
     if(this.loading != undefined){
       await this.loading.dismiss();

@@ -109,7 +109,7 @@ page_type:string='events';
           else{
             self.scroll_event.target.complete();
           }
-          self.userService.presentToast('Unable to fetch results, Please try again','danger');
+          self.userService.presentToast('Unable to fetch results. Please try again','danger');
       });
     }, 500);
   }
@@ -156,7 +156,7 @@ page_type:string='events';
           else{
             self.scroll_event_v.target.complete();
           }
-          self.userService.presentToast('Unable to fetch results, Please try again','danger');
+          self.userService.presentToast('Unable to fetch results. Please try again','danger');
       });
     }, 500);
   }

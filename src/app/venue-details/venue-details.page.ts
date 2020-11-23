@@ -78,7 +78,7 @@ slideOpts = {
     err => {
       this.is_loaded = true;
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -98,7 +98,7 @@ slideOpts = {
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
   
@@ -262,7 +262,7 @@ slideOpts = {
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

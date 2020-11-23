@@ -137,7 +137,7 @@ API_URL:any=config.API_URL;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 }

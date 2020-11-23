@@ -1,0 +1,96 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "com-sarriaroman-photoviewer": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-android-support-gradle-release": {
+      "ANDROID_SUPPORT_VERSION": "27.+",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-email-composer": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-fcm-with-dependency-updated-apns": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-filepath": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-streaming-media": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-telerik-imagepicker": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+      "GOOGLE_API_KEY_FOR_ANDROID": "AIzaSyA79-IxXn8jPfCHN1-lOwIt_EIafzD3Qsw",
+      "OKHTTP_VERSION": "3.12.0",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "nl.x-services.plugins.videocaptureplus": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "com.moust.cordova.videoplayer": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-googleplus": {
+      "PLAY_SERVICES_VERSION": "15.0.1",
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "io.giteowl.a841946"
+    }
+  }
+}

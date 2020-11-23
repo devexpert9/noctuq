@@ -68,7 +68,7 @@ share_message:any;
     err => {
       this.is_loaded = true;
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -88,7 +88,7 @@ share_message:any;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -233,6 +233,7 @@ share_message:any;
         this.userService.presentToast('Unable to post feed, Please try later.','danger');
       }
   }, (err) => {
+    console.log(err);
     this.userService.stopLoading();
     this.userService.presentToast('Unable to post feed, Please try later.','danger');
   });
@@ -259,7 +260,7 @@ share_message:any;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

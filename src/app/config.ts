@@ -1,4 +1,4 @@
-var MAIN_URL = 'http://3.84.25.159';
+var MAIN_URL = 'https://www.noctuq.com';
 var MAIN_URL_PORT = '3001'; 
 var SOCKET_URL_PORT = '3002'; 
 

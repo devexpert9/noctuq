@@ -49,12 +49,12 @@ page_type:any;
         this.userService.presentToast("Email doesn't exists in our system!",'danger');
       }
       else{
-        this.userService.presentToast('Unable to fetch results, Please try again!','danger');
+        this.userService.presentToast('Unable to fetch results. Please try again!','danger');
       }
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -80,7 +80,7 @@ page_type:any;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -111,7 +111,7 @@ page_type:any;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

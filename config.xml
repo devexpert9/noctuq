@@ -99,16 +99,6 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.6.8">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
     </plugin>
-    <plugin name="cordova-plugin-facebook4" spec="^6.4.0">
-        <variable name="APP_ID" value="440387989955093" />
-        <variable name="APP_NAME" value="9ite Owl" />
-        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
-        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="5.0.2" />
-    </plugin>
-    <plugin name="cordova-plugin-googleplus" spec="^8.5.0">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.608339143855-6t5isdeaok9h2s64hbbv5haq3tncpju3" />
-        <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
-    </plugin>
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^5.0.4">
         <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="AIzaSyA79-IxXn8jPfCHN1-lOwIt_EIafzD3Qsw" />
         <variable name="OKHTTP_VERSION" value="3.12.0" />

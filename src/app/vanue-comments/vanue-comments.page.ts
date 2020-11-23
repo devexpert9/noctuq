@@ -20,6 +20,7 @@ hostId:any;
 errors:any=['',null,undefined];
 IMAGES_URL:any=config.IMAGES_URL;
 page_type:any;
+user_Type:any;
   constructor(private activatedRoute: ActivatedRoute,public userService:UserService,public alertController:AlertController, public router: Router) { 
   	this.event_id = activatedRoute.snapshot.paramMap.get('id');
   }
@@ -31,6 +32,7 @@ page_type:any;
 
   ionViewDidEnter(){
     this.page_type = localStorage.getItem('eve_venue_page_type');
+    this.user_Type = localStorage.getItem('userType');
   	var token = localStorage.getItem('niteowl_auth_token');
     this.userId = this.userService.decryptData(token,config.ENC_SALT);
     if(this.userId != 0){
@@ -54,7 +56,7 @@ page_type:any;
     err => {
       this.is_loaded = true;
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -114,13 +116,18 @@ page_type:any;
           text: 'Yes',
           handler: () => {
             this.userService.presentLoading();
-            this.userService.postData({id:feedId, userId : this.userId},'flag_comment').subscribe((result) => {
+            this.userService.postData({id:feedId, userId : this.userId},'flag_comment').subscribe((res) => {
+              var result;
+              result  = res
               this.userService.stopLoading();
               if(result.status == 1){
                 this.userService.presentToast('Comment has been reported. We will look into it.','success');
                 if(result.flag_status == 0){
                   this.comments.splice(index,1);
                 }
+              }
+              else if (result.status == 4){
+                this.userService.presentToast('You have already flagged this commnent.','danger');
               }
               else{
                 this.userService.presentToast('Error while reporting comment! Please try later','danger');
@@ -139,7 +146,7 @@ page_type:any;
   }
 
   userProfile(user_type, uid){
-    if(user_type == 'user'){
+    if(user_type == 'user' && this.user_Type== 'user'){
       this.router.navigate(['/public-profile/'+uid])
     }
   }

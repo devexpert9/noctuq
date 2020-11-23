@@ -222,7 +222,7 @@ notifications:any=0;
 
   getEvents(event={},type=''){
     if(type == '0'){
-      this.userService.presentLoading();
+      this.userService.presentLoading1();
     }
     else{
       this.scroll_event = event;
@@ -273,6 +273,7 @@ notifications:any=0;
           miles : 10000
 
         },api_endpoint).subscribe((result) => { 
+            self.userService.stopLoading();
             self.is_loaded = true;
             var loaded_records = self.start+self.records_per_page;
             if(loaded_records >= result.total){
@@ -280,7 +281,7 @@ notifications:any=0;
             }
             self.all_events = self.all_events.concat(result.data);
             if(type == '0'){
-              self.userService.stopLoading();
+             
             }
             else{
               if(type == '1'){
@@ -289,6 +290,7 @@ notifications:any=0;
             }
           },
           err => {
+            self.userService.stopLoading();
             self.is_more_records = false;
             self.is_loaded = true;
             // self.all_events = [];
@@ -298,7 +300,7 @@ notifications:any=0;
             else{
               self.scroll_event.target.complete();
             }
-            self.userService.presentToast('Unable to fetch results, Please try again','danger');
+            self.userService.presentToast('Unable to fetch results. Please try again','danger');
         });
       }
       // });
@@ -336,7 +338,7 @@ notifications:any=0;
 
       var api_endpoint = (self.page_type == 'favorites') ? 'my_favorites_venue' : 'get_venues_list';
       if(type == '0'){
-        self.userService.presentLoading();
+        self.userService.presentLoading1();
       }
       else{
         self.scroll_event_v = event;
@@ -361,6 +363,7 @@ notifications:any=0;
           current_lat : current_lat,
           miles : 10000
         },api_endpoint).subscribe((result) => { 
+            self.userService.stopLoading();
             self.is_loaded_v = true;
             var loaded_records = self.start_v+self.records_per_page;
             if(loaded_records >= result.total){
@@ -377,6 +380,7 @@ notifications:any=0;
             }
           },
           err => {
+            self.userService.stopLoading();
             self.is_more_records_v = false;
             self.is_loaded_v = true;
             // self.all_events = [];
@@ -386,7 +390,7 @@ notifications:any=0;
             else{
               self.scroll_event_v.target.complete();
             }
-            self.userService.presentToast('Unable to fetch results, Please try again','danger');
+            self.userService.presentToast('Unable to fetch results. Please try again','danger');
         });
       }, 500);
     }

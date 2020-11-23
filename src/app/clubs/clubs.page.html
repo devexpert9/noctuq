@@ -106,7 +106,7 @@
 				  </ion-fab>
 			</li>
 			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
-			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/map/{{event?._id}}/1"> <ion-icon name="pin"></ion-icon> </li>
 			<li routerLink="/feed-gallery/{{event?._id}}"> 
 				<span class="">
 					<img src="assets/img/live.jpg">
@@ -155,7 +155,7 @@
 				</ion-fab>
 			</li>
 			<li *ngIf="is_mobile_app == 'true'" (click)="share()"> <ion-icon name="paper-plane"></ion-icon> </li>
-			<li routerLink="/map/{{event?._id}}"> <ion-icon name="pin"></ion-icon> </li>
+			<li routerLink="/map/{{event?._id}}/1"> <ion-icon name="pin"></ion-icon> </li>
 			<li routerLink="/feed-gallery/{{event?._id}}"> 
 				<span class="">
 					<img src="assets/img/live.jpg">

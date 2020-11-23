@@ -7,6 +7,7 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/n
 import { File, FileEntry } from '@ionic-native/file/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as moment from 'moment-timezone';
 declare var window: any; 
 
 
@@ -54,6 +55,7 @@ end_date:any;
   	// this.userSettings['inputPlaceholderText'] = 'Location';
    //  this.userSettings = Object.assign({},this.userSettings);
     this.event_id = activatedRoute.snapshot.paramMap.get('id');
+    console.log(moment.tz.guess());
   }
 
   ngOnInit() {
@@ -163,7 +165,12 @@ end_date:any;
     formData.append('genre', JSON.stringify(this.genre_type));
     
     this.userService.presentLoading();
-    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0]+'/'+this.venue_type+'/'+this.event_id : 'add_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0]+'/'+this.venue_type;
+
+    console.log(moment.tz.guess());
+  
+    var API_ENDPOINT = this.isEdit == '1' ? 'edit_event/'+this.hostId+'/'+this.start_time+'/'+this.date.split('T')[0]+'/'+this.end_time+'/'+this.end_date.split('T')[0]+'/'+this.venue_type+'/'+this.event_id+'/'+moment.tz.guess() : 'add_event/'+this.hostId+'/'+this.start_time.split('T')[1].substr(0,5)+'/'+this.date.split('T')[0]+'/'+this.end_time.split('T')[1].substr(0,5)+'/'+this.end_date.split('T')[0]+'/'+this.venue_type+'/'+moment.tz.guess();
+
+
     this.userService.postData(formData, API_ENDPOINT).subscribe((result) => {
       this.userService.stopLoading();
       if(result.status == 1){

@@ -45,7 +45,7 @@ IMAGES_URL:any=config.IMAGES_URL;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -57,7 +57,7 @@ IMAGES_URL:any=config.IMAGES_URL;
     },
     err => {
       this.my_friend_requests();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -69,7 +69,7 @@ IMAGES_URL:any=config.IMAGES_URL;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 

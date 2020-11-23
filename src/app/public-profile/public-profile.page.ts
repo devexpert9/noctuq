@@ -48,7 +48,7 @@ is_mobile_app:any = config.IS_MOBILE_APP;
     err => {
       this.is_loaded = true;
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
@@ -71,7 +71,7 @@ is_mobile_app:any = config.IS_MOBILE_APP;
     },
     err => {
       this.userService.stopLoading();
-      this.userService.presentToast('Unable to fetch results, Please try again','danger');
+      this.userService.presentToast('Unable to fetch results. Please try again','danger');
     });
   }
 
