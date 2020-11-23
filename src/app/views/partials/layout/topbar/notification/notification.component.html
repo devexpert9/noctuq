@@ -1,0 +1,24 @@
+<div ngbDropdown placement="bottom-right" autoClose="outside" class="kt-header__topbar-item">
+	<div ngbDropdownToggle class="kt-header__topbar-wrapper" id="top_notis_drop">
+		<span class="kt-header__topbar-icon" [ngClass]="{'kt-pulse kt-pulse--brand': pulse, 'kt-pulse--light' : pulseLight, 'kt-header__topbar-icon--success' : iconType === 'success'	}">
+			<!-- <i *ngIf="!useSVG" [ngClass]="icon"></i> -->
+			<i class="fa fa-bell"></i>
+			<!-- <span *ngIf="useSVG" class="kt-svg-icon" [ngClass]="{'kt-svg-icon--success' : iconType === 'success'}" [inlineSVG]="icon"></span> -->
+			<span class="kt-pulse__ring" [hidden]="!pulse"></span>
+		</span>
+		<span *ngIf="all_notifications.length > 0" class="kt-badge kt-badge--dot kt-badge--notify kt-badge--sm kt-badge--brand">{{all_notifications.length}}</span>
+	</div>
+
+	<div ngbDropdownMenu class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-lg">
+			<!--begin: Head -->
+			<div class="all_notis kt-head kt-head--skin-{{skin}} kt-head--fit-x kt-head--fit-b" [ngStyle]="{'background-image': backGroundStyle() }">
+			<h4>Notifications <span *ngIf="all_notifications.length > 0">({{all_notifications.length}})</span></h4>
+				<p (click)="readNotis(notis._id,notis.type,notis.data_params,i)" *ngFor="let notis of all_notifications; let i=index ">
+					One of the {{notis.type == 22 ? 'comment' : 'feed'}} of {{notis.data_params.page_type}} <b>{{notis.data_params.name}}</b> has marked flag {{notis.data_params.flag}} times.
+				</p>
+				<p *ngIf="all_notifications == ''">No notifications found.</p>
+			</div>
+			<!--end: Head -->
+			
+	</div>
+</div>

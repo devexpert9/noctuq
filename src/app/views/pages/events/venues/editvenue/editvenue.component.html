@@ -1,0 +1,121 @@
+<div class="kt-portlet">
+<div class="kt-portlet__head">
+<div class="kt-portlet__head-label">
+<h3 class="kt-portlet__head-title"><span>Edit Venue</span></h3>
+</div>
+<div class="kt-portlet__head-toolbar">
+<a  routerLink="/panel/venues"  mat-raised-button color="yellow">Back To Venues</a>
+</div>
+</div>
+<div class="kt-portlet__body" >
+	<form class="kt-form" [formGroup]="addForm" autocomplete="off">
+<div class="row">		     
+<div class="col-md-12">
+<mat-form-field>
+<input matInput formControlName="title"  placeholder="Title">
+</mat-form-field> 
+<mat-error *ngIf="isControlHasError('title','required')">
+<strong>Please enter venue name</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12 ">	
+ 
+<mat-form-field class="mat-form-field-infix">			
+<mat-select multiple formControlName="venue_type" [(value)]="selected"  placeholder="Venue Type">
+	<mat-option>Select Venue Type</mat-option>
+	<mat-option *ngFor="let allVenue of allVenues" value="{{allVenue._id}}">{{allVenue.name}}</mat-option>
+</mat-select>				
+</mat-form-field>	
+<mat-error *ngIf="isControlHasError('venue_type','required')">
+<strong>Please select venue type</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12">	
+<mat-form-field>
+<mat-select  multiple
+ placeholder="Genre Type" formControlName="genre_type"  
+panelClass="example-panel-{{genre_type.value}}">
+
+ <mat-option *ngFor="let allGenr of allGenre" [value]="allGenr._id" >{{ allGenr.name }}</mat-option>
+</mat-select>
+</mat-form-field>
+<mat-error *ngIf="isControlHasError('genre_type','required')">
+<strong>Please select genre type</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12">
+<mat-form-field>
+<input type="number" matInput formControlName="price"   placeholder="Price">
+</mat-form-field>
+<mat-error *ngIf="isControlHasError('price','required')">
+<strong>Please enter cover price</strong>
+</mat-error> 
+<mat-error *ngIf="isControlHasError('price','min')">
+<strong>Please enter valid cover price</strong>
+</mat-error> 
+</div>
+
+<div class="col-md-12">
+<mat-form-field> 
+<input (keyup)="onKey($event)" matInput placeholder="Location" matInput
+matGoogleMapsAutocomplete
+country=""
+(onAutocompleteSelected)="onAutocompleteSelected($event,'pick')"
+(onLocationSelected)="onLocationSelected($event,'pick')" autocomplete="off" formControlName="location" #pickid>
+<mat-error *ngIf="isControlHasError('location','required')">
+<strong>Please enter the location</strong>
+</mat-error>
+<mat-error *ngIf="isControlHasError('location','incorrect')">
+<strong>Please enter valid location</strong>
+</mat-error>
+</mat-form-field> 
+</div>
+
+
+<!--[(value)]='values' -->
+<div class="col-md-12">	
+<label>Description</label>
+<ejs-richtexteditor [(value)]='values'formControlName="description" #toolsRTE1 id='alltoolRTE1' [toolbarSettings]='tools1'>
+
+</ejs-richtexteditor>
+</div>
+
+
+<div class="col-md-12">
+<div form-field images>
+<label>Venue Images</label><br>
+
+<span class="e-droptext1" ng2FileDrop [uploader]="uploader" (onFileDrop)="images()" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)">
+<i class="fa fa-upload fa-3x"></i><br>
+  <span class="e-rte-upload-text">
+	  Drop photos here to upload
+  </span>   
+</span>
+<div class="row" style="margin-top: 20px;">
+<div class="col-md-4 col-lg-2"  *ngFor="let img of all_images; let index = index ">
+<div images-files>
+
+<img *ngIf="errors.indexOf(img._id) == -1" class="img-thumbnail" src="{{IMAGES_URL+'/venues/thumbnails/'+img?.file_name}}">
+<img *ngIf="errors.indexOf(img._id) >= 0" class="img-thumbnail" [src]="sanitizer.bypassSecurityTrustUrl(img.url)">
+<span class="fa fa-times" (click)="delete_image(index,img)"></span> 
+
+
+
+</div>
+</div>
+
+
+</div>				 
+</div>
+</div>
+
+
+<div class="col-md-12 mt-3">
+<button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" (click)="submit()" mat-raised-button color="pink">Submit</button>
+</div>
+</div>
+</form>
+</div> 

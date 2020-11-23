@@ -1,0 +1,61 @@
+<div class="kt-portlet">
+		<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>Event Slider Images</span></h3>
+		 </div>
+		  <div class="kt-portlet__head-toolbar">
+		  <button  routerLink="/panel/events/addslide" mat-raised-button color="yellow">Add Slide</button>
+		 </div>
+	</div>
+		<div class="kt-portlet__body">
+		<div class="row">
+		     <div class="col-md-6 col-lg-4">
+			   <div class="event-image">
+			       <img src="assets/img/event-bg.jpg"/>
+				   <div class="btn-event">
+				      <button  routerLink="/panel/events/editslide" btn-icon class="btn btn-green"  matTooltip="Edit Slide"><i class="fa fa-pencil-alt"></i></button>
+				      <button (click)="open(content)"  btn-icon class="btn btn-danger"  matTooltip="Delete Slide"><i class="fa fa-trash"></i></button>
+				   </div>
+			   </div>
+			 </div>
+				 <div class="col-md-6 col-lg-4">
+			   <div class="event-image">
+			       <img src="assets/img/event-bg.jpg"/>
+				   <div class="btn-event">
+				      <button  routerLink="/panel/events/editslide" btn-icon class="btn btn-green"  matTooltip="Edit Slide"><i class="fa fa-pencil-alt"></i></button>
+				      <button (click)="open(content)"  btn-icon class="btn btn-danger"  matTooltip="Delete Slide"><i class="fa fa-trash"></i></button>
+				   </div>
+			   </div>
+			 </div>
+			 <div class="col-md-6 col-lg-4">
+			   <div class="event-image">
+			       <img src="assets/img/event-bg.jpg"/>
+				   <div class="btn-event">
+				      <button  routerLink="/demo1/events/editslide" btn-icon class="btn btn-green"  matTooltip="Edit Slide"><i class="fa fa-pencil-alt"></i></button>
+				      <button (click)="open(content)"  btn-icon class="btn btn-danger"  matTooltip="Delete Slide"><i class="fa fa-trash"></i></button>
+				   </div>
+			   </div>
+			 </div>
+		
+		</div>
+</div> 
+<div class="kt-section">
+  <div class="kt-section__content">
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-body">
+	   <button type="button" class="close close-modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+		<div  class="modal-inner text-center">
+			 <i class="flaticon2-close-cross fa-4x close-icon"></i>
+			 <h4>Are You Sure ?</h4>
+			 <p class="mb-0">Are you sure you want to delete this records? This process cannot be undone</p>
+         </div>
+      </div>
+      <div class="modal-footer no-border pt-0 justify-content-center pb-4">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

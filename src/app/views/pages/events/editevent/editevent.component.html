@@ -1,0 +1,195 @@
+<div class="kt-portlet">
+<div class="kt-portlet__head">
+<div class="kt-portlet__head-label">
+<h3 class="kt-portlet__head-title"><span>Edit Events</span></h3>
+</div>
+<div class="kt-portlet__head-toolbar">
+<a  routerLink="/panel/events"  mat-raised-button color="yellow">Back To Events</a>
+</div>
+</div>
+<div class="kt-portlet__body" >
+	<form class="kt-form" [formGroup]="addForm" autocomplete="off">
+<div class="row">		     
+<div class="col-md-12">
+<mat-form-field>
+<input matInput formControlName="title"  placeholder="Title">
+</mat-form-field> 
+<mat-error *ngIf="isControlHasError('title','required')">
+<strong>Please enter title of event</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12 ">	
+ 
+<mat-form-field class="mat-form-field-infix">			
+<mat-select formControlName="venue_type" [(value)]="selected"  placeholder="Venue Type">
+	<mat-option>Select Venue Type</mat-option>
+	<mat-option *ngFor="let allVenue of allVenues" value="{{allVenue._id}}">{{allVenue.name}}</mat-option>
+</mat-select>				
+</mat-form-field>	
+<mat-error *ngIf="isControlHasError('venue_type','required')">
+<strong>Please select Venue Type</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12">	
+<mat-form-field>
+<mat-select  multiple
+ placeholder="Genre Type" formControlName="genre_type"  
+panelClass="example-panel-{{genre_type.value}}">
+
+ <mat-option *ngFor="let allGenr of allGenre" [value]="allGenr._id" >{{ allGenr.name }}</mat-option>
+</mat-select>
+</mat-form-field>
+<mat-error *ngIf="isControlHasError('genre_type','required')">
+<strong>Please select Genre Type</strong>
+</mat-error>
+</div>
+
+<div class="col-md-12">
+<mat-form-field>
+<input type="number" matInput formControlName="price"   placeholder="Price">
+</mat-form-field>
+<mat-error *ngIf="isControlHasError('price','required')">
+<strong>Please enter the price</strong>
+</mat-error> 
+<mat-error *ngIf="isControlHasError('price','min')">
+<strong>Please enter valid price</strong>
+</mat-error> 
+</div>
+
+<!-- <div class="col-md-12">
+<mat-form-field> 
+<input (keyup)="onKey($event)" matInput placeholder="Location" matInput
+matGoogleMapsAutocomplete
+country=""
+(onAutocompleteSelected)="onAutocompleteSelected($event,'pick')"
+(onLocationSelected)="onLocationSelected($event,'pick')" autocomplete="off" formControlName="location" #pickid>
+<mat-error *ngIf="isControlHasError('location','required')">
+<strong>Please enter the location</strong>
+</mat-error>
+<mat-error *ngIf="isControlHasError('location','incorrect')">
+<strong>Please enter valid location</strong>
+</mat-error>
+</mat-form-field> 
+</div> -->
+
+<div class="col-md-12">
+
+<!-- <mat-form-field>
+  <mat-label>Event Date</mat-label>
+  <input [min]="minDate" formControlName="date" matInput [matDatepicker]="picker">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field> -->
+
+ 
+	<mat-label>Event Date</mat-label>
+	<ejs-datepicker id='datepicker' placeholder='Select a date' formControlName="date"></ejs-datepicker>
+ 
+
+
+<mat-error *ngIf="isControlHasError('date','required')">
+<strong>Please enter event date</strong>
+</mat-error> 
+<mat-error *ngIf="isControlHasError('date','matDatepickerMin')">
+<strong>Please enter valid event date</strong>
+</mat-error> 
+
+</div>
+
+<div class="col-md-12">
+
+
+	<!-- <mat-form-field>
+	  <mat-label>Event End Date</mat-label>
+	  <input [min]="minDate" formControlName="end_date" matInput [matDatepicker]="picker1">
+	  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+	  <mat-datepicker #picker1></mat-datepicker>
+	</mat-form-field> -->
+
+	<mat-label>Event End Date</mat-label>
+	<ejs-datepicker id='datepicker' placeholder='Select a date' formControlName="end_date"></ejs-datepicker>
+
+
+	<mat-error *ngIf="isControlHasError('end_date','required')">
+	<strong>Please enter event end date</strong>
+	</mat-error> 
+	<mat-error *ngIf="isControlHasError('end_date','matDatepickerMin')">
+	<strong>Please enter valid event end date</strong>
+	</mat-error>
+</div>
+
+
+
+<div class="col-md-6">
+<mat-form-field>
+ 	<mat-label>Start Time</mat-label>
+	<div class="24hr-example">
+	  <input matInput placeholder="Start Time" formControlName="start_time" [format]="12" [ngxTimepicker]="default" readonly > 
+	  <ngx-material-timepicker #default (change)="checkTime()"></ngx-material-timepicker>
+	</div>
+</mat-form-field>
+
+<mat-error *ngIf="isControlHasError('start_time','required')">
+<strong>Please enter event start time</strong>
+</mat-error> 
+</div>
+
+<div class="col-md-6">
+<mat-form-field>
+ 	<mat-label>Start End Time</mat-label>
+	<div class="24hr-example">
+	  <input matInput placeholder="Start End Time" formControlName="end_time" [format]="12" [ngxTimepicker]="default1" readonly>
+	  <ngx-material-timepicker #default1></ngx-material-timepicker>
+	</div>
+</mat-form-field>
+
+<mat-error *ngIf="isControlHasError('end_time','required')">
+<strong>Please enter event start time</strong>
+</mat-error> 
+
+</div>
+
+
+
+<!--[(value)]='values' -->
+<div class="col-md-12">	
+<label>Description</label>
+<ejs-richtexteditor [(value)]='values'formControlName="description" #toolsRTE1 id='alltoolRTE1' [toolbarSettings]='tools1'>
+
+</ejs-richtexteditor>
+</div>
+
+<div class="col-md-12">
+<div form-field images>
+<label>Images</label><br>
+<div class="row">
+<div class="col-md-4 col-lg-2">
+<div images-files>
+<img *ngIf="errors.indexOf(post?.image) >= 0 && is_license_uploaded == false"   src="assets/img/events.png" >
+<img *ngIf="errors.indexOf(post?.image) == -1 && is_license_uploaded == false" src="{{IMAGES_URL+'/events/thumbnails/'+post?.image}}"/> 
+<img *ngIf="is_license_uploaded == true"  [src]="sanitizer.bypassSecurityTrustUrl(license_image_url)" >
+
+<!-- <img src="assets/img/events.png"/> -->
+<!-- <span class="fa fa-times"></span> -->
+</div>
+</div>
+
+
+</div>
+<input   (change)="uploadLicense($event,'profile')" id="user-img" name="user-img" type="file" >				
+</div>
+</div>
+
+<!-- <div class="col-md-12">	
+<mat-checkbox formControlName="is_hot"  class="example-margin" >Make It Hot</mat-checkbox>
+</div> -->
+
+
+<div class="col-md-12 mt-3">
+<button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" (click)="submit()" mat-raised-button color="pink">Submit</button>
+</div>
+</div>
+</form>
+</div> 

@@ -1,0 +1,40 @@
+mat-form-field
+{
+    width: 100%;
+}
+.form-group
+{
+label
+{
+    color: #757576;
+}
+display: table;
+
+}
+.example-margin
+{
+margin-right:10px;
+}
+[form-field] , ejs-richtexteditor
+{
+  margin-bottom:20px;
+ &[mb-0]
+ {
+  margin-bottom:0px;
+ }
+ &[images]
+ {
+  margin-top:20px;
+  input
+  {
+      border-bottom: 1px solid #e9e9ef;
+      width: 100%;
+  }
+ }
+}
+
+label
+  {
+      color: rgba(0, 0, 0, 0.54);
+	  font-family: Roboto, "Helvetica Neue", sans-serif;
+  } 

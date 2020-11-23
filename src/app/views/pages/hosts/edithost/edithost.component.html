@@ -1,0 +1,135 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>Edit Host</span></h3>
+		 </div>
+		 <div class="kt-portlet__head-toolbar">
+		  <button  routerLink="/panel/hosts/" mat-raised-button color="yellow">Back To Hosts</button>
+		 </div>
+	</div>
+	<div class="kt-portlet__body">
+	<div class="row">
+		<div class="col-lg-4">
+			 <div class="card  user-profile" >
+				  <img class="card-img-top" src="assets/media/account-bg.jpg">
+					  <div class="card-body text-center">
+						  <div class="user-image " img-upload>
+							<img *ngIf="errors.indexOf(post?.image) >= 0 && is_license_uploaded == false"   src="assets/img/default.png" class="table-user rounded-circle img-thumbnail" width="70px" height="70px" >
+							<img *ngIf="errors.indexOf(post?.image) == -1 && is_license_uploaded == false"  class="table-user rounded-circle img-thumbnail" width="70px" height="70px"  src="{{IMAGES_URL+'/profile/'+post?.image}}"/> 
+							<img *ngIf="is_license_uploaded == true"  [src]="sanitizer.bypassSecurityTrustUrl(license_image_url)"
+							width="70px"  class="table-user rounded-circle img-thumbnail" height="70px" >
+							<label  for="user-img"><i class="la la-pencil" ></i></label>
+							<input  style="display:none" id="user-img"   (change)="uploadLicense($event,'profile')" name="user-img" type="file" >
+							</div>
+						<h4 class="card-title" >{{post?.name}}</h4>
+					  </div>
+			</div>
+		</div>
+	    <div class="col-lg-8">
+		<mat-tab-group [(selectedIndex)]="selectedTab">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-user"></i>
+					Basic Info
+				</ng-template>
+				<ng-template matTabContent>
+					<div>
+						<form [formGroup]="addForm" class="kt-form kt-form--group-seperator-dashed">
+
+<div panel>
+<div panel-body>
+
+								<div class="row">
+									
+									<div class="col-md-6">
+										<mat-form-field>
+											<input matInput    formControlName="name" placeholder="Full Name">
+										</mat-form-field>
+										<mat-error *ngIf="isControlHasError('name','required')">
+					<strong>Please enter admin name</strong>
+				  </mat-error>
+									</div>
+									
+									<div class="col-md-6">
+										<mat-form-field>
+											<input matInput type="email" formControlName="email"  placeholder="Enter Email Address">
+										</mat-form-field>
+										<mat-error *ngIf="isControlHasError('email','required')">
+											<strong>Please enter email address</strong>
+				  						</mat-error>
+									</div>									
+								</div>
+								<div class="row">
+									
+
+									
+									<div class="col-md-6">
+										<mat-form-field>
+											<input matInput  formControlName="phone"  placeholder="Phone Number">
+										</mat-form-field>
+										<mat-error *ngIf="isControlHasError('phone','required')">
+											<strong>Please enter phone number</strong>
+				  						</mat-error>
+									</div>
+										
+								</div>
+
+</div>
+<div class="col-md-12">
+<button  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" (click)="submit()" mat-raised-button color="pink">Submit</button>
+</div>
+</div>
+						</form>
+					</div>
+				</ng-template>
+			</mat-tab>
+			<mat-tab  >
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-exchange-alt"></i>
+					Change Password
+				</ng-template>
+				<ng-template matTabContent>
+					<div class="kt-change-password">
+					<form [formGroup]="changeForm" class="kt-form kt-form--group-seperator-dashed">
+									<div class="kt-form__section kt-form__section--first">
+									<div class="form-group kt-form__group row">
+																
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
+
+									<mat-form-field class="mat-form-field-fluid">
+									<input matInput  [(ngModel)]="password" name="password"  type="password" placeholder="New Password" formControlName="password"/>
+									</mat-form-field>
+									<mat-error *ngIf="isControlHasError1('password','required')">
+									<strong>Please enter new password</strong>
+									</mat-error>
+									</div>
+
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
+									<mat-form-field class="mat-form-field-fluid">
+									<input type="password" matInput [(ngModel)]="confirmpassword" name="confirmpassword" placeholder="Confirm Password" formControlName="confirmpassword"/>
+
+									</mat-form-field>
+									<mat-error *ngIf="isControlHasError1('confirmpassword','required')">
+									<strong>Please enter confirm password</strong>
+									</mat-error>
+
+									<mat-error *ngIf="password != confirmpassword && errors.indexOf(confirmpassword) == -1">
+									<strong>Please enter same password again</strong>
+									</mat-error>
+
+									</div>
+									</div>
+									<div class="col-md-12">
+									<button  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" (click)="submit1()" mat-raised-button color="pink">Submit</button>
+									</div>
+
+									</div>
+								</form>
+							</div>
+						</ng-template>
+					</mat-tab>
+				</mat-tab-group>
+			</div>
+		</div>
+	</div>
+</div>

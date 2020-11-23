@@ -1,0 +1,21 @@
+mat-form-field
+{
+    width: 100%;
+}
+[form-field] 
+{
+
+ &[images]  
+ { label
+ {
+ color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+ }
+  input
+  {   border:none;
+      border-bottom: 1px solid #e9e9ef;
+      width: 100%;
+  }
+ }
+}

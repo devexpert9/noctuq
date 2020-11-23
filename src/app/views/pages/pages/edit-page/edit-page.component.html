@@ -1,0 +1,58 @@
+<div class="kt-portlet">
+		<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>Edit Page</span></h3>
+		 </div>
+		 <div class="kt-portlet__head-toolbar">
+		 	<button routerLink="/panel/pages" mat-raised-button color="yellow">Back To Pages</button>
+		 </div>
+	</div>
+		<div class="kt-portlet__body">
+<form class="kt-form" [formGroup]="addForm" autocomplete="off">
+		<div class="row">
+<div class="col-md-12">
+<mat-form-field>
+<input matInput [readonly]="true"
+ formControlName="name"  placeholder="Page Name">
+</mat-form-field> 
+<mat-error *ngIf="isControlHasError('name','required')">
+<strong>Please enter page name</strong>
+</mat-error>
+<mat-error *ngIf="isControlHasError('name','pattern')">
+<strong>Only A-Z alphabets allowed</strong>
+</mat-error>
+</div>
+<div class="col-md-12">
+<mat-form-field>
+<input matInput formControlName="title"  placeholder="Page Title">
+</mat-form-field> 
+<mat-error *ngIf="isControlHasError('title','required')">
+<strong>Please enter page title</strong>
+</mat-error>
+</div>
+		          
+<div class="col-md-12">	
+<label>Description</label>
+<ejs-richtexteditor formControlName="description" #toolsRTE1 id='alltoolRTE1' [toolbarSettings]='tools1'>
+
+</ejs-richtexteditor>
+</div>
+
+<div class="col-md-12" *ngIf="page_name == 'contactus'" style="margin-top: 15px;">
+<mat-form-field>
+<input matInput formControlName="email"  placeholder="Email address">
+</mat-form-field> 
+<small>This email address will be used to receieve emails from report a problem page.</small>
+</div>
+
+<div class="col-md-12" *ngIf="page_name != 'contactus'" style="visibility: hidden;">
+<input matInput formControlName="email">
+</div>
+
+
+		<div class="col-md-12 mt-3">
+		 <button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" (click)="submit()" mat-raised-button color="pink">Submit</button>
+		</div>
+		</div>
+	</form>
+</div> 

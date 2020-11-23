@@ -1,0 +1,85 @@
+mat-form-field
+{
+    width: 100%;
+}
+.form-group
+{
+label
+{
+    color: #757576;
+}
+display: table;
+
+}
+.example-margin
+{
+margin-right:10px;
+}
+[form-field] , ejs-richtexteditor
+{
+  margin-bottom:20px;
+ &[mb-0]
+ {
+  margin-bottom:0px;
+ }
+ &[images]
+ {
+  margin-top:20px;
+  input
+  {
+      border-bottom: 1px solid #e9e9ef;
+      width: 100%;
+  }
+ }
+}
+
+label
+  {
+      color: rgba(0, 0, 0, 0.54);
+	  font-family: Roboto, "Helvetica Neue", sans-serif;
+  } 
+[images-files]
+{  margin-bottom:20px;
+  img
+  {
+max-width: 100%;
+    border-radius: 6px;
+    min-height: 115px;
+    object-fit: cover;
+  }
+  span.fa {
+width: 22px;
+    height: 22px;
+    background: #ffffff;
+    color: #940000;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 30px;
+    position: absolute;
+    right: 5px;
+    top: -14px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.34);
+}
+}
+
+.nv-file-over { border:  1px dotted red !important; } 
+
+.e-droptext1
+{ 
+.fa
+{
+color:#4c9e17;  margin-bottom: 15px;
+}
+    border: dashed 2px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    color: rgba(0, 0, 0, 0.38);
+    display: block;
+    font-size: 14px;
+    height: 165px;
+    margin: 0 auto;
+  padding:40px;
+    text-align: center;
+    width: 100%;
+    vertical-align: middle;
+   
+}

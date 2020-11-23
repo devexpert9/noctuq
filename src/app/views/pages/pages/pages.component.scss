@@ -1,0 +1,41 @@
+[pos] , [check]   
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+.table-page
+{
+
+mat-header-row + mat-row 
+{
+padding-left: 0px!important;
+cursor:pointer!important;
+}
+margin-bottom:30px;
+mat-row {
+    padding-left: 10px;
+	cursor:move;
+}
+}
+button
+{
+&[btn-icon]
+{
+     padding: 3px 6px;
+ i
+ {
+ padding:0px;
+ font-size:16px;
+ }
+}
+}
+mat-header-row + mat-row
+{
+   [title]
+   {
+     button
+	 {
+	  display:none;
+	 }
+   }
+}

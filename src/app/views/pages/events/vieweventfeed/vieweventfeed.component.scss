@@ -1,0 +1,101 @@
+.event-image
+{
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+}
+  img
+  {
+   max-width:100%;   
+     border-radius: 6px;
+  }
+  .btn-event
+  {         z-index: 9; 
+    position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+     button
+   {
+    &[btn-icon]
+    {      
+         background:#fff;
+       border-color:#fff;
+        color:#000;
+          margin-left:5px;
+            border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      padding: 0 0px;
+      text-align: center;
+      line-height: 35px;
+      i
+      {
+          font-size: 12px;
+        padding: 0;
+      } 
+    }
+    
+   }
+  }
+}
+img.modal-img {
+    width: 750px !important;
+}
+.event-imaged img {
+    vertical-align: middle;
+    border-style: none;
+    height: 329px;
+    width: 329px;
+    margin: 3px 1px 21px 0px;
+    border: 5px solid black;
+    border-radius: 8px;
+}
+.event-imaged .btn-event {
+    z-index: 9;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.event-imaged.event-str {
+  margin-bottom: 20px; 
+  img.big-imga {
+    width: 100% !important;
+    height: 230px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 0px;
+    padding: 4px;
+    border: 1px solid #d8d8d8;
+    margin: 0px;
+    /* margin-bottom: 20px; */
+    min-width: 100%;
+}
+}
+
+.btn-event {
+button.btn.btn-green  {
+    i {
+    padding: 0px;
+}
+  }
+}
+.feed-btns button{
+  margin-right: 2px;
+}

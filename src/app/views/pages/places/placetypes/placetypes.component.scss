@@ -1,0 +1,32 @@
+[check] 
+{
+ flex: 0 0 12% ;
+  width: 12% ;
+}
+[title]
+{
+ flex: 0 0 50%;
+  width: 50% ;
+}
+[last]
+{
+justify-content:center;
+}
+button
+{
+&[btn-icon]
+{
+     padding: 3px 6px;
+ i
+ {
+ padding:0px;
+ font-size:16px;
+ }
+}
+&[ mat-icon-button]
+{
+  margin-right:10px;
+}
+}mat-row {
+    cursor: move;
+}

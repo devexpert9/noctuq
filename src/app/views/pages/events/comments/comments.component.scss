@@ -1,0 +1,51 @@
+[check] 
+{
+ flex: 0 0 12% ;
+  width: 12% ;
+}
+[title]
+{
+ flex: 0 0 50%;
+  width: 50% ;
+}
+[last]
+{
+justify-content:center;
+}button
+{
+&[btn-icon]
+{
+     padding: 3px 6px;
+ i
+ {
+ padding:0px;
+ font-size:16px;
+ }
+}
+&[ mat-icon-button]
+{
+  margin-right:10px;
+}
+}mat-row {
+    cursor: move;
+}
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell,
+.mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  padding: 0px 10px;
+  line-break: unset;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}

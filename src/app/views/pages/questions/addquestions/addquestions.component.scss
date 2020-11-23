@@ -1,0 +1,31 @@
+mat-form-field
+{
+    width: 100%;
+}
+
+[form-field] 
+{
+  margin-bottom:20px;
+ &[mb-0]
+ {
+  margin-bottom:0px;
+ }
+}
+
+label
+  {
+      color: rgba(0, 0, 0, 0.54);
+	  font-family: Roboto, "Helvetica Neue", sans-serif;
+  } 
+[btn-icon] {
+    width: 35px;
+    height: 35px;
+    padding: 0px;
+    text-align: center;
+	border-radius:50%;
+	.fa
+	{
+		font-size: 14px;
+        padding: 0;
+	}
+}

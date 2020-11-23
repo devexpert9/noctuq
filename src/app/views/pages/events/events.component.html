@@ -1,0 +1,172 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>All Events</span></h3>
+		 </div>
+		 <div class="kt-portlet__head-toolbar">
+		  <button routerLink="/panel/events/addevent" mat-raised-button color="yellow">Add Event</button>
+		 </div>
+	</div>
+	
+	<div class="kt-portlet__body">
+	  <!--div search-top>
+	    <div class="row">
+		  <div class="col">
+		     <mat-form-field class="mat-form-field-infix">			
+					  <mat-select [(value)]="selected"  placeholder="Status">
+					  	<mat-option *ngFor="let allVenue of allVenues" value="{{allVenue.name}}">{{allVenue.name}}</mat-option>
+						<mat-option>Select Status</mat-option>
+						<mat-option value="in-process">In Progress</mat-option>
+						<mat-option value="published">Published</mat-option>
+						<mat-option value="pending">Pending Approval</mat-option>
+						</mat-select>				
+		  </mat-form-field>	  
+		  </div>
+		  <div class="col">
+		      <mat-form-field class="mat-form-field-infix">
+				<input matInput placeholder="Event Name">
+			   </mat-form-field>			  
+		  </div>
+		   <div class="col">
+		    <mat-form-field class="mat-form-field-infix">
+			
+					  <mat-select  [(value)]="selectedtype"  placeholder="Type">
+						<mat-option>Select Type</mat-option>
+						<mat-option value="special">Special Offers</mat-option>
+						<mat-option value="music">Music</mat-option>
+						<mat-option value="shows">Shows</mat-option>
+						<mat-option value="cultural">Cultural</mat-option>
+						<mat-option value="food">Food</mat-option>
+						<mat-option value="kids">Kids</mat-option>
+						<mat-option value="classes">Classes</mat-option>
+						<mat-option value="sports">Sports</mat-option>
+						<mat-option value="film">Film</mat-option>
+						<mat-option value="corporate">Corporate Events</mat-option>
+					  </mat-select>
+		  </mat-form-field>	  
+		  		  
+		    </div>
+			<div class="col">
+		      <mat-form-field class="mat-form-field-infix">
+				  <input matInput [matDatepicker]="picker" placeholder="Modified">
+				  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				  <mat-datepicker #picker></mat-datepicker>
+			   </mat-form-field>			  
+		    </div>	
+			<div class="col">
+			<button class="btn btn-green mt-4 mr-1">
+			  Filter
+			</button>
+			<button class="btn btn-green mt-4">
+			  Reset
+			</button>
+	        </div>
+	    </div>
+	  </div-->
+	  <mat-form-field class="mat-form-field-infix">
+		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+	  </mat-form-field>
+	  	 <div class="mat-table__wrapper"> 
+   <mat-table #table [dataSource]="dataSource">  
+       
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+  <mat-cell *matCellDef="let element"> 
+  <img *ngIf="errors.indexOf(element?.image) >= 0 "   src="assets/img/events.png" class="table-user rounded-circle img-thumbnail" width="60px" height="60px" >           
+  <img *ngIf="errors.indexOf(element?.image) == -1 "  class="table-user rounded-circle img-thumbnail" width="60px" height="60px"  src="{{IMAGES_URL+'/events/thumbnails/'+element?.image}}"/> 
+  </mat-cell>
+    </ng-container>
+     <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef title> Event Title </mat-header-cell>
+      <mat-cell *matCellDef="let element" title> {{element.title}} &nbsp;&nbsp;
+<span  *ngIf="(element?.is_hot) == 0 "  class="badge is-hot max-width-90" color="danger" matTooltip="Hot">
+	 Hot</span>
+      </mat-cell>
+    </ng-container>
+	 <ng-container matColumnDef="venue_type">
+      <mat-header-cell *matHeaderCellDef > Venue</mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.venue_type}}</mat-cell>
+    </ng-container>
+    <!-- Date Column -->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+	<mat-cell *matCellDef="let element"> ${{element.price}}</mat-cell>
+    </ng-container>
+     <ng-container matColumnDef="host">
+      <mat-header-cell *matHeaderCellDef> Host </mat-header-cell>
+	<mat-cell *matCellDef="let element"> {{element.host_name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="comments">
+      <mat-header-cell *matHeaderCellDef> Comments </mat-header-cell>
+	<mat-cell *matCellDef="let element">
+	<button  *ngIf="(element?.comments) == 0 "  class="btn btn-success max-width-90" matTooltip="Comments List">
+	 {{element.comments}}</button>
+		<button *ngIf="(element?.comments)  > 0 "  routerLink="/panel/events/comments/{{element?._id}}"  class="btn btn-success max-width-90" matTooltip="Comments List">{{element.comments}}
+		</button>
+	</mat-cell>
+    </ng-container>
+	  <!--  <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-ltgreen">{{element.status}}</span> </mat-cell>
+    </ng-container>
+		<ng-container matColumnDef="nextevent">
+      <mat-header-cell *matHeaderCellDef> Next Event </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="max-width-90">{{element.nextevent}}</span> </mat-cell>
+    </ng-container> -->
+	<ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef> Created </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-secondary max-width-90">{{element.created_at | date : 'MMM d, y'}} </span> </mat-cell>
+    </ng-container>
+		<!-- <ng-container matColumnDef="modified">
+      <mat-header-cell *matHeaderCellDef> Modified </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-secondary max-width-90">{{element.modified}}</span> </mat-cell>
+    </ng-container> -->
+	 <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef action> Action </mat-header-cell>
+      <mat-cell *matCellDef="let element" action>
+      	 <button *ngIf="(element?.feeds)  > 0 "   routerLink="/panel/events/vieweventfeeds/{{element?._id}}"  mat-icon-button color="pink" matTooltip="View Feeds">
+	    <mat-icon>remove_red_eye</mat-icon>
+	</button>&nbsp;
+
+      	<button *ngIf="(element?.comments)  > 0 "  routerLink="/panel/events/comments/{{element?._id}}"  mat-icon-button color="yellow" matTooltip="Comments List">
+	    <mat-icon> comment</mat-icon>
+	</button>&nbsp;
+	 	 <button  routerLink="/panel/events/editevent/{{element?._id}}"  mat-icon-button color="pink" matTooltip="Edit">
+	    <mat-icon>create</mat-icon>
+	</button>&nbsp;
+	<button mat-icon-button color="danger" matTooltip="Delete Event" type="button" (click)="del_open(delete_post,element._id,i + (paginator.pageIndex * paginator.pageSize))">
+	<mat-icon>delete</mat-icon>
+	</button>
+	  </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+    <mat-paginator #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
+</div>
+
+<div class="kt-section">
+  <div class="kt-section__content">
+    <ng-template #delete_post let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Event</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this event?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+        <button (click)="confirm_delete()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

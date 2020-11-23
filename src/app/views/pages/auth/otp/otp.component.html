@@ -1,0 +1,35 @@
+<!--begin::Body-->
+<div class="kt-login__body">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<img class="img-icon" src="assets/img/forgot.png"/>
+		<div class="kt-login__title">
+			<h3>OTP</h3>
+			<p>Enter your OTP to access change password.</p>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+		<form class="kt-form" [formGroup]="forgotPasswordForm" autocomplete="off">
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>OTP</mat-label>
+					<input matInput type="text" placeholder="OTP" formControlName="otp" autocomplete="off"/>
+					<mat-error *ngIf="isControlHasError('otp','required')">
+						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('otp','maxLength')">
+						<strong>Not more than 4 characters are allowed</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<!--begin::Action-->
+			<div class="kt-login__actions">
+				<button routerLink="/auth/login" [disabled]="loading" id="kt_login_signup_cancel" class="btn btn-secondary btn-elevate kt-login__btn-secondary">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
+				<button (click)="submit()" id="kt_login_signin_submit" class="btn btn-green btn-elevate kt-login__btn-primary" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">{{ 'AUTH.GENERAL.SUBMIT_BUTTON' | translate }}</button>
+			</div>
+			<!--end::Action-->
+		</form>
+	</div>
+</div>
+

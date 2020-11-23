@@ -1,0 +1,22 @@
+[pos] 
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+[check]
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+[title]
+{
+ flex: 0 0 22%;
+  width: 22% ;
+}
+button
+{
+&[ mat-icon-button]
+{
+  margin-right:3px;
+}
+}

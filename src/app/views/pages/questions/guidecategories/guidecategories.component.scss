@@ -1,0 +1,55 @@
+[pos] 
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+[check]
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+[title]
+{
+ flex: 0 0 22%;
+  width: 22% ;
+}
+button
+{
+&[ mat-icon-button]
+{
+  margin-right:3px;
+}
+}.table-user {
+    background: #1e1e2d;
+}[form-field]
+{
+  margin-bottom:20px;
+
+ &[images]
+ {
+
+  input
+  {
+      border-bottom: 1px solid #e9e9ef;
+      width: 100%;
+  }
+ }
+}
+[img-cat]
+{   position: relative;
+    display: inline;
+	.fa
+	{cursor:pointer;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    background: #dc3545;
+    position: absolute;
+    right: -6px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    top: -14px;
+    font-size: 10px;
+     }
+}

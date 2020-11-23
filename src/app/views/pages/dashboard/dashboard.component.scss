@@ -1,0 +1,64 @@
+:host {
+	::ng-deep {
+		ngb-tabset > .nav-tabs {
+			display: none;
+		}
+	}
+	
+	
+}
+
+
+.card
+{     
+    border:none;
+    border-bottom: 3px solid rgba(93,120,255,.2);
+    box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
+  .card-body
+  {
+  .card-inner
+  {    align-items: center;
+    p
+	{
+	  &.card-number
+	  {
+	        font-weight: 600;
+			font-size: 1.8rem;
+			color: #646c9a;
+	  }
+	  &.card-title
+	  {     color: #74788d;
+			font-size: 1.1rem;
+			font-weight: 400;
+			margin-top: .55rem;
+	  }
+	}
+  }
+  }
+}
+.text-pink
+{
+color:#fd3995;
+}
+.text-green
+{
+color:#0abb87
+}[pos] 
+{
+ flex: 0 0 7% ;
+  width: 7% ;
+}
+[check]
+{
+ flex: 0 0 10% ;
+  width: 10% ;
+}
+[title]
+{
+ flex: 0 0 22%;
+  width: 22% ;
+}
+[last]
+{    justify-content: center;
+}
+

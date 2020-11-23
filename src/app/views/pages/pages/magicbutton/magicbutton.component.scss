@@ -1,0 +1,43 @@
+mat-form-field
+{
+width:100%;
+}
+[sponsor-btn] 
+{
+    display: inline-block;
+    position: relative;
+.fa {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 9;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    margin: 0 auto;
+    line-height: 30px;
+    border-radius: 50%;
+    color: #009d00;
+    cursor: pointer;
+    border: 1px solid #009d00;
+}
+}
+[form-field]
+{
+ margin-top: 20px;
+[magic-button] {
+    border: 2px dashed #ebedf2;
+    display: block;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    max-width: 300px;
+	.fa
+	{
+	    font-size: 35px;
+    margin-bottom: 6px;
+    color: #009d00;
+	}
+}
+}

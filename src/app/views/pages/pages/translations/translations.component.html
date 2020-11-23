@@ -1,0 +1,45 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>Website Translations</span></h3>
+		 </div>
+	</div>
+	
+	<div class="kt-portlet__body">	
+		  <mat-form-field class="mat-form-field-infix">
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+		  </mat-form-field>	
+	 <div class="mat-table__wrapper"> 
+   <mat-table #table [dataSource]="dataSource">  
+    <ng-container matColumnDef="translation">
+      <mat-header-cell *matHeaderCellDef  width70> Keyword / Translation </mat-header-cell>
+      <mat-cell *matCellDef="let element" width70> 
+	  <p class="mb-0"> {{element.translation}} </p>
+	  <p class="ml-3 mb-0"> <b> en: </b> {{element.translationen}} </p>
+	  <p class="ml-3 mb-0"> <b> pt: </b> {{element.translationpt}} </p> 	  
+	  
+	  </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="en">
+      <mat-header-cell *matHeaderCellDef > en </mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.en}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="pt">
+      <mat-header-cell *matHeaderCellDef > pt </mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.pt}} </mat-cell>
+    </ng-container>
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+		                <button  routerLink="/demo1/pages/edittranslations" mat-icon-button color="pink" matTooltip="Edit">
+							<mat-icon>create</mat-icon>
+						</button>
+		  </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+</div>
+</div>

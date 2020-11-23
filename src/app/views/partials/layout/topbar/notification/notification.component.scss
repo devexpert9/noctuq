@@ -1,0 +1,27 @@
+:host {
+	::ng-deep {
+		ngb-tabset > .nav-tabs {
+			display: none;
+		}
+	}
+}
+.all_notis{
+	padding-top: 5px;
+	h4{
+		padding:10px;
+		background: #1f1e2d;
+    	color: #fff;
+	}
+	p{
+		padding:10px;
+		border-bottom: 1px solid #ccc;
+		cursor: pointer;
+	}
+}
+.kt-badge.kt-badge--dot{
+	min-height: 20px;
+    min-width: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    top: 7px !important;
+}

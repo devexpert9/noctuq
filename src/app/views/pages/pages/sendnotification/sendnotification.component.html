@@ -1,0 +1,74 @@
+<div class="kt-portlet">
+		<div class="kt-portlet__head">
+	     <div class="kt-portlet__head-label">
+		    <h3 class="kt-portlet__head-title"><span>Send Notification</span></h3>
+		 </div>
+	</div>
+		<div class="kt-portlet__body">
+		<div class="row">
+				   <div class="col-md-12">
+					   <mat-form-field>
+						  <mat-select  [formControl]="selected2" [(value)]="selected2"  placeholder="Location">
+							<mat-option>Select Location</mat-option>
+							<mat-option value="option12"> The Francesinhas House </mat-option>
+							<mat-option value="option22"> HIGH Diving Center </mat-option>
+							<mat-option value="option32"> Hotness Academy </mat-option>
+							<mat-option value="option42"> Porto de Galinhas Academy </mat-option>
+							<mat-option value="option52"> Acai Concept Store </mat-option>
+							<mat-option value="option62">  Água Viva Flat and Pousada </mat-option>
+						  </mat-select>
+						</mat-form-field>
+				   </div>
+				   <div class="col-md-12">
+				   <mat-form-field>
+				  <textarea matInput  placeholder="Translation (en)"></textarea>				
+				 </mat-form-field>
+				 </div>
+		      <div class="col-md-12">
+				   <mat-form-field>
+				  <textarea matInput  placeholder="Translation (pt)"></textarea>				
+				 </mat-form-field>
+				 </div>
+				  <div class="col-md-12">
+				    <div form-field>
+					<label>Event Or Place</label><br>
+					  <mat-radio-group>
+                           <mat-radio-button value="event"> Event</mat-radio-button>
+                           <mat-radio-button value="place"> Place</mat-radio-button>
+                       </mat-radio-group>
+					</div>
+				  </div>
+				  <div class="col-md-6">
+				   <mat-form-field>
+					  <mat-select [(value)]="selected"  placeholder="Event ">
+						<mat-option>Select Event </mat-option>
+						<mat-option value="option1">Live Music at Porto Mix   (Voz e Violão na Porto Mix) (2019-09-26 12:00:00) </mat-option>
+						<mat-option value="option2">Special dish of the Day   (Promoção Prato do Dia!!!) (2019-09-26 12:00:00) </mat-option>
+						<mat-option value="option3">Live Music at Barcaxeira   (Música ao Vivo no Barcaxeira) (2019-09-26 12:00:00) </mat-option>
+						<mat-option value="option4">Live Music at Pitanga   (Voz e Violão no Pitanga) (2019-09-26 12:00:00) </mat-option>
+						<mat-option value="option5">Live music at Itaoca   (Música ao vivo no Itaoca) (2019-09-26 12:00:00)  </mat-option>
+						<mat-option value="option6">Opportunity Market   (Feira de Oportunidades) (2019-09-26 17:00:00)  </mat-option>
+						<mat-option value="option7">Handicrafts Market   (Feira de Artesanato) (2019-09-26 18:00:00)  </mat-option>
+					  </mat-select>
+					</mat-form-field>
+				 </div>
+				  <div class="col-md-6">
+				   <mat-form-field>
+					  <mat-select [(value)]="selected2"  placeholder="Place">
+						<mat-option>Select Place </mat-option>
+						<mat-option value="option11">25 hectares of Land in Carneiros   (Terreno em Carneiros)</mat-option>
+						<mat-option value="option22">A Casa Das Francesinhas   (A Casa Das Francesinhas)</mat-option>
+						<mat-option value="option33">A.L.T.A Centro de Mergulho   (A.L.T.A Centro de Mergulho)</mat-option>
+						<mat-option value="option34">AP Artes e Presentes   (AP Artes e Presentes)</mat-option>
+						<mat-option value="option35">APCI Buggy - Buggy Rental   (APCI Buggy - Passeio de Buggy)</mat-option>
+						<mat-option value="option36">Academia Hotação   (Academia Hotação)</mat-option>
+						<mat-option value="option37">Adega do Porto   (Adega do Porto)</mat-option>
+						<mat-option value="option38">Aicá Diving   (Aicá Diving)</mat-option>
+					  </mat-select>
+					</mat-form-field>
+				 </div>
+		<div class="col-md-12 mt-3">
+		 <button  mat-raised-button color="pink">Save</button>
+		</div>
+		</div>
+</div> 

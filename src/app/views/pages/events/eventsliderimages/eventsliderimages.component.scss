@@ -1,0 +1,52 @@
+.event-image
+{
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+}
+  img
+  {
+	 max-width:100%;	 
+     border-radius: 6px;
+  }
+  .btn-event
+  {         z-index: 9; 
+    position: absolute;
+	top: 0px;
+	left: 0;
+	right: 0px;
+	bottom: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+     button
+	 {
+	  &[btn-icon]
+	  {      
+	       background:#fff;
+		   border-color:#fff;
+		    color:#000;
+	        margin-left:5px;
+            border-radius: 50%;
+			width: 35px;
+			height: 35px;
+			padding: 0 0px;
+			text-align: center;
+			line-height: 35px;
+			i
+			{
+			    font-size: 12px;
+				padding: 0;
+			}	
+	  }
+	  
+	 }
+  }
+}

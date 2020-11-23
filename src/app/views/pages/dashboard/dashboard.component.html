@@ -1,0 +1,174 @@
+<div class="row">
+	<div class="col-xl-12">
+		<div class="row row-full-height">
+			<div class="col-sm-12 col-md-6 col-lg-3">
+			   <div class="card card-stats mb-3">
+					<div class="card-body ">
+						<div class="row card-inner">						
+							<div class="col-7 col-md-8">
+								 <div class="numbers">
+									<p class="card-number">{{total_users}}</p>
+									<p class="card-title">Total Users </p>
+								</div>							
+							</div>
+							<div class="col-5 col-md-4">
+								<div class="icon-big text-center icon-warning">
+									<i class="fa fa-users fa-3x text-primary"></i>
+								</div>
+							</div>
+						</div>
+					  </div>
+				  </div>
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-3">
+			   <div class="card card-stats mb-3">
+					<div class="card-body ">
+						<div class="row card-inner">						
+							<div class="col-7 col-md-8">
+								 <div class="numbers">
+									<p class="card-number">{{total_hosts}}</p>
+									<p class="card-title">Total Hosts </p>
+								</div>							
+							</div>
+							<div class="col-5 col-md-4">
+								<div class="icon-big text-center icon-warning">
+									<i class="fa fa-user fa-3x text-green"></i>
+								</div>
+							</div>
+						</div>
+					  </div>
+				  </div>
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-3">
+			   <div class="card card-stats mb-3">
+					<div class="card-body ">
+						<div class="row card-inner">						
+							<div class="col-7 col-md-8">
+								 <div class="numbers">
+									<p class="card-number">{{total_events}}</p>
+									<p class="card-title">Total Events</p>
+								</div>							
+							</div>
+							<div class="col-5 col-md-4">
+								<div class="icon-big text-center icon-warning">
+									<i class="fa fa-calendar  fa-3x text-warning"></i>
+								</div>
+							</div>
+						</div>
+					  </div>
+				  </div>
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-3">
+			   <div class="card card-stats mb-3">
+					<div class="card-body ">
+						<div class="row card-inner">						
+							<div class="col-7 col-md-8">
+								 <div class="numbers">
+									<p class="card-number">{{total_comments}}</p>
+									<p class="card-title">Total Comments</p>
+								</div>							
+							</div>
+							<div class="col-5 col-md-4">
+								<div class="icon-big text-center icon-warning">
+									<i class="fa fa-comment fa-3x text-green"></i>
+								</div>
+							</div>
+						</div>
+					  </div>
+				  </div>
+			</div>
+		
+			 </div>
+		</div>
+	   <div  class="kt-space-20"></div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-xl-12">
+		<kt-portlet [class]="'kt-portlet--height-fluid'">
+			<kt-portlet-header [title]="'Event'" [class]="'kt-portlet__head--lg  kt-portlet__head--break-sm'">
+				<ng-container ktPortletTools>				
+				</ng-container>
+			</kt-portlet-header>
+			<kt-portlet-body [class]="''">
+			<!--kt-data-table></kt-data-table-->
+  <div class="mat-table__wrapper"> 
+   <mat-table #table [dataSource]="dataSource">  
+       
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+  <mat-cell *matCellDef="let element"> 
+  <img *ngIf="errors.indexOf(element?.image) >= 0 "   src="assets/img/events.png" class="table-user rounded-circle img-thumbnail" width="60px" height="60px" >           
+  <img *ngIf="errors.indexOf(element?.image) == -1 "  class="table-user rounded-circle img-thumbnail" width="60px" height="60px"  src="{{IMAGES_URL+'/events/thumbnails/'+element?.image}}"/> 
+  </mat-cell>
+    </ng-container>
+     <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef title> Event Title </mat-header-cell>
+      <mat-cell *matCellDef="let element" title> {{element.title}} </mat-cell>
+    </ng-container>
+	 <ng-container matColumnDef="venue_type">
+      <mat-header-cell *matHeaderCellDef > Venue</mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.venue_type}}</mat-cell>
+    </ng-container>
+    <!-- Date Column -->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+	<mat-cell *matCellDef="let element"> {{element.price}}</mat-cell>
+    </ng-container>
+     <ng-container matColumnDef="venue_description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+	<mat-cell *matCellDef="let element" [innerHTML]="element.venue_description"> </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="comments">
+      <mat-header-cell *matHeaderCellDef> Comments </mat-header-cell>
+	<mat-cell *matCellDef="let element">
+	<button  *ngIf="(element?.comments) == 0 "  class="btn btn-success max-width-90" matTooltip="Comments List">
+	 {{element.comments}}</button>
+		<button *ngIf="(element?.comments)  > 0 "  routerLink="/panel/events/comments/{{element?._id}}"  class="btn btn-success max-width-90" matTooltip="Comments List">{{element.comments}}
+		</button>
+	</mat-cell>
+    </ng-container>
+	  <!--  <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-ltgreen">{{element.status}}</span> </mat-cell>
+    </ng-container>
+		<ng-container matColumnDef="nextevent">
+      <mat-header-cell *matHeaderCellDef> Next Event </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="max-width-90">{{element.nextevent}}</span> </mat-cell>
+    </ng-container> -->
+	<ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef> Created </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-secondary max-width-90">{{element.created_at | date : 'MMM d, y'}} </span> </mat-cell>
+    </ng-container>
+		<!-- <ng-container matColumnDef="modified">
+      <mat-header-cell *matHeaderCellDef> Modified </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <span class="badge badge-secondary max-width-90">{{element.modified}}</span> </mat-cell>
+    </ng-container> -->
+	 <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef action> Action </mat-header-cell>
+      <mat-cell *matCellDef="let element" action>
+      	<button *ngIf="(element?.comments)  > 0 "  routerLink="/panel/events/comments/{{element?._id}}"  mat-icon-button color="yellow" matTooltip="Comments List">
+	    <mat-icon> comment</mat-icon>
+	</button>&nbsp;
+	 	 <button  routerLink="/panel/events/editevent/{{element?._id}}"  mat-icon-button color="pink" matTooltip="Edit">
+	    <mat-icon>create</mat-icon>
+	</button>
+	  </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+    <mat-paginator #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showFirstLastButtons]="true">
+  </mat-paginator>
+  
+			</kt-portlet-body>
+		</kt-portlet>
+	</div>
+	
+</div>
